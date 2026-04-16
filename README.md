@@ -94,7 +94,18 @@ Notas del profesor
 * No os falta en la parte publica ver los patrocinadores?
 * Habeis considerado las un perfil adicional de cuenta de patrocinador para crear torneos y establecer los premios y el coste de apuntarse?
 * Para mayor moetizacion y potencial de interes, habeis pensado en añadir lista de videojuegos de interes para votaciones?
-* Metricas de monetizacion como por ejemplo: torneos más populares por inscripciones, equipos registrados por mes, patrocinadores con mayor actividad...* 
+* Metricas de monetizacion como por ejemplo: torneos más populares por inscripciones, equipos registrados por mes, patrocinadores con mayor actividad...*
+
+#####################################################
+SEGUNDA ENTREGA :  Entrega esquema de la BB.DD
+
+NOMBRE DE FICHERO Y UBICACIÓN
+
+FICHERO : Esquema_EERR.pdf
+
+UBICACIÓN : /Esquema_EERR.pdf
+
+
 
 
 
