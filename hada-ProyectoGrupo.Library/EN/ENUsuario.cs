@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace hada_ProyectoGrupo.Library.EN
 {
-    internal class UsuarioEN
+    internal class ENUsuario
     {
+        string _email;
     }
 }
 

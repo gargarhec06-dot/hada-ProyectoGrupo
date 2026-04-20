@@ -9,7 +9,8 @@ namespace hada_ProyectoGrupo.Library.CAD
 {
     internal class CADUsuario
     {
-        public CADUsuario() { 
+        public CADUsuario() 
+        { 
         
         }
 
