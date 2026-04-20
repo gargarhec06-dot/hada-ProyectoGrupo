@@ -31,6 +31,18 @@ namespace hada_ProyectoGrupo.Library.EN
             _verificado = false;
         }
 
+        public ENUsuario(string email, string password, string nombre, string apellidos, DateTime fecha, string pais, float saldo, bool verificado)
+        {
+            _email = email;
+            _password = password;
+            _nombre = nombre;
+            _apellidos = apellidos;
+            _fecha_nacimiento = fecha;
+            _pais = pais;
+            _saldo_cartera = saldo;
+            _verificado = verificado;
+        }
+
         public string Email
         {
             get { return _email; }
