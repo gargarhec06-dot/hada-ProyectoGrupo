@@ -1,4 +1,5 @@
-﻿using System;
+﻿using hada_ProyectoGrupo.Library.CAD;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -73,6 +74,30 @@ namespace hada_ProyectoGrupo.Library.EN
             get { return _verificado; }
 
             set { _verificado = value; }
+        }
+
+        public bool Login()
+        {
+            CADUsuario cad = new CADUsuario();
+            return cad.Login(this);
+        }
+
+        public bool Register()
+        {
+            CADUsuario cad = new CADUsuario();
+            return cad.Create(this);
+        }
+
+        public bool Update()
+        {
+            CADUsuario cad = new CADUsuario();
+            return cad.Update(this);
+        }
+
+        public bool Delete()
+        {
+            CADUsuario cad = new CADUsuario();
+            return cad.Delete(this);
         }
     }
 }
