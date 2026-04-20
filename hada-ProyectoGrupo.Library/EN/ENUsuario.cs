@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace hada_ProyectoGrupo.Library.EN
 {
-    internal class ENUsuario
+    public class ENUsuario
     {
         private string _email;
         private string _password;
