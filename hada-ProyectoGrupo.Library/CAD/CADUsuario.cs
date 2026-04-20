@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace hada_ProyectoGrupo.Library.CAD
 {
-    internal class CADUsuario
+    public class CADUsuario
     {
         public CADUsuario() 
         { 

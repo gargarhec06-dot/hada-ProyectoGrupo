@@ -37,5 +37,13 @@ namespace hada_ProyectoGrupo.Library.CAD
 
             return ok;
         }
+
+        public bool Delete(ENJugador en)
+        {
+            bool ok = true;
+
+
+            return ok;
+        }
     }
 }
