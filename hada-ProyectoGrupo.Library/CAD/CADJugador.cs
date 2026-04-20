@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace hada_ProyectoGrupo.Library.CAD
 {
-    internal class CADJugador
+    public class CADJugador
     {
 
         public CADJugador() { 

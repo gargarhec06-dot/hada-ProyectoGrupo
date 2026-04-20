@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace hada_ProyectoGrupo.Library.EN
 {
-    internal class ENJugador
+    public class ENJugador
     {
         private int _codigo;
         private string _email_usuario;
