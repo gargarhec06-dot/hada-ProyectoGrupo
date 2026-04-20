@@ -34,6 +34,31 @@ namespace hada_ProyectoGrupo.Library.EN
             _equipo_actual = 0;
         }
 
+        public ENJugador(int codigo, string email, string apodo, string rol, float kda, float winrate, int nivel, string hardware, bool buscando, int equipo)
+        {
+            _codigo = codigo;
+            _email_usuario = email;
+            _apodo = apodo;
+            _rol_principal = rol;
+            _kda_promedio = kda;
+            _winrate = winrate;
+            _nivel = nivel;
+            _hardware = hardware;
+            _buscando_equipo = buscando;
+            _equipo_actual = equipo;
+        }
+
+        // Constructor para los parametro obligatorios
+        public ENJugador(string email, string apodo)
+        {
+            _email_usuario = email;
+            _apodo = apodo;
+            _nivel = 1; 
+            _buscando_equipo = false;
+            _kda_promedio = 0;
+            _winrate = 0;
+        }
+
         public int Codigo
         {
             get { return _codigo; }
@@ -94,7 +119,6 @@ namespace hada_ProyectoGrupo.Library.EN
             set { _equipo_actual = value; }
         }
 
-        // Métodos de negocio (Cabeceras que llaman al CADJugador)
         public bool Create()
         {
             CADJugador cad = new CADJugador();

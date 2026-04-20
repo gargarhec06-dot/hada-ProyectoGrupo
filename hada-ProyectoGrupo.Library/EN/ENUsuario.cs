@@ -43,6 +43,17 @@ namespace hada_ProyectoGrupo.Library.EN
             _verificado = verificado;
         }
 
+        // Constructor para los parametro obligatorios
+        public ENUsuario(string email, string password, string nombre, DateTime fecha)
+        {
+            _email = email;
+            _password = password;
+            _nombre = nombre;
+            _fecha_nacimiento = fecha;
+            _saldo_cartera = 0; 
+            _verificado = false; 
+        }
+
         public string Email
         {
             get { return _email; }
