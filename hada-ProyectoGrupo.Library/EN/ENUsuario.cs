@@ -8,7 +8,72 @@ namespace hada_ProyectoGrupo.Library.EN
 {
     internal class ENUsuario
     {
-        string _email;
+        private string _email;
+        private string _password;
+        private string _nombre;
+        private string _apellidos;
+        private DateTime _fecha_nacimiento;
+        private string _pais;
+        private float _saldo_cartera;
+        private bool _verificado;
+
+
+        public string Email
+        {
+            get { return _email; }
+
+            set { _email = value; }
+        }
+
+        public string Password
+        {
+            get { return _password; }
+
+            set { _password = value; }
+        }
+
+        public string Nombre 
+        {  
+            get { return _nombre; } 
+            
+            set {  _nombre = value; } 
+        }
+
+        public string Apellidos
+        {
+            get { return _apellidos;}
+
+            set { _apellidos = value;}
+        }
+
+        public DateTime Fecha_Nacimiento
+        {
+            get { return _fecha_nacimiento; }
+
+            set { _fecha_nacimiento = value;}
+        }
+
+        public string Pais
+        {
+            get { return _pais; }
+
+            set { _pais = value; }
+        }
+
+
+        public float Saldo_cartera
+        {
+            get { return _saldo_cartera;}
+
+            set { _saldo_cartera = value;}
+        }
+
+        public bool Verificado
+        {
+            get { return _verificado; }
+
+            set { _verificado = value; }
+        }
     }
 }
 
