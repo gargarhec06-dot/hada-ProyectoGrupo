@@ -19,6 +19,18 @@ namespace hada_ProyectoGrupo.Library.EN
         private bool _verificado;
 
 
+        public ENUsuario()
+        {
+            _email = "";
+            _password = "";
+            _nombre = "";
+            _apellidos = "";
+            _fecha_nacimiento = DateTime.Now;
+            _pais = "";
+            _saldo_cartera = 0;
+            _verificado = false;
+        }
+
         public string Email
         {
             get { return _email; }
