@@ -13,7 +13,7 @@ namespace hada_ProyectoGrupo.Library.CAD
 
         public bool Create(ENNoticia en)
         {
-            bool ok = true; // se implementará correctamente en el futuro
+            bool ok = true; 
 
             return ok;
         }
@@ -41,7 +41,7 @@ namespace hada_ProyectoGrupo.Library.CAD
 
         public List<ENNoticia> ReadAll()
         {
-            List<ENNoticia> lista = new List<ENNoticia>(); // se implementará correctamente en el futuro
+            List<ENNoticia> lista = new List<ENNoticia>(); 
 
             return lista;
         }

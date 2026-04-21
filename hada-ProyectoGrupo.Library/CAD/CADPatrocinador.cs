@@ -14,7 +14,7 @@ namespace hada_ProyectoGrupo.Library.CAD
 
         public bool Create(ENPatrocinador en)
         {
-            bool ok = true; // se implementará correctamente en el futuro
+            bool ok = true; 
 
             return ok;
         }
