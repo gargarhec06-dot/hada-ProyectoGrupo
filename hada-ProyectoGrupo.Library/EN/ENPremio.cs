@@ -1,4 +1,5 @@
-﻿using System;
+﻿using hada_ProyectoGrupo.Library.CAD;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -95,6 +96,41 @@ namespace hada_ProyectoGrupo.Library.EN
         {
             get { return _no_monetario; }
             set { _no_monetario = value; }
+        }
+
+        public bool Create()
+        {
+            CADPremio cad = new CADPremio();
+            return cad.Create(this);
+        }
+
+        public bool Read()
+        {
+            CADPremio cad = new CADPremio();
+            return cad.Read(this);
+        }
+
+        public bool Update()
+        {
+            CADPremio cad = new CADPremio();
+            return cad.Update(this);
+        }
+
+        public bool Delete()
+        {
+            CADPremio cad = new CADPremio();
+            return cad.Delete(this);
+        }
+
+        /// <summary>
+        /// Devuelve todos los premios salvo que ocurra un error
+        /// Disponibilidad por si tenemos que filtrarlas por algún criterio
+        /// </summary>
+        /// <returns>Lista con todas los premios</returns>
+        public List<ENPremio> ReadAll()
+        {
+            CADPremio cad = new CADPremio();
+            return cad.ReadAll();
         }
     }
 }

@@ -45,6 +45,7 @@
     <Compile Include="CAD\CADNoticia.cs" />
     <Compile Include="CAD\CADPartida.cs" />
     <Compile Include="CAD\CADPatrocinador.cs" />
+    <Compile Include="CAD\CADPremio.cs" />
     <Compile Include="CAD\CADUsuario.cs" />
     <Compile Include="EN\ENJugador.cs" />
     <Compile Include="EN\ENNoticia.cs" />
