@@ -47,6 +47,7 @@
     <Compile Include="CAD\CADUsuario.cs" />
     <Compile Include="EN\ENJugador.cs" />
     <Compile Include="EN\ENNoticia.cs" />
+    <Compile Include="EN\ENPartida.cs" />
     <Compile Include="EN\ENPatrocinador.cs" />
     <Compile Include="EN\ENUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
