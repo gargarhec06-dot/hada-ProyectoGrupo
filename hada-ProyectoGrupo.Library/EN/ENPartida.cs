@@ -1,4 +1,5 @@
-﻿using System;
+﻿using hada_ProyectoGrupo.Library.CAD;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -94,6 +95,41 @@ namespace hada_ProyectoGrupo.Library.EN
         {
             get { return _jugadores; }
             set { _jugadores = value; }
+        }
+
+        public bool Create()
+        {
+            CADPartida cad = new CADPartida();
+            return cad.Create(this);
+        }
+
+        public bool Read()
+        {
+            CADPartida cad = new CADPartida();
+            return cad.Read(this);
+        }
+
+        public bool Update()
+        {
+            CADPartida cad = new CADPartida();
+            return cad.Update(this);
+        }
+
+        public bool Delete()
+        {
+            CADPartida cad = new CADPartida();
+            return cad.Delete(this);
+        }
+
+        /// <summary>
+        /// Devuelve todas las partidas salvo que ocurra un error
+        /// Disponibilidad por si tenemos que filtrarlas por algún criterio
+        /// </summary>
+        /// <returns>Lista con todas las partidas</returns>
+        public List<ENPartida> ReadAll()
+        {
+            CADPartida cad = new CADPartida();
+            return cad.ReadAll();
         }
     }
 }
