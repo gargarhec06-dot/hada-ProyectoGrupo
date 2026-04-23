@@ -41,10 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CAD\JugadorCAD.cs" />
-    <Compile Include="CAD\UsuarioCAD.cs" />
-    <Compile Include="EN\JugadorEN.cs" />
-    <Compile Include="EN\UsuarioEN.cs" />
+    <Compile Include="CAD\CADJugador.cs" />
+    <Compile Include="CAD\CADUsuario.cs" />
+    <Compile Include="CAD\CADNoticia.cs" />
+    <Compile Include="CAD\CADPatrocinador.cs" />
+    <Compile Include="EN\ENJugador.cs" />
+    <Compile Include="EN\ENUsuario.cs" />
+    <Compile Include="EN\ENNoticia.cs" />
+    <Compile Include="EN\ENPatrocinador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
