@@ -42,13 +42,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CAD\CADJugador.cs" />
-    <Compile Include="CAD\CADUsuario.cs" />
     <Compile Include="CAD\CADNoticia.cs" />
+    <Compile Include="CAD\CADPartida.cs" />
     <Compile Include="CAD\CADPatrocinador.cs" />
+    <Compile Include="CAD\CADPremio.cs" />
+    <Compile Include="CAD\CADUsuario.cs" />
     <Compile Include="EN\ENJugador.cs" />
-    <Compile Include="EN\ENUsuario.cs" />
     <Compile Include="EN\ENNoticia.cs" />
+    <Compile Include="EN\ENPartida.cs" />
     <Compile Include="EN\ENPatrocinador.cs" />
+    <Compile Include="EN\ENPremio.cs" />
+    <Compile Include="EN\ENUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
