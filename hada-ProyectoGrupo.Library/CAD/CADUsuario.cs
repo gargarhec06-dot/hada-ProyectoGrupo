@@ -26,7 +26,7 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                // Contamos cuántos usuarios tienen ese email y password
+
                 string sql = "SELECT COUNT(*) FROM [Usuario] WHERE email = @email AND password = @pass";
 
                 SqlCommand com = new SqlCommand(sql, c);
