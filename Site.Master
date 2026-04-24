@@ -1,0 +1,28 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="hada_ProyectoGrupo.Site" %>
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>HADA Esports</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:Menu ID="Menu1" runat="server" Orientation="Horizontal">
+            <Items>
+                <asp:MenuItem Text="Inicio" NavigateUrl="~/Default.aspx"/>
+                <asp:MenuItem Text="Torneos" NavigateUrl="~/Public/Torneos.aspx"/>
+                <asp:MenuItem Text="Equipos" NavigateUrl="~/Public/Equipos.aspx"/>
+                <asp:MenuItem Text="Noticias" NavigateUrl="~/Public/Noticias.aspx"/>
+                <asp:MenuItem Text="Registro" NavigateUrl="~/Public/Registro.aspx"/>
+                <asp:MenuItem Text="Login" NavigateUrl="~/Public/Login.aspx"/>
+            </Items>
+        </asp:Menu>
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>

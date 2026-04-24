@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.37012.4 d17.14
+VisualStudioVersion = 17.14.37012.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hada-ProyectoGrupo", "hada-ProyectoGrupo.csproj", "{2E5CEF34-31FF-4C32-8211-4260B1C4BC67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hada-ProyectoGrupo.Library", "hada-ProyectoGrupo.Library\hada-ProyectoGrupo.Library.csproj", "{49109936-590F-4233-BE90-80C88BC9B44A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{2E5CEF34-31FF-4C32-8211-4260B1C4BC67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E5CEF34-31FF-4C32-8211-4260B1C4BC67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E5CEF34-31FF-4C32-8211-4260B1C4BC67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49109936-590F-4233-BE90-80C88BC9B44A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49109936-590F-4233-BE90-80C88BC9B44A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49109936-590F-4233-BE90-80C88BC9B44A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49109936-590F-4233-BE90-80C88BC9B44A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
