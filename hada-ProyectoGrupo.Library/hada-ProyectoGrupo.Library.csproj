@@ -57,6 +57,7 @@
     <Compile Include="EN\ENTorneo.cs" />
     <Compile Include="EN\ENUsuario.cs" />
     <Compile Include="EN\ENVideojuego.cs" />
+    <Compile Include="EN\EquipoEN.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
