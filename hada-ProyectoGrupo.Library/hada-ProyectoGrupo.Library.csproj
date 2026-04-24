@@ -49,6 +49,7 @@
     <Compile Include="CAD\CADTorneo.cs" />
     <Compile Include="CAD\CADUsuario.cs" />
     <Compile Include="CAD\CADVideojuego.cs" />
+    <Compile Include="EN\ENEquipo.cs" />
     <Compile Include="EN\ENJugador.cs" />
     <Compile Include="EN\ENNoticia.cs" />
     <Compile Include="EN\ENPartida.cs" />
@@ -57,7 +58,6 @@
     <Compile Include="EN\ENTorneo.cs" />
     <Compile Include="EN\ENUsuario.cs" />
     <Compile Include="EN\ENVideojuego.cs" />
-    <Compile Include="EN\EquipoEN.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
