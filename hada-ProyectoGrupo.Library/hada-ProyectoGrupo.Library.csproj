@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CAD\CADEquipo.cs" />
+    <Compile Include="CAD\CADInscripcion.cs" />
     <Compile Include="CAD\CADJugador.cs" />
     <Compile Include="CAD\CADNoticia.cs" />
     <Compile Include="CAD\CADPartida.cs" />
@@ -50,6 +52,7 @@
     <Compile Include="CAD\CADUsuario.cs" />
     <Compile Include="CAD\CADVideojuego.cs" />
     <Compile Include="EN\ENEquipo.cs" />
+    <Compile Include="EN\ENInscripcion.cs" />
     <Compile Include="EN\ENJugador.cs" />
     <Compile Include="EN\ENNoticia.cs" />
     <Compile Include="EN\ENPartida.cs" />
