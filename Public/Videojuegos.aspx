@@ -13,16 +13,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><asp:Label Text="Hello Kitty Island Adventure" runat="server"/></td>
-                    <td><asp:Label Text="Speedrun ANY%" runat="server"/></td>
-                    <td><asp:Label Text="+3" runat="server"/></td>
-                </tr>
-                <tr>
-                    <td><asp:Label Text="Doom 2016 RIP BOZO Edition" runat="server"/></td>
-                    <td><asp:Label Text="Speedrun Weed%" runat="server"/></td>
-                    <td><asp:Label Text="420" runat="server"/></td>
-                </tr>
+                <asp:Repeater ID="tableGenerator" runat="server">
+                    <ItemTemplate>
+                    <tr>
+                        <td><span><%# Eval("Nombre") %></span></td>
+                        <td><span><%# Eval("Tipo") %></span></td>
+                        <td><span><%# Eval("EdadMinima") %></span></td>
+                    </tr>
+                    </ItemTemplate>
+                </asp:Repeater>
             </tbody>
         </table>
     </div>
