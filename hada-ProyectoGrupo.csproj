@@ -77,6 +77,8 @@
     <Content Include="Default.aspx" />
     <Content Include="Public\Registro.aspx" />
     <Content Include="Public\Login.aspx" />
+    <Content Include="Public\Patrocinadores.aspx" />
+    <Content Include="Public\DetallePatrocinador.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -101,6 +103,20 @@
     </Compile>
     <Compile Include="Public\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\Patrocinadores.aspx.cs">
+      <DependentUpon>Patrocinadores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\Patrocinadores.aspx.designer.cs">
+      <DependentUpon>Patrocinadores.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\DetallePatrocinador.aspx.cs">
+      <DependentUpon>DetallePatrocinador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\DetallePatrocinador.aspx.designer.cs">
+      <DependentUpon>DetallePatrocinador.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -127,7 +143,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Admin\" />
     <Folder Include="Private\" />
   </ItemGroup>
   <PropertyGroup>
