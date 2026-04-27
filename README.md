@@ -4,20 +4,20 @@ Nombre Proyecto : Portal de Torneos de Esports
 
 Miembros : 
 
-Héctor García García (Coordinador) --> 48770607G
-Jesús Villena Gómis --> 48775415M
+HÃ©ctor GarcÃ­a GarcÃ­a (Coordinador) --> 48770607G
+JesÃºs Villena GÃ³mis --> 48775415M
 Farouk Naalamene --> Z0289003J
 Maksim Grines --> 760563479
 Carlos Alguacil Delgado --> 48722539Y
 
-Descripción : 
+DescripciÃ³n : 
 
 Hay tres tipos de usuario: visitante, jugador y administrador.
 
-Cuando te registras creas tu cuenta y tu perfil de jugador a la vez (nickname, juego favorito, rol). Una vez dentro puedes crear un equipo o unirte a uno existente, y desde ahí inscribirte en torneos.
-El administrador es un usuario especial que se crea directamente en la base de datos. Cuando alguien se registra ese campo se pone a false automáticamente, nadie puede asignarse admin desde la web. Al hacer login el sistema detecta si eres admin y te manda a un panel distinto con opciones de gestión.
+Cuando te registras creas tu cuenta y tu perfil de jugador a la vez (nickname, juego favorito, rol). Una vez dentro puedes crear un equipo o unirte a uno existente, y desde ahÃ­ inscribirte en torneos.
+El administrador es un usuario especial que se crea directamente en la base de datos. Cuando alguien se registra ese campo se pone a false automÃ¡ticamente, nadie puede asignarse admin desde la web. Al hacer login el sistema detecta si eres admin y te manda a un panel distinto con opciones de gestiÃ³n.
 
-Parte pública (sin cuenta)
+Parte pÃºblica (sin cuenta)
 
 - Ver torneos activos con imagen, videojuego, fecha y premio
 - Buscar torneos por videojuego, fecha o premio
@@ -25,7 +25,7 @@ Parte pública (sin cuenta)
 - Noticias y info general de la plataforma
 - Formulario de registro
 
-Listado EN Pública : 
+Listado EN PÃºblica : 
 
 - Torneo
 - Videojuego
@@ -46,7 +46,7 @@ Listado EN Privada - Jugador :
 
 - Jugador
 - Equipo
-- Inscripción
+- InscripciÃ³n
 - Torneo
 - Partida
 - Usuario
@@ -55,7 +55,7 @@ Parte privada - Administrador (panel separado)
 
 - Gestionar torneos, videojuegos y premios
 - Gestionar patrocinadores y noticias
-- Panel de informes (participación, torneos más populares...)
+- Panel de informes (participaciÃ³n, torneos mÃ¡s populares...)
 
 Listado EN Privada - Administrador : 
 
@@ -64,7 +64,7 @@ Listado EN Privada - Administrador :
 - Premio
 - Patrocinador
 - Noticia
-- Inscripción
+- InscripciÃ³n
 - Panel de Informes(todas las entidades para generar estadisticas)
 
 Entidades (2 por alumno, somos 5) : 
@@ -74,7 +74,7 @@ Entidades (2 por alumno, somos 5) :
 - Equipo
 - Torneo
 - Videojuego
-- Inscripción
+- InscripciÃ³n
 - Partida
 - Premio
 - Patrocinador
@@ -83,7 +83,30 @@ Entidades (2 por alumno, somos 5) :
 
 Posibles Mejoras : 
 
-- Mejora de Monetización como la creación de diferentes suscripciones para acceder a los torneos , sistemas de patrocinios de torneos y pagos con diferentes tipos de moneda.
-- Mejora de Funcionalidad : Sistemas de notificaciones para los Jugadores y generación automatica de emparejamientos .
-- Mejora Tecnica : Exportación de Informe , logotipos personalizados de equipos y conexion a APIs para verificar perfiles.
+- Mejora de MonetizaciÃ³n como la creaciÃ³n de diferentes suscripciones para acceder a los torneos , sistemas de patrocinios de torneos y pagos con diferentes tipos de moneda.
+- Mejora de Funcionalidad : Sistemas de notificaciones para los Jugadores y generaciÃ³n automatica de emparejamientos .
+- Mejora Tecnica : ExportaciÃ³n de Informe , logotipos personalizados de equipos y conexion a APIs para verificar perfiles.
+
+
+######################
+Notas del profesor
+######################
+* No os falta en la parte publica ver los patrocinadores?
+* Habeis considerado las un perfil adicional de cuenta de patrocinador para crear torneos y establecer los premios y el coste de apuntarse?
+* Para mayor moetizacion y potencial de interes, habeis pensado en aÃ±adir lista de videojuegos de interes para votaciones?
+* Metricas de monetizacion como por ejemplo: torneos mÃ¡s populares por inscripciones, equipos registrados por mes, patrocinadores con mayor actividad...*
+
+#####################################################
+SEGUNDA ENTREGA :  Entrega esquema de la BB.DD
+
+NOMBRE DE FICHERO Y UBICACIÃ“N
+
+FICHERO : Esquema_EERR.pdf
+
+UBICACIÃ“N : /Esquema_EERR.pdf
+
+
+
+
+
 
