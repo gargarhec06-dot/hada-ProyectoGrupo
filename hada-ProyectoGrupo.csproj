@@ -70,6 +70,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Admin\GestionPatrocinadores.aspx" />
     <Content Include="App_Data\Database.mdf" />
     <Content Include="App_Data\Database_log.ldf">
       <DependentUpon>Database.mdf</DependentUpon>
@@ -77,9 +78,17 @@
     <Content Include="Default.aspx" />
     <Content Include="Public\Registro.aspx" />
     <Content Include="Public\Login.aspx" />
+    <Content Include="Public\Patrocinadores.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\GestionPatrocinadores.aspx.cs">
+      <DependentUpon>GestionPatrocinadores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\GestionPatrocinadores.aspx.designer.cs">
+      <DependentUpon>GestionPatrocinadores.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -101,6 +110,13 @@
     </Compile>
     <Compile Include="Public\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\Patrocinadores.aspx.cs">
+      <DependentUpon>Patrocinadores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\Patrocinadores.aspx.designer.cs">
+      <DependentUpon>Patrocinadores.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -127,7 +143,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Admin\" />
     <Folder Include="Private\" />
   </ItemGroup>
   <PropertyGroup>
