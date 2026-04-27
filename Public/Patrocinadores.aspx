@@ -8,15 +8,18 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h2>Patrocinadores</h2>
 
-    <asp:GridView ID="gvPatrocinadores" runat="server" AutoGenerateColumns="false">
-        <Columns>
-            <asp:BoundField DataField="Nombre" HeaderText="Nombre"/>
-            <asp:BoundField DataField="Email" HeaderText="Email"/>
-            <asp:BoundField DataField="PaginaWeb" HeaderText="Página Web"/>
-            <asp:BoundField DataField="Activo" HeaderText="Activo"/>
-            <asp:HyperLinkField HeaderText="Detalle" Text="Ver detalle"
-                DataNavigateUrlFields="IdPatrocinador"
-                DataNavigateUrlFormatString="~/Public/DetallePatrocinador.aspx?id={0}"/>
-        </Columns>
-    </asp:GridView>
+    <asp:Repeater ID="rptPatrocinadores" runat="server">
+        <ItemTemplate>
+            <div>
+                <h3><%# Eval("Nombre") %></h3>
+                <p>Email: <%# Eval("Email") %></p>
+                <p>Web: <a href='<%# Eval("PaginaWeb") %>'><%# Eval("PaginaWeb") %></a></p>
+                <p>Estado: <%# (bool)Eval("Activo") ? "Activo" : "Inactivo" %></p>
+                <asp:HyperLink runat="server" 
+                    NavigateUrl='<%# "~/Public/DetallePatrocinador.aspx?id=" + Eval("IdPatrocinador") %>'
+                    Text="Ver detalle"/>
+                <hr/>
+            </div>
+        </ItemTemplate>
+    </asp:Repeater>
 </asp:Content>
