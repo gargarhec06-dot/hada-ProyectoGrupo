@@ -27,7 +27,7 @@ namespace hada_ProyectoGrupo.Public
             string is_admin = Request.QueryString["admin"];
             if (is_admin != null)
             {
-                
+                DebugLabel.Text = "Admin detected";
             }
         }
     }

@@ -16,7 +16,7 @@
                 <asp:Repeater ID="tableGenerator" runat="server">
                     <ItemTemplate>
                     <tr>
-                        <td><span><%# Eval("Nombre") %></span></td>
+                        <td><a href="Videojuego.aspx?codigo=<%# Eval("Codigo")%>"><%# Eval("Nombre") %></a></td>
                         <td><span><%# Eval("Tipo") %></span></td>
                         <td><span><%# Eval("EdadMinima") %></span></td>
                     </tr>
