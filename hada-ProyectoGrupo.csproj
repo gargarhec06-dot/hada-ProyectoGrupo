@@ -71,6 +71,7 @@
     <Content Include="Public\Login.aspx" />
     <Content Include="Public\Patrocinadores.aspx" />
     <Content Include="Public\Registro.aspx" />
+    <Content Include="Public\Videojuego.aspx" />
     <Content Include="Public\Videojuegos.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -103,6 +104,13 @@
     </Compile>
     <Compile Include="Public\Registro.aspx.designer.cs">
       <DependentUpon>Registro.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\Videojuego.aspx.cs">
+      <DependentUpon>Videojuego.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\Videojuego.aspx.designer.cs">
+      <DependentUpon>Videojuego.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\Videojuegos.aspx.cs">
       <DependentUpon>Videojuegos.aspx</DependentUpon>

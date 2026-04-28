@@ -15,16 +15,16 @@ namespace hada_ProyectoGrupo.Public
             List<ENVideojuego> listado_demo = new List<ENVideojuego>();
 
             listado_demo.Add(new ENVideojuego(0, "Hello Kitty Island Adventure", "ninguna", "Speedrun", 3));
-            listado_demo.Add(new ENVideojuego(0, "Quake", "ninguna", "Speedrun", 18));
-            listado_demo.Add(new ENVideojuego(0, "Quake", "ninguna", "Shooter", 18));
-            listado_demo.Add(new ENVideojuego(0, "Schedule1", "ninguna", "Speedrun", 21));
-            listado_demo.Add(new ENVideojuego(0, "Mario64", "ninguna", "Speedrun", 3));
-            listado_demo.Add(new ENVideojuego(0, "Call of Duty", "ninguna", "Shooter", 18));
-            listado_demo.Add(new ENVideojuego(0, "Fortnite", "ninguna", "Shooter", 12));
-            listado_demo.Add(new ENVideojuego(0, "Counter Strike 2", "ninguna", "Shooter", 18));
-            listado_demo.Add(new ENVideojuego(0, "League Of Lengends", "ninguna", "Moba", 12));
-            listado_demo.Add(new ENVideojuego(0, "Rivals of Ather 2", "ninguna", "Fighthing", 12));
-            listado_demo.Add(new ENVideojuego(0, "Super Smash Brothers Ultimate", "ninguna", "Fighting", 12));
+            listado_demo.Add(new ENVideojuego(1, "Quake", "ninguna", "Speedrun", 18));
+            listado_demo.Add(new ENVideojuego(2, "Quake", "ninguna", "Shooter", 18));
+            listado_demo.Add(new ENVideojuego(3, "Schedule 1", "ninguna", "Speedrun", 21));
+            listado_demo.Add(new ENVideojuego(4, "Mario64", "ninguna", "Speedrun", 3));
+            listado_demo.Add(new ENVideojuego(5, "Call of Duty", "ninguna", "Shooter", 18));
+            listado_demo.Add(new ENVideojuego(6, "Fortnite", "ninguna", "Shooter", 12));
+            listado_demo.Add(new ENVideojuego(7, "Counter Strike 2", "ninguna", "Shooter", 18));
+            listado_demo.Add(new ENVideojuego(8, "League Of Lengends", "ninguna", "Moba", 12));
+            listado_demo.Add(new ENVideojuego(9, "Rivals of Ather 2", "ninguna", "Fighthing", 12));
+            listado_demo.Add(new ENVideojuego(10, "Super Smash Brothers Ultimate", "ninguna", "Fighting", 12));
 
             tableGenerator.DataSource = listado_demo;
             tableGenerator.DataBind();
