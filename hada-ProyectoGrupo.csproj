@@ -76,6 +76,8 @@
     </Content>
     <Content Include="Default.aspx" />
     <Content Include="Private\GestionPatrocinador.aspx" />
+    <Content Include="Public\DetallesEquipo.aspx" />
+    <Content Include="Public\Equipos.aspx" />
     <Content Include="Public\Registro.aspx" />
     <Content Include="Public\Login.aspx" />
     <Content Include="Public\Patrocinadores.aspx" />
@@ -98,6 +100,20 @@
       <DependentUpon>GestionPatrocinador.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Public\DetallesEquipo.aspx.cs">
+      <DependentUpon>DetallesEquipo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\DetallesEquipo.aspx.designer.cs">
+      <DependentUpon>DetallesEquipo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\Equipos.aspx.cs">
+      <DependentUpon>Equipos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\Equipos.aspx.designer.cs">
+      <DependentUpon>Equipos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Public\Registro.aspx.cs">
       <DependentUpon>Registro.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
