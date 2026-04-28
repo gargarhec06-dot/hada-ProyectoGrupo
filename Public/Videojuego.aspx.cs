@@ -12,6 +12,8 @@ namespace hada_ProyectoGrupo.Public
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Se debe de obtener el videojuego en un futuro con esta variable
+            string code = Request.QueryString["codigo"];
 
             ENVideojuego videojuego = new ENVideojuego(9, "Rivals of Ather 2", "Juego de lucha plataformero modero con luchadores inspirandose en elementos. Normalmente jugado en modalidad 1v1, 3 stocks, 8 minutos.", "Fighting", 12);
 
@@ -20,6 +22,13 @@ namespace hada_ProyectoGrupo.Public
             DescripcionLabel.Text = videojuego.Descripcion;
             TipoLabel.Text = videojuego.Tipo;
             EdadMinimaLabel.Text = videojuego.EdadMinima.ToString();
+
+            // Para observar el panel de admin
+            string is_admin = Request.QueryString["admin"];
+            if (is_admin != null)
+            {
+                
+            }
         }
     }
 }
