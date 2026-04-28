@@ -27,7 +27,27 @@ namespace hada_ProyectoGrupo.Public
             string is_admin = Request.QueryString["admin"];
             if (is_admin != null)
             {
-                DebugLabel.Text = "Admin detected";
+                DebugLabel.Text = "Admin detectado";
+
+                NombreAdminBox.Text = NombreLabel.Text;
+                CodigoAdminBox.Text = CodigoLabel.Text;
+                DescripcionAdminBox.Text = DescripcionLabel.Text;
+                TipoAdminBox.Text = TipoLabel.Text;
+                EdadMinimaAdminBox.Text = EdadMinimaLabel.Text;
+            }
+            // Quitar Visible elimina por completo el html client side.
+            // Notese que no tengo claras las implicaciones de seguridad, pero eso debería ser solventable con una verificación de cookie.
+            else
+            {
+                NombreAdminBox.Visible = false;
+                CodigoAdminBox.Visible = false;
+                DescripcionAdminBox.Visible = false;
+                TipoAdminBox.Visible = false;
+                EdadMinimaAdminBox.Visible = false;
+
+                AdminDelete.Visible = false;
+                AdminUpdate.Visible = false;
+                AdminAdd.Visible = false;
             }
         }
     }
