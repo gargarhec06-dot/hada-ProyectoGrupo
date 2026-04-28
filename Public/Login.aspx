@@ -2,10 +2,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h2>Login de Usuario</h2>
+    <h2 class="d-flex flex-column justify-contents-center align-items-center text-center">Login de Usuario</h2>
 
-    <div>
-        <div>
+    <div class="d-flex flex-column justify-contents-center align-items-center text-center w-100">
+        <div class="">
             <asp:Label ID="EmailLabel" Text="Email: " runat="server"/>
             <asp:TextBox ID="EmailBox" TextMode="Email" runat="server" />
         </div>
@@ -15,7 +15,7 @@
             <asp:TextBox ID="PasswordBox" TextMode="Password" runat="server" />
         </div>
         <br/>
-        <div>
+        <div class="d-flex flex-column justify-contents-center align-items-center text-center w-100">
             <asp:Button Text="Log in" runat="server" Width="100px" ID="LogInButton" OnClick="LogInButton_Click"/>
             <asp:Label Text="" runat="server" ID="LogInError"/>
         </div>
