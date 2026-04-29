@@ -69,6 +69,7 @@
   <ItemGroup>
     <Content Include="Default.aspx" />
     <Content Include="Private\GestionPatrocinador.aspx" />
+    <Content Include="Private\Jugador.aspx" />
     <Content Include="Public\DetallePatrocinador.aspx" />
     <Content Include="Public\DetallesEquipo.aspx" />
     <Content Include="Public\Equipos.aspx" />
@@ -93,6 +94,13 @@
     </Compile>
     <Compile Include="Private\GestionPatrocinador.aspx.designer.cs">
       <DependentUpon>GestionPatrocinador.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Private\Jugador.aspx.cs">
+      <DependentUpon>Jugador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Private\Jugador.aspx.designer.cs">
+      <DependentUpon>Jugador.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Public\DetallePatrocinador.aspx.cs">
