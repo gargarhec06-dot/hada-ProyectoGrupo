@@ -24,10 +24,12 @@
                 <asp:MenuItem Text="Jugadores" NavigateUrl="~/Public/Jugadores.aspx"/>
             </Items>
         </asp:Menu>
+       
         <div class="container-fluid">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         </div>
+         <div style="background-image: url('Fondo/Fondo.png'); background-size: cover; background-position: center; min-height: 100vh;"></div>
     </form>
 </body>
 </html>
