@@ -11,106 +11,133 @@ namespace hada_ProyectoGrupo.Public
 {
 
 
-    public partial class DetallePatrocinador
+    public partial class Videojuego
     {
 
         /// <summary>
-        /// Control lblNombre.
+        /// Control NombreLabel.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNombre;
+        protected global::System.Web.UI.WebControls.Label NombreLabel;
 
         /// <summary>
-        /// Control lblEmail.
+        /// Control NombreAdminBox.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblEmail;
+        protected global::System.Web.UI.WebControls.TextBox NombreAdminBox;
 
         /// <summary>
-        /// Control hlWeb.
+        /// Control CodigoLabel.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink hlWeb;
+        protected global::System.Web.UI.WebControls.Label CodigoLabel;
 
         /// <summary>
-        /// Control lblInicioContrato.
+        /// Control CodigoAdminBox.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblInicioContrato;
+        protected global::System.Web.UI.WebControls.TextBox CodigoAdminBox;
 
         /// <summary>
-        /// Control lblFinContrato.
+        /// Control TipoLabel.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFinContrato;
+        protected global::System.Web.UI.WebControls.Label TipoLabel;
 
         /// <summary>
-        /// Control lblActivo.
+        /// Control TipoAdminBox.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblActivo;
+        protected global::System.Web.UI.WebControls.TextBox TipoAdminBox;
 
         /// <summary>
-        /// Control rptTorneos.
+        /// Control DescripcionLabel.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptTorneos;
+        protected global::System.Web.UI.WebControls.Label DescripcionLabel;
 
         /// <summary>
-        /// Control btnVolver.
+        /// Control DescripcionAdminBox.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnVolver;
+        protected global::System.Web.UI.WebControls.TextBox DescripcionAdminBox;
 
         /// <summary>
-        /// Control pnlAdmin.
+        /// Control EdadMinimaLabel.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlAdmin;
+        protected global::System.Web.UI.WebControls.Label EdadMinimaLabel;
 
         /// <summary>
-        /// Control btnEditar.
+        /// Control EdadMinimaAdminBox.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEditar;
+        protected global::System.Web.UI.WebControls.TextBox EdadMinimaAdminBox;
 
         /// <summary>
-        /// Control btnEliminar.
+        /// Control DebugLabel.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEliminar;
+        protected global::System.Web.UI.WebControls.Label DebugLabel;
+
+        /// <summary>
+        /// Control AdminUpdate.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button AdminUpdate;
+
+        /// <summary>
+        /// Control AdminDelete.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button AdminDelete;
+
+        /// <summary>
+        /// Control AdminAdd.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button AdminAdd;
     }
 }
