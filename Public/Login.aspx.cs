@@ -40,6 +40,10 @@ namespace hada_ProyectoGrupo.Public
             {
                 LogInError.Text = "Accedido correctamente, bienvenido " + en_usuario.Nombre;
                 LogInError.ForeColor = Color.Green;
+                Session["EsAdmin"] = en_usuario.Verificado;
+
+                
+
             }
             else
             {
