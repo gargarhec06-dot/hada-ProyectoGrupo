@@ -18,10 +18,14 @@ namespace hada_ProyectoGrupo.Public
                 {
                     int id = int.Parse(Request.QueryString["id"]);
                     CargarEquipo(id);
+                    if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == false)
+                    {
+                        pnlJugador.Visible = true;
+                    }
                 }
                 else
                 {
-                    Response.Redirect("~/Public/Patrocinadores.aspx");
+                    Response.Redirect("~/Public/Equipos.aspx");
                 }
             }
         }
@@ -45,6 +49,21 @@ namespace hada_ProyectoGrupo.Public
         }
 
         protected void btnVolver_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Public/Equipos.aspx");
+        }
+
+        protected void btnCrear_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Public/Equipos.aspx");
+        }
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Public/Equipos.aspx");
+        }
+
+        protected void btnModificar_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Public/Equipos.aspx");
         }

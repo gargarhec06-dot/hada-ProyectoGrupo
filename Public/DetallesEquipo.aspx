@@ -22,5 +22,10 @@
 
  <asp:Button ID="btnVolver" runat="server" Text="Volver" 
      OnClick="btnVolver_Click" CssClass="btn btn-secondary" />
+           <asp:Panel ID="pnlJugador" runat="server" Visible="false" style="margin-top: 20px;">
+    <asp:Button ID="btnCrear" runat="server" Text="CREAR" OnClick="btnCrear_Click" CssClass="btn btn-success" />
+     <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" OnClick="btnEliminar_Click" CssClass="btn btn-success" />
+     <asp:Button ID="btnModificar" runat="server" Text="Modificar" OnClick="btnModificar_Click" CssClass="btn btn-success" />
+</asp:Panel>
 
 </asp:Content>

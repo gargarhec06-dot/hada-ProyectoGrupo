@@ -15,7 +15,7 @@ namespace hada_ProyectoGrupo.Public
             if (!IsPostBack)
             {
                 CargarEquipos();
-                if (Session["EsJugador"] != null && (bool)Session["EsJugador"] == false)
+                if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == false)
                 {
                     pnlJugador.Visible = true;
                 }
@@ -36,7 +36,7 @@ namespace hada_ProyectoGrupo.Public
         protected void btnCrear_Click(object sender, EventArgs e)
         {
             //Falta por implementar base de datos
-            Response.Redirect("~/Public/Equipos.aspx");
+            Response.Redirect("~/Public/DetallesEquipo.aspx");
         }
     }
 }

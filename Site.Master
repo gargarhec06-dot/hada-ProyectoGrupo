@@ -21,6 +21,7 @@
                 <asp:MenuItem Text="Patrocinadores" NavigateUrl="~/Public/Patrocinadores.aspx"/>
                 <asp:MenuItem Text="Registro" NavigateUrl="~/Public/Registro.aspx"/>
                 <asp:MenuItem Text="Login" NavigateUrl="~/Public/Login.aspx"/>
+                <asp:MenuItem Text="Jugadores" NavigateUrl="~/Public/Jugadores.aspx"/>
             </Items>
         </asp:Menu>
         <div class="container-fluid">
