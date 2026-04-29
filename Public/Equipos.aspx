@@ -2,18 +2,19 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-        <h2>Equipos</h2>
+    <div style=" padding:10px; text-align:center; "><h2>Equipos</h2></div>   
 
+   <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
     <asp:Repeater ID="rptEquipos" runat="server">
         <ItemTemplate>
-            <div>
+            <div style="border:1px solid #ccc; padding:10px; text-align:center;">
                 <h3><%# Eval("Nombre") %></h3>
                 <img src='<%# Eval("Logo_url") %>' alt="Logo" width="100" />
                 <asp:HyperLink runat="server" 
                     NavigateUrl='<%# "~/Public/DetallesEquipo.aspx?id=" + Eval("Id_equipo") %>'
                     Text="Ver detalle"/>
-                <hr/>
             </div>
         </ItemTemplate>
     </asp:Repeater>
+</div>
 </asp:Content>
