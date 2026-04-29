@@ -33,15 +33,6 @@ namespace hada_ProyectoGrupo.Public
         protected global::System.Web.UI.WebControls.Label lblFecha;
 
         /// <summary>
-        /// Control hlLogo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink hlLogo;
-
-        /// <summary>
         /// Control lblDescripción.
         /// </summary>
         /// <remarks>
@@ -58,6 +49,15 @@ namespace hada_ProyectoGrupo.Public
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblCapitan;
+
+        /// <summary>
+        /// Control imgLogo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgLogo;
 
         /// <summary>
         /// Control btnVolver.

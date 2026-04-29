@@ -4,31 +4,23 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h2>Detalle del Equipo</h2>
 
-<div>
-    <asp:Label runat="server" Text="Nombre: "/>
-    <asp:Label ID="lblNombre" runat="server"/>
+<div style="display:flex; align-items:flex-start; gap:40px;">
+    <div>
+        <p><strong>Nombre :</strong> <asp:Label ID="lblNombre" runat="server"/></p>
+
+        <p><strong>Fecha de Creación :</strong> <asp:Label ID="lblFecha" runat="server"/></p>
+
+        <p><strong>Descripción :</strong> <asp:Label ID="lblDescripción" runat="server"/></p>
+
+        <p><strong>ID Capitán :</strong> <asp:Label ID="lblCapitan" runat="server"/></p>
+    </div>
+    <div>
+        <asp:Image ID="imgLogo" runat="server" Width="200px" />
+    </div>
+
 </div>
 
-<div>
-    <asp:Label runat="server" Text="Fecha de creación : "/>
-    <asp:Label ID="lblFecha" runat="server"/>
-</div>
+ <asp:Button ID="btnVolver" runat="server" Text="Volver" 
+     OnClick="btnVolver_Click" CssClass="btn btn-secondary" />
 
-<div>
-    <asp:Label runat="server" Text="Logo : "/>
-    <asp:HyperLink ID="hlLogo" runat="server"/>
-</div>
-
-<div>
-    <asp:Label runat="server" Text="Descripción: "/>
-    <asp:Label ID="lblDescripción" runat="server"/>
-</div>
-
-<div>
-    <asp:Label runat="server" Text="ID Capitán: "/>
-    <asp:Label ID="lblCapitan" runat="server"/>
-</div>
-
-<asp:Button ID="btnVolver" runat="server" Text="Volver" 
-    OnClick="btnVolver_Click"/>
 </asp:Content>

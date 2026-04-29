@@ -15,6 +15,10 @@ namespace hada_ProyectoGrupo.Public
             if (!IsPostBack)
             {
                 CargarEquipos();
+                if (Session["EsJugador"] != null && (bool)Session["EsJugador"] == false)
+                {
+                    pnlJugador.Visible = true;
+                }
             }
         }
         public void CargarEquipos()
@@ -27,6 +31,12 @@ namespace hada_ProyectoGrupo.Public
             };
             rptEquipos.DataSource = lista;
             rptEquipos.DataBind();
+        }
+
+        protected void btnCrear_Click(object sender, EventArgs e)
+        {
+            //Falta por implementar base de datos
+            Response.Redirect("~/Public/Equipos.aspx");
         }
     }
 }

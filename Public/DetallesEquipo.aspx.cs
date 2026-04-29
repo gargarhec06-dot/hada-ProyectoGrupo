@@ -33,7 +33,7 @@ namespace hada_ProyectoGrupo.Public
             p.Id_equipo = id;
             p.Nombre = "Equipo ejemplo";
             p.Fecha_creacion = DateTime.Now;
-            p.Logo_url = "https://en.wikipedia.org/wiki/FaZe_Clan";
+            p.Logo_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/TSM_Logo.svg/500px-TSM_Logo.svg.png";
             p.Descripcion = "Especializado en shooters";
             p.Id_capitan = id;
 
@@ -41,7 +41,7 @@ namespace hada_ProyectoGrupo.Public
             lblFecha.Text = p.Fecha_creacion.ToShortDateString();
             lblDescripción.Text = p.Descripcion;
             lblCapitan.Text = p.Id_capitan.ToString();
-            hlLogo.Text = p.Logo_url;
+            imgLogo.ImageUrl = p.Logo_url;
         }
 
         protected void btnVolver_Click(object sender, EventArgs e)
