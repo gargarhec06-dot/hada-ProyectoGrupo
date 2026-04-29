@@ -1,0 +1,54 @@
+﻿using hada_ProyectoGrupo.Library.EN;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace hada_ProyectoGrupo.Public
+{
+    public partial class Videojuego : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            // Se debe de obtener el videojuego en un futuro con esta variable
+            string code = Request.QueryString["codigo"];
+
+            ENVideojuego videojuego = new ENVideojuego(9, "Rivals of Ather 2", "Juego de lucha plataformero modero con luchadores inspirandose en elementos. Normalmente jugado en modalidad 1v1, 3 stocks, 8 minutos.", "Fighting", 12);
+
+            NombreLabel.Text = videojuego.Nombre;
+            CodigoLabel.Text = videojuego.Codigo.ToString();
+            DescripcionLabel.Text = videojuego.Descripcion;
+            TipoLabel.Text = videojuego.Tipo;
+            EdadMinimaLabel.Text = videojuego.EdadMinima.ToString();
+
+            // Para observar el panel de admin
+            string is_admin = Request.QueryString["admin"];
+            if (is_admin != null)
+            {
+                DebugLabel.Text = "Admin detectado";
+
+                NombreAdminBox.Text = NombreLabel.Text;
+                CodigoAdminBox.Text = CodigoLabel.Text;
+                DescripcionAdminBox.Text = DescripcionLabel.Text;
+                TipoAdminBox.Text = TipoLabel.Text;
+                EdadMinimaAdminBox.Text = EdadMinimaLabel.Text;
+            }
+            // Quitar Visible elimina por completo el html client side.
+            // Notese que no tengo claras las implicaciones de seguridad, pero eso debería ser solventable con una verificación de cookie.
+            else
+            {
+                NombreAdminBox.Visible = false;
+                CodigoAdminBox.Visible = false;
+                DescripcionAdminBox.Visible = false;
+                TipoAdminBox.Visible = false;
+                EdadMinimaAdminBox.Visible = false;
+
+                AdminDelete.Visible = false;
+                AdminUpdate.Visible = false;
+                AdminAdd.Visible = false;
+            }
+        }
+    }
+}

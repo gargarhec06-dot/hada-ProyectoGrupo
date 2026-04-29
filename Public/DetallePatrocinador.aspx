@@ -9,35 +9,50 @@
     <h2>Detalle del Patrocinador</h2>
 
     <div>
-        <asp:Label runat="server" Text="Nombre: "/>
-        <asp:Label ID="lblNombre" runat="server"/>
+        <p><strong>Nombre:</strong> <asp:Label ID="lblNombre" runat="server"/></p>
+        <p><strong>Email:</strong> <asp:Label ID="lblEmail" runat="server"/></p>
+        <p><strong>Página Web:</strong> <asp:HyperLink ID="hlWeb" runat="server"/></p>
+        <p><strong>Inicio Contrato:</strong> <asp:Label ID="lblInicioContrato" runat="server"/></p>
+        <p><strong>Fin Contrato:</strong> <asp:Label ID="lblFinContrato" runat="server"/></p>
+        <p><strong>Estado:</strong> <asp:Label ID="lblActivo" runat="server"/></p>
     </div>
 
-    <div>
-        <asp:Label runat="server" Text="Email: "/>
-        <asp:Label ID="lblEmail" runat="server"/>
-    </div>
 
-    <div>
-        <asp:Label runat="server" Text="Página Web: "/>
-        <asp:HyperLink ID="hlWeb" runat="server"/>
-    </div>
+    <h3>Torneos patrocinados</h3>
+    <asp:Repeater ID="rptTorneos" runat="server">
+        <HeaderTemplate>
+            <table>
+                <tr>
+                    <th>Torneo</th>
+                    <th>Cantidad aportada</th>
+                </tr>
+        </HeaderTemplate>
+        <ItemTemplate>
+                <tr>
+                    <td><%# Eval("NombreTorneo") %></td>
+                    <td><%# Eval("Cantidad") %> €</td>
+                </tr>
+        </ItemTemplate>
+        <FooterTemplate>
+            </table>
+        </FooterTemplate>
+    </asp:Repeater>
 
-    <div>
-        <asp:Label runat="server" Text="Inicio Contrato: "/>
-        <asp:Label ID="lblInicioContrato" runat="server"/>
-    </div>
+        <!-- el boton de volver siempre está visible pero el de editar u eliminar solo este cuando haya sesión iniciada con cuenta de administrador -->
 
-    <div>
-        <asp:Label runat="server" Text="Fin Contrato: "/>
-        <asp:Label ID="lblFinContrato" runat="server"/>
-    </div>
-
-    <div>
-        <asp:Label runat="server" Text="Estado: "/>
-        <asp:Label ID="lblActivo" runat="server"/>
-    </div>
+<div style="margin-top: 20px;">
 
     <asp:Button ID="btnVolver" runat="server" Text="Volver" 
-        OnClick="btnVolver_Click"/>
+        OnClick="btnVolver_Click" CssClass="btn btn-secondary" />
+
+
+    <asp:Panel ID="pnlAdmin" runat="server" Visible="false" style="display: inline-block; margin-left: 0px;">
+        <asp:Button ID="btnEditar" runat="server" Text=" Editar" 
+            OnClick="btnEditar_Click" CssClass="btn btn-primary" />
+        <asp:Button ID="btnEliminar" runat="server" Text=" Eliminar" 
+            OnClick="btnEliminar_Click" 
+            OnClientClick="return confirm('¿Estás seguro de eliminar este patrocinador?');"
+            CssClass="btn btn-danger" />
+    </asp:Panel>
+</div>
 </asp:Content>
