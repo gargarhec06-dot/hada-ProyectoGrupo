@@ -32,7 +32,7 @@ namespace hada_ProyectoGrupo.Public
 
         protected void btnCrear_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Public/Equipos.aspx");
+            Response.Redirect("~/Private/Jugador.aspx");
         }
     }
 }
