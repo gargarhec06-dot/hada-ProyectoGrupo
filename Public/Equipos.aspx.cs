@@ -36,7 +36,7 @@ namespace hada_ProyectoGrupo.Public
         protected void btnCrear_Click(object sender, EventArgs e)
         {
             //Falta por implementar base de datos
-            Response.Redirect("~/Public/DetallesEquipo.aspx");
+            Response.Redirect("~/Public/DetallesEquipo.aspx?id=1");
         }
     }
 }
