@@ -17,6 +17,7 @@
                 <asp:MenuItem Text="Inicio" NavigateUrl="~/Default.aspx"/>
                 <asp:MenuItem Text="Torneos" NavigateUrl="~/Public/Torneos.aspx"/>
                 <asp:MenuItem Text="Equipos" NavigateUrl="~/Public/Equipos.aspx"/>
+                 <asp:MenuItem Text="VideoJuegos" NavigateUrl="~/Public/VideoJuegos.aspx"/>
                 <asp:MenuItem Text="Noticias" NavigateUrl="~/Public/Noticias.aspx"/>
                 <asp:MenuItem Text="Patrocinadores" NavigateUrl="~/Public/Patrocinadores.aspx"/>
                 <asp:MenuItem Text="Registro" NavigateUrl="~/Public/Registro.aspx"/>
