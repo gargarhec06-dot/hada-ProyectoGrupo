@@ -72,11 +72,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Default.aspx" />
+    <Content Include="Fondo\Fondo.png" />
     <Content Include="Private\GestionPatrocinador.aspx" />
+    <Content Include="Private\Jugador.aspx" />
     <Content Include="Private\PerfilUsuario.aspx" />
     <Content Include="Public\DetallePatrocinador.aspx" />
     <Content Include="Public\DetallesEquipo.aspx" />
     <Content Include="Public\Equipos.aspx" />
+    <Content Include="Public\Jugadores.aspx" />
     <Content Include="Public\Login.aspx" />
     <Content Include="Public\Patrocinadores.aspx" />
     <Content Include="Public\Registro.aspx" />
@@ -100,6 +103,13 @@
     </Compile>
     <Compile Include="Private\GestionPatrocinador.aspx.designer.cs">
       <DependentUpon>GestionPatrocinador.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Private\Jugador.aspx.cs">
+      <DependentUpon>Jugador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Private\Jugador.aspx.designer.cs">
+      <DependentUpon>Jugador.aspx</DependentUpon>
     </Compile>
     <Compile Include="Private\PerfilUsuario.aspx.cs">
       <DependentUpon>PerfilUsuario.aspx</DependentUpon>
@@ -128,6 +138,13 @@
     </Compile>
     <Compile Include="Public\Equipos.aspx.designer.cs">
       <DependentUpon>Equipos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\Jugadores.aspx.cs">
+      <DependentUpon>Jugadores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\Jugadores.aspx.designer.cs">
+      <DependentUpon>Jugadores.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>

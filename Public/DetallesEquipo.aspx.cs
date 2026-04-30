@@ -18,10 +18,14 @@ namespace hada_ProyectoGrupo.Public
                 {
                     int id = int.Parse(Request.QueryString["id"]);
                     CargarEquipo(id);
+                    if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == false)
+                    {
+                        pnlJugador.Visible = true;
+                    }
                 }
                 else
                 {
-                    Response.Redirect("~/Public/Patrocinadores.aspx");
+                    Response.Redirect("~/Public/Equipos.aspx");
                 }
             }
         }
@@ -33,7 +37,7 @@ namespace hada_ProyectoGrupo.Public
             p.Id_equipo = id;
             p.Nombre = "Equipo ejemplo";
             p.Fecha_creacion = DateTime.Now;
-            p.Logo_url = "https://en.wikipedia.org/wiki/FaZe_Clan";
+            p.Logo_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/TSM_Logo.svg/500px-TSM_Logo.svg.png";
             p.Descripcion = "Especializado en shooters";
             p.Id_capitan = id;
 
@@ -41,10 +45,25 @@ namespace hada_ProyectoGrupo.Public
             lblFecha.Text = p.Fecha_creacion.ToShortDateString();
             lblDescripción.Text = p.Descripcion;
             lblCapitan.Text = p.Id_capitan.ToString();
-            hlLogo.Text = p.Logo_url;
+            imgLogo.ImageUrl = p.Logo_url;
         }
 
         protected void btnVolver_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Public/Equipos.aspx");
+        }
+
+        protected void btnCrear_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Public/Equipos.aspx");
+        }
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Public/Equipos.aspx");
+        }
+
+        protected void btnModificar_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Public/Equipos.aspx");
         }

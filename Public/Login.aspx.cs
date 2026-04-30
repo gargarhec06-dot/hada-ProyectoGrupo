@@ -40,6 +40,11 @@ namespace hada_ProyectoGrupo.Public
             {
                 LogInError.Text = "Accedido correctamente, bienvenido " + en_usuario.Nombre;
                 LogInError.ForeColor = Color.Green;
+                Session["EsAdmin"] = en_usuario.Verificado;
+                Session["Email"] = en_usuario.Email;
+                Session["Nombre"] = en_usuario.Nombre;
+                Response.Redirect("Default.aspx");
+
             }
             else
             {

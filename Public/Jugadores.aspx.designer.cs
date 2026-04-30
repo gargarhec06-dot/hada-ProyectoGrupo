@@ -11,17 +11,17 @@ namespace hada_ProyectoGrupo.Public
 {
 
 
-    public partial class Equipos
+    public partial class Jugadores
     {
 
         /// <summary>
-        /// Control rptEquipos.
+        /// Control rptJugadores.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptEquipos;
+        protected global::System.Web.UI.WebControls.Repeater rptJugadores;
 
         /// <summary>
         /// Control pnlJugador.
