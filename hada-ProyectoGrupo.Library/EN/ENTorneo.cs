@@ -16,42 +16,54 @@ namespace hada_ProyectoGrupo.Library.EN
         private string _descripcion;
         private bool _profesional;
         private float _costeOrganizacion;
-        
-        public ENTorneo() 
+        private DateTime _fecha;
+        private List<ENPremio> _premios;  
+
+        public ENTorneo()
         {
             _codigo = 0;
             _id_videojuego = 0;
             _precioInscripcion = 0.0f;
-            _nombre= string.Empty;
-            _descripcion= string.Empty;
-            _profesional= false;
+            _nombre = string.Empty;
+            _descripcion = string.Empty;
+            _profesional = false;
             _costeOrganizacion = 0.0f;
+            _fecha = DateTime.MinValue;
+            _premios = new List<ENPremio>();
         }
-        public ENTorneo(int codigo, int id_videojuego,float precioInscripcion, string nombre, string descripcion, bool profesional, float costeOrganizacion)
+
+        public ENTorneo(int codigo, int id_videojuego, float precioInscripcion, string nombre,
+            string descripcion, bool profesional, float costeOrganizacion, DateTime fecha)
         {
             _codigo = codigo;
-            _id_videojuego= id_videojuego;
+            _id_videojuego = id_videojuego;
             _precioInscripcion = precioInscripcion;
             _nombre = nombre;
             _descripcion = descripcion;
             _profesional = profesional;
             _costeOrganizacion = costeOrganizacion;
+            _fecha = fecha;
+            _premios = new List<ENPremio>();
         }
 
-        //Para los parametros obligatorios
-        public ENTorneo(int codigo, int id_videojuego, float precioInscripcion, string nombre, bool profesional, float costeOrganizacion)
+        // Para los parámetros obligatorios
+        public ENTorneo(int codigo, int id_videojuego, float precioInscripcion,
+            string nombre, bool profesional, float costeOrganizacion)
         {
-             _codigo = codigo;
-            _id_videojuego= id_videojuego;
+            _codigo = codigo;
+            _id_videojuego = id_videojuego;
             _precioInscripcion = precioInscripcion;
             _nombre = nombre;
             _descripcion = "";
             _profesional = profesional;
             _costeOrganizacion = costeOrganizacion;
+            _fecha = DateTime.MinValue;
+            _premios = new List<ENPremio>();
         }
 
-        //Para solo lo obligatorio
-        public ENTorneo(int codigo, float precioInscripcion, string nombre, bool profesional, float costeOrganizacion)
+        // Para solo lo obligatorio
+        public ENTorneo(int codigo, float precioInscripcion, string nombre,
+            bool profesional, float costeOrganizacion)
         {
             _codigo = codigo;
             _precioInscripcion = precioInscripcion;
@@ -59,56 +71,74 @@ namespace hada_ProyectoGrupo.Library.EN
             _descripcion = string.Empty;
             _profesional = profesional;
             _costeOrganizacion = costeOrganizacion;
+            _fecha = DateTime.MinValue;
+            _premios = new List<ENPremio>();
         }
+
+        // ── Propiedades ──────────────────────────────────────────
+
         public int Codigo
         {
             get { return _codigo; }
             set { _codigo = value; }
         }
+        public int IdVideojuego
+        {
+            get { return _id_videojuego; }
+            set { _id_videojuego = value; }
+        }
         public float PrecioInscripcion
         {
             get { return _precioInscripcion; }
-            set { _precioInscripcion= value; }
+            set { _precioInscripcion = value; }
         }
-
         public string Nombre
         {
-            get{ return _nombre; }
+            get { return _nombre; }
             set { _nombre = value; }
         }
         public string Descripcion
         {
             get { return _descripcion; }
-            set{ _descripcion= value; }
+            set { _descripcion = value; }
         }
         public bool Profesional
         {
-            get { return _profesional;}
+            get { return _profesional; }
             set { _profesional = value; }
         }
         public float CosteOrganizacion
         {
-            get { return _costeOrganizacion;}
-            set { _costeOrganizacion = value;}
+            get { return _costeOrganizacion; }
+            set { _costeOrganizacion = value; }
         }
+        public DateTime Fecha
+        {
+            get { return _fecha; }
+            set { _fecha = value; }
+        }
+        public List<ENPremio> Premios
+        {
+            get { return _premios; }
+            set { _premios = value; }
+        }
+
+
         public bool Create()
         {
             CADTorneo cad = new CADTorneo();
             return cad.Create(this);
         }
-
         public bool Read()
         {
             CADTorneo cad = new CADTorneo();
             return cad.Read(this);
         }
-
         public bool Update()
         {
             CADTorneo cad = new CADTorneo();
             return cad.Update(this);
         }
-
         public bool Delete()
         {
             CADTorneo cad = new CADTorneo();
@@ -118,6 +148,13 @@ namespace hada_ProyectoGrupo.Library.EN
         {
             CADTorneo cad = new CADTorneo();
             return cad.ReadAll();
+        }
+
+        public void CargarPremios()
+        {
+            ENPremio enPremio = new ENPremio();
+            List<ENPremio> todos = enPremio.ReadAll();
+            _premios = todos.Where(p => p.Torneo == _codigo).ToList();
         }
     }
 }

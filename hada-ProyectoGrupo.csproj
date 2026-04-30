@@ -73,6 +73,7 @@
   <ItemGroup>
     <Content Include="Default.aspx" />
     <Content Include="Private\GestionPatrocinador.aspx" />
+    <Content Include="Private\PerfilUsuario.aspx" />
     <Content Include="Public\DetallePatrocinador.aspx" />
     <Content Include="Public\DetallesEquipo.aspx" />
     <Content Include="Public\Equipos.aspx" />
@@ -81,6 +82,8 @@
     <Content Include="Public\Registro.aspx" />
     <Content Include="Public\Videojuego.aspx" />
     <Content Include="Public\Videojuegos.aspx" />
+    <Content Include="Public\Torneos.aspx" />
+    <Content Include="Public\DetalleTorneo.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +100,13 @@
     </Compile>
     <Compile Include="Private\GestionPatrocinador.aspx.designer.cs">
       <DependentUpon>GestionPatrocinador.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Private\PerfilUsuario.aspx.cs">
+      <DependentUpon>PerfilUsuario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Private\PerfilUsuario.aspx.designer.cs">
+      <DependentUpon>PerfilUsuario.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Public\DetallePatrocinador.aspx.cs">
@@ -154,12 +164,19 @@
     <Compile Include="Public\Videojuegos.aspx.designer.cs">
       <DependentUpon>Videojuegos.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Public\Torneo.aspx.cs">
-      <DependentUpon>Torneo.aspx</DependentUpon>
+    <Compile Include="Public\Torneos.aspx.cs">
+      <DependentUpon>Torneos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Public\Torneo.aspx.designer.cs">
-      <DependentUpon>Torneo.aspx</DependentUpon>
+    <Compile Include="Public\Torneos.aspx.designer.cs">
+      <DependentUpon>Torneos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\DetalleTorneo.aspx.cs">
+      <DependentUpon>DetalleTorneo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\DetalleTorneo.aspx.designer.cs">
+      <DependentUpon>DetalleTorneo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
