@@ -26,6 +26,7 @@
     <asp:Button ID="btnCrear" runat="server" Text="CREAR" OnClick="btnCrear_Click" CssClass="btn btn-success" />
      <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" OnClick="btnEliminar_Click" CssClass="btn btn-success" />
      <asp:Button ID="btnModificar" runat="server" Text="Modificar" OnClick="btnModificar_Click" CssClass="btn btn-success" />
+    <asp:Button ID="ButtonUnirse" runat="server" Text="Unirse" OnClick="btnUnirse_Click" CssClass="btn btn-success" />
 </asp:Panel>
 
 </asp:Content>
