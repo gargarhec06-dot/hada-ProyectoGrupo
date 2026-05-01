@@ -17,7 +17,8 @@ namespace hada_ProyectoGrupo.Library.EN
         private bool _profesional;
         private float _costeOrganizacion;
         private DateTime _fecha;
-        private List<ENPremio> _premios;  
+        private List<ENPremio> _premios;
+        private string _ubicacion;
 
         public ENTorneo()
         {
@@ -30,10 +31,11 @@ namespace hada_ProyectoGrupo.Library.EN
             _costeOrganizacion = 0.0f;
             _fecha = DateTime.MinValue;
             _premios = new List<ENPremio>();
+            _ubicacion = string.Empty;
         }
 
         public ENTorneo(int codigo, int id_videojuego, float precioInscripcion, string nombre,
-            string descripcion, bool profesional, float costeOrganizacion, DateTime fecha)
+            string descripcion, bool profesional, float costeOrganizacion, DateTime fecha, string ubicacion)
         {
             _codigo = codigo;
             _id_videojuego = id_videojuego;
@@ -44,11 +46,12 @@ namespace hada_ProyectoGrupo.Library.EN
             _costeOrganizacion = costeOrganizacion;
             _fecha = fecha;
             _premios = new List<ENPremio>();
+            _ubicacion = ubicacion;
         }
 
         // Para los parámetros obligatorios
         public ENTorneo(int codigo, int id_videojuego, float precioInscripcion,
-            string nombre, bool profesional, float costeOrganizacion)
+            string nombre, bool profesional, float costeOrganizacion,string  ubicacion)
         {
             _codigo = codigo;
             _id_videojuego = id_videojuego;
@@ -59,11 +62,12 @@ namespace hada_ProyectoGrupo.Library.EN
             _costeOrganizacion = costeOrganizacion;
             _fecha = DateTime.MinValue;
             _premios = new List<ENPremio>();
+            _ubicacion = ubicacion;
         }
 
         // Para solo lo obligatorio
         public ENTorneo(int codigo, float precioInscripcion, string nombre,
-            bool profesional, float costeOrganizacion)
+            bool profesional, float costeOrganizacion, string ubicacion)
         {
             _codigo = codigo;
             _precioInscripcion = precioInscripcion;
@@ -73,6 +77,7 @@ namespace hada_ProyectoGrupo.Library.EN
             _costeOrganizacion = costeOrganizacion;
             _fecha = DateTime.MinValue;
             _premios = new List<ENPremio>();
+            _ubicacion = ubicacion;
         }
 
         // ── Propiedades ──────────────────────────────────────────
@@ -123,6 +128,11 @@ namespace hada_ProyectoGrupo.Library.EN
             set { _premios = value; }
         }
 
+        public string Ubicacion
+        {
+            get { return _ubicacion; }
+            set { _ubicacion = value; }
+        }
 
         public bool Create()
         {

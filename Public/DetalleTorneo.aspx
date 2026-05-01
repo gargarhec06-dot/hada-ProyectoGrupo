@@ -37,6 +37,10 @@
                                     <th> Descripción</th>
                                     <td><asp:Label ID="lblDescripcion" runat="server" /></td>
                                 </tr>
+                                <tr>
+                                <th>Ubicacion</th>
+                                <td><asp:Label ID="lblUbicacion" runat="server" /></td>
+                            </tr>
                             </table>
                         </div>
                         <div class="col-md-6">

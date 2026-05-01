@@ -40,6 +40,7 @@ namespace hada_ProyectoGrupo.Public
             lblProfesional.Text = t.Profesional ? " Profesional" : " Amateur";
             lblDescripcion.Text = string.IsNullOrEmpty(t.Descripcion)
                                             ? "Sin descripción" : t.Descripcion;
+            lblUbicacion.Text = string.IsNullOrEmpty(t.Ubicacion) ? "Sin ubicacion" : t.Ubicacion;
             lblPrecioInscripcion.Text = $"{t.PrecioInscripcion:F2} €";
             lblCosteOrganizacion.Text = $"{t.CosteOrganizacion:F2} €";
 

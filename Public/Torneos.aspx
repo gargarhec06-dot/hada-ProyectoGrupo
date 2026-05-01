@@ -14,15 +14,16 @@
                                 <%# Eval("Nombre") %>
                             </h5>
                             <p class="card-text small text-muted">
-                                 Fecha: <%# Eval("Fecha", "{0:dd/MM/yyyy}") %><br />  
-                                 Nivel: <%# (bool)Eval("Profesional") ? "Profesional" : "Amateur" %><br />
-                                 Inscripción: <%# Eval("PrecioInscripcion") %>€
+                                Fecha: <%# Eval("Fecha", "{0:dd/MM/yyyy}") %><br />  
+                                Nivel: <%# (bool)Eval("Profesional") ? "Profesional" : "Amateur" %><br />
+                                Inscripción: <%# Eval("PrecioInscripcion") %>€<br />
+                                Ubicacion: <%# Eval("Ubicacion") %>
                             </p>
                         </div>
                         <div class="card-footer bg-transparent border-top-0">
                             <asp:HyperLink runat="server" 
                                 NavigateUrl='<%# "~/Public/DetalleTorneo.aspx?codigo=" + Eval("Codigo") %>'
-                                Text="Ver Detalles" CssClass="btn btn-outline-primary btn-sm w-100" />
+                                Text="Ver detalles" CssClass="btn btn-outline-primary btn-sm w-100" />
                         </div>
                     </div>
                 </div>
