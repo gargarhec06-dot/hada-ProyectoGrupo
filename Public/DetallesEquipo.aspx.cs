@@ -67,5 +67,10 @@ namespace hada_ProyectoGrupo.Public
         {
             Response.Redirect("~/Public/Equipos.aspx");
         }
+
+        protected void btnUnirse_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Public/Equipos.aspx");
+        }
     }
 }
