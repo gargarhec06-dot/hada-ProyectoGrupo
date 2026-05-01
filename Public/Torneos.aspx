@@ -14,9 +14,9 @@
                                 <%# Eval("Nombre") %>
                             </h5>
                             <p class="card-text small text-muted">
-                                📅 Fecha: <%# Eval("Fecha", "{0:dd/MM/yyyy}") %><br />
-                                🏅 Nivel: <%# (bool)Eval("Profesional") ? "Profesional" : "Amateur" %><br />
-                                💰 Inscripción: <%# Eval("PrecioInscripcion") %>€
+                                 Fecha: <%# Eval("Fecha", "{0:dd/MM/yyyy}") %><br />  
+                                 Nivel: <%# (bool)Eval("Profesional") ? "Profesional" : "Amateur" %><br />
+                                 Inscripción: <%# Eval("PrecioInscripcion") %>€
                             </p>
                         </div>
                         <div class="card-footer bg-transparent border-top-0">

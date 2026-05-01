@@ -25,23 +25,8 @@ namespace hada_ProyectoGrupo.Public
 
         private void CargarTorneos()
         {
-            //ENTorneo en = new ENTorneo();
-            //List<ENTorneo> lista = en.ReadAll(); 
-
-            List<ENTorneo> lista = new List<ENTorneo>
-            {
-                new ENTorneo(101, 1, 20.0f, "Valorant Cup 2026",
-                    "Torneo élite de estrategia.", true, 800.0f,
-                    DateTime.Now.AddDays(10)),
-
-                new ENTorneo(102, 2, 5.0f, "FIFA championship",
-                    "Torneo abierto para todos.", false, 150.0f,
-                    DateTime.Now.AddDays(25)),
-
-                new ENTorneo(103, 1, 10.0f, "Torneo Invitacional",
-                    "Solo jugadores invitados.", true, 400.0f,
-                    DateTime.Now.AddDays(40))
-            };
+            ENTorneo en = new ENTorneo();
+            List<ENTorneo> lista = en.ReadAll(); // en la siguiente entrega en vez de leer datos que se han puesto manualmente lo hará desde la base de datos.
 
             rptTorneos.DataSource = lista;
             rptTorneos.DataBind();

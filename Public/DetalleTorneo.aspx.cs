@@ -16,18 +16,15 @@ namespace hada_ProyectoGrupo.Public
             {
                 if (int.TryParse(Request.QueryString["codigo"], out int codigo))
                 {
-                    // Usamos el constructor y Read() igual que el patrón EN→CAD
-                    ENTorneo en = new ENTorneo();
-                    en.Codigo = codigo;
+                    // Usamos ReadAll() y filtramos, igual que en Torneos.aspx
+                    ENTorneo enTemp = new ENTorneo();
+                    List<ENTorneo> lista = enTemp.ReadAll();
+                    ENTorneo en = lista.FirstOrDefault(t => t.Codigo == codigo);
 
-                    if (en.Read()) // CADTorneo.Read() rellena el objeto con los datos
-                    {
+                    if (en != null)
                         MostrarTorneo(en);
-                    }
                     else
-                    {
                         MostrarError();
-                    }
                 }
                 else
                 {
@@ -40,7 +37,7 @@ namespace hada_ProyectoGrupo.Public
         {
             lblNombre.Text = t.Nombre;
             lblCodigo.Text = t.Codigo.ToString();
-            lblProfesional.Text = t.Profesional ? "🏆 Profesional" : "🎮 Amateur";
+            lblProfesional.Text = t.Profesional ? " Profesional" : " Amateur";
             lblDescripcion.Text = string.IsNullOrEmpty(t.Descripcion)
                                             ? "Sin descripción" : t.Descripcion;
             lblPrecioInscripcion.Text = $"{t.PrecioInscripcion:F2} €";
@@ -54,6 +51,13 @@ namespace hada_ProyectoGrupo.Public
         {
             pnlDetalle.Visible = false;
             pnlError.Visible = true;
+        }
+
+
+        // Este método se implementará cuando se tenga acceso a la base de datos (siguiente entrega)
+        protected void btnInscribirse_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
