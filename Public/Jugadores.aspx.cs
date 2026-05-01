@@ -13,6 +13,10 @@ namespace hada_ProyectoGrupo.Public
         protected void Page_Load(object sender, EventArgs e)
         {
             CargarJugadores();
+            if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == false)
+            {
+                pnlJugador.Visible = true;
+            }
         }
 
         public void CargarJugadores()
