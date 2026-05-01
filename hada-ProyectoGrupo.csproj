@@ -74,6 +74,7 @@
     <Content Include="Default.aspx" />
     <Content Include="Fondo\Fondo.png" />
     <Content Include="Private\GestionPatrocinador.aspx" />
+    <Content Include="Private\GestionTorneo.aspx" />
     <Content Include="Private\Jugador.aspx" />
     <Content Include="Private\PerfilUsuario.aspx" />
     <Content Include="Public\DetallePatrocinador.aspx" />
@@ -105,6 +106,13 @@
     </Compile>
     <Compile Include="Private\GestionPatrocinador.aspx.designer.cs">
       <DependentUpon>GestionPatrocinador.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Private\GestionTorneo.aspx.cs">
+      <DependentUpon>GestionTorneo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Private\GestionTorneo.aspx.designer.cs">
+      <DependentUpon>GestionTorneo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Private\Jugador.aspx.cs">
       <DependentUpon>Jugador.aspx</DependentUpon>
