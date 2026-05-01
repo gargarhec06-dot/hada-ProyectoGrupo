@@ -43,7 +43,7 @@ namespace hada_ProyectoGrupo.Public
                 Session["EsAdmin"] = en_usuario.Verificado;
                 Session["Email"] = en_usuario.Email;
                 Session["Nombre"] = en_usuario.Nombre;
-                Response.Redirect("Default.aspx");
+                Response.Redirect("~/Default.aspx");
 
             }
             else
