@@ -23,6 +23,7 @@
                  <asp:MenuItem Text="Jugadores" NavigateUrl="~/Public/Jugadores.aspx"/>
                 <asp:MenuItem Text="Registro" NavigateUrl="~/Public/Registro.aspx"/>
                 <asp:MenuItem Text="Login" NavigateUrl="~/Public/Login.aspx"/>
+                <asp:MenuItem Text="Mi Perfil" NavigateUrl="~/private/PerfilUsuario.aspx"/>
             </Items>
         </asp:Menu>
        
