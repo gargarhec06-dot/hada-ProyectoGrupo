@@ -6,24 +6,7 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h2>Mis Jugadores</h2>
-
-    <%-- Lista de jugadores existentes --%>
-    <asp:Repeater ID="rptJugadores" runat="server">
-        <ItemTemplate>
-            <div>
-                <p><strong>Apodo:</strong> <%# Eval("Apodo") %></p>
-                <p><strong>Rol:</strong> <%# Eval("Rol_principal") %></p>
-                <p><strong>Nivel:</strong> <%# Eval("Nivel") %></p>
-                <p><strong>Buscando equipo:</strong> <%# (bool)Eval("Buscando_equipo") ? "Sí" : "No" %></p>
-                <asp:Button runat="server" Text="Seleccionar" CommandArgument='<%# Eval("Codigo") %>'
-                    OnCommand="btnSeleccionar_Command"/>
-                <asp:Button runat="server" Text="Eliminar" CommandArgument='<%# Eval("Codigo") %>'
-                    OnCommand="btnEliminar_Command"/>
-                <hr/>
-            </div>
-        </ItemTemplate>
-    </asp:Repeater>
+    
 
     <%-- Formulario para crear nuevo jugador --%>
     <h3>Crear nuevo jugador</h3>

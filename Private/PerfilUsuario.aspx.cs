@@ -11,7 +11,37 @@ namespace hada_ProyectoGrupo.Private
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Verificar sesión
+            if (Session["Email"] == null)
+            {
+                Response.Redirect("~/Public/Login.aspx");
+                return;
+            }
 
+            if (!IsPostBack)
+            {
+                // Cargar datos del usuario desde la sesión
+                // lblNombre.Text = Session["Nombre"]?.ToString();
+                // lblEmail.Text = Session["Email"]?.ToString();
+            }
+        }
+
+        protected void btnMisJugadores_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Private/Jugador.aspx");
+        }
+
+        protected void btnEditarPerfil_Click(object sender, EventArgs e)
+        {
+            // TODO: Redirigir a página de edición de perfil
+            Response.Redirect("~/Private/EditarPerfil.aspx");
+        }
+
+        protected void btnCerrarSesion_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Session.Abandon();
+            Response.Redirect("~/Public/Login.aspx");
         }
     }
 }
