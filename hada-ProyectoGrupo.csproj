@@ -87,6 +87,8 @@
     <Content Include="Public\Videojuegos.aspx" />
     <Content Include="Public\Torneos.aspx" />
     <Content Include="Public\DetalleTorneo.aspx" />
+    <Content Include="Public\Noticias.aspx" />
+    <Content Include="Public\DetallesNoticia.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -194,6 +196,20 @@
     </Compile>
     <Compile Include="Public\DetalleTorneo.aspx.designer.cs">
       <DependentUpon>DetalleTorneo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\Noticias.aspx.cs">
+      <DependentUpon>Noticias.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\Noticias.aspx.designer.cs">
+      <DependentUpon>Noticias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\DetallesNoticia.aspx.cs">
+      <DependentUpon>DetallesNoticia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\DetallesNoticia.aspx.designer.cs">
+      <DependentUpon>DetallesNoticia.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
