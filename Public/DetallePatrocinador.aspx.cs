@@ -75,7 +75,7 @@ namespace hada_ProyectoGrupo.Public
 
         protected void btnEditar_Click(object sender, EventArgs e)
         {
-            //Response.Redirect($"~/Private/GestionPatrocinador.aspx?id={idPatrocinador}"); para editar el patrocinador se debe tener la BD primero 
+            // Response.Redirect($"~/Private/EditarPatrocinador.aspx?id={idPatrocinador}"); para editar el patrocinador se debe tener la BD primero 
         }
 
         protected void btnEliminar_Click(object sender, EventArgs e)

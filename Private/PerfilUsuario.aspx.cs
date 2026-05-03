@@ -12,11 +12,7 @@ namespace hada_ProyectoGrupo.Private
         protected void Page_Load(object sender, EventArgs e)
         {
             // Verificar sesión
-            if (Session["Email"] == null)
-            {
-                Response.Redirect("~/Public/Login.aspx");
-                return;
-            }
+
 
             if (!IsPostBack)
             {
@@ -28,7 +24,7 @@ namespace hada_ProyectoGrupo.Private
 
         protected void btnMisJugadores_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Private/Jugador.aspx");
+            Response.Redirect("~/Public/Jugadores.aspx");
         }
 
         protected void btnEditarPerfil_Click(object sender, EventArgs e)
