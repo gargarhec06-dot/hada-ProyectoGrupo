@@ -13,7 +13,7 @@ namespace hada_ProyectoGrupo.Library.CAD
 
         public CADTorneo()
         {
-            s = ConfigurationManager.ConnectionStrings["miconexion"].ToString();
+            s = ConfigurationManager.ConnectionStrings["HadaEsports"].ToString();
         }
 
         public bool Create(ENTorneo en)
