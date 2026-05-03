@@ -16,6 +16,7 @@ namespace hada_ProyectoGrupo.Library.EN
         private DateTime _inicioContrato;
         private DateTime _finContrato;
         private bool _activo;
+        private int telefono;
 
         public ENPatrocinador()
         {
@@ -26,9 +27,10 @@ namespace hada_ProyectoGrupo.Library.EN
             _inicioContrato = DateTime.Now;
             _finContrato = DateTime.Now;
             _activo = true;
+            
         }
 
-        public ENPatrocinador(int idPatrocinador, string nombre, string email, string paginaWeb, DateTime inicioContrato, DateTime finContrato, bool activo)
+        public ENPatrocinador(int idPatrocinador, string nombre, string email, string paginaWeb, DateTime inicioContrato, DateTime finContrato, bool activo,int telefono)
         {
             _idPatrocinador = idPatrocinador;
             _nombre = nombre;
@@ -37,10 +39,11 @@ namespace hada_ProyectoGrupo.Library.EN
             _inicioContrato = inicioContrato;
             _finContrato = finContrato;
             _activo = activo;
+            this.telefono = telefono;
         }
 
         // Constructor para los parámetros obligatorios
-        public ENPatrocinador(string nombre, string email, DateTime inicioContrato, DateTime finContrato)
+        public ENPatrocinador(string nombre, string email, DateTime inicioContrato, DateTime finContrato, int telefono)
         {
             _nombre = nombre;
             _email = email;
@@ -48,6 +51,7 @@ namespace hada_ProyectoGrupo.Library.EN
             _finContrato = finContrato;
             _activo = true;
             _paginaWeb = "";
+            this.telefono = telefono;
         }
 
         public int IdPatrocinador
@@ -66,6 +70,12 @@ namespace hada_ProyectoGrupo.Library.EN
         {
             get { return _email; }
             set { _email = value; }
+        }
+
+        public int Telefono
+        {
+            get { return telefono; }
+            set { telefono = value; }
         }
 
         public string PaginaWeb
