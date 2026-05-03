@@ -20,9 +20,9 @@
                  <asp:MenuItem Text="VideoJuegos" NavigateUrl="~/Public/VideoJuegos.aspx"/>
                 <asp:MenuItem Text="Noticias" NavigateUrl="~/Public/Noticias.aspx"/>
                 <asp:MenuItem Text="Patrocinadores" NavigateUrl="~/Public/Patrocinadores.aspx"/>
+                 <asp:MenuItem Text="Jugadores" NavigateUrl="~/Public/Jugadores.aspx"/>
                 <asp:MenuItem Text="Registro" NavigateUrl="~/Public/Registro.aspx"/>
                 <asp:MenuItem Text="Login" NavigateUrl="~/Public/Login.aspx"/>
-                <asp:MenuItem Text="Jugadores" NavigateUrl="~/Public/Jugadores.aspx"/>
             </Items>
         </asp:Menu>
        
