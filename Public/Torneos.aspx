@@ -2,7 +2,11 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h2 class="mb-4">Próximos Torneos</h2>
+    <h2 class="mb-4">Torneos disponibles</h2>
+
+    <asp:Panel ID="pnlTorneo" runat="server" Visible="false" style="margin-top: 20px;">
+        <asp:Button ID="Button1" runat="server" Text="CREAR NUEVO TORNEO" OnClick="btnCrear_Click" CssClass="btn btn-success" />
+    </asp:Panel>
 
     <div class="row">
         <asp:Repeater ID="rptTorneos" runat="server">

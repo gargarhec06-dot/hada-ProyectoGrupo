@@ -26,16 +26,24 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-
-                string sql = "SELECT COUNT(*) FROM [Usuario] WHERE email = @email AND password = @pass";
-
+                string sql = "SELECT nombre, apellidos, fecha_nacimiento, pais, saldo_cartera, verificado " +
+                             "FROM [Usuario] WHERE email = @email AND password = @pass";
                 SqlCommand com = new SqlCommand(sql, c);
                 com.Parameters.AddWithValue("@email", en.Email);
                 com.Parameters.AddWithValue("@pass", en.Password);
-
-                int count = Convert.ToInt32(com.ExecuteScalar()); 
-
-                if (count == 1) ok = true; 
+                SqlDataReader reader = com.ExecuteReader();
+                if (reader.Read())
+                {
+                    // Rellena el objeto con los datos de la BD
+                    en.Nombre = reader["nombre"].ToString();
+                    en.Apellidos = reader["apellidos"] == DBNull.Value ? "" : reader["apellidos"].ToString();
+                    en.Fecha_Nacimiento = Convert.ToDateTime(reader["fecha_nacimiento"]);
+                    en.Pais = reader["pais"] == DBNull.Value ? "" : reader["pais"].ToString();
+                    en.Saldo_cartera = reader["saldo_cartera"] == DBNull.Value ? 0 : Convert.ToSingle(reader["saldo_cartera"]);
+                    en.Verificado = Convert.ToBoolean(reader["verificado"]);
+                    ok = true;
+                }
+                reader.Close();
             }
             catch (Exception ex)
             {
@@ -43,7 +51,6 @@ namespace hada_ProyectoGrupo.Library.CAD
                 Console.WriteLine("User operation has failed. Error: {0}", ex.Message);
             }
             finally { c.Close(); }
-
             return ok;
         }
 
