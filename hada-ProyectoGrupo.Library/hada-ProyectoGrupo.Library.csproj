@@ -61,6 +61,7 @@
     <Compile Include="EN\ENPatrocinador.cs" />
     <Compile Include="EN\ENPremio.cs" />
     <Compile Include="EN\ENTorneo.cs" />
+    <Compile Include="EN\ENTorneoPatrocinador.cs" />
     <Compile Include="EN\ENUsuario.cs" />
     <Compile Include="EN\ENVideojuego.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

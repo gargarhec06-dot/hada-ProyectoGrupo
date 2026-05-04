@@ -16,7 +16,7 @@ namespace hada_ProyectoGrupo.Library.EN
         private DateTime _inicioContrato;
         private DateTime _finContrato;
         private bool _activo;
-        private int telefono;
+        private string _telefono;
 
         public ENPatrocinador()
         {
@@ -27,10 +27,10 @@ namespace hada_ProyectoGrupo.Library.EN
             _inicioContrato = DateTime.Now;
             _finContrato = DateTime.Now;
             _activo = true;
-            
+            _telefono = "";
         }
 
-        public ENPatrocinador(int idPatrocinador, string nombre, string email, string paginaWeb, DateTime inicioContrato, DateTime finContrato, bool activo,int telefono)
+        public ENPatrocinador(int idPatrocinador, string nombre, string email, string paginaWeb, DateTime inicioContrato, DateTime finContrato, bool activo,string telefono)
         {
             _idPatrocinador = idPatrocinador;
             _nombre = nombre;
@@ -39,11 +39,11 @@ namespace hada_ProyectoGrupo.Library.EN
             _inicioContrato = inicioContrato;
             _finContrato = finContrato;
             _activo = activo;
-            this.telefono = telefono;
+            _telefono = telefono;
         }
 
         // Constructor para los parámetros obligatorios
-        public ENPatrocinador(string nombre, string email, DateTime inicioContrato, DateTime finContrato, int telefono)
+        public ENPatrocinador(string nombre, string email, DateTime inicioContrato, DateTime finContrato, string telefono)
         {
             _nombre = nombre;
             _email = email;
@@ -51,7 +51,7 @@ namespace hada_ProyectoGrupo.Library.EN
             _finContrato = finContrato;
             _activo = true;
             _paginaWeb = "";
-            this.telefono = telefono;
+            _telefono = telefono;
         }
 
         public int IdPatrocinador
@@ -72,10 +72,10 @@ namespace hada_ProyectoGrupo.Library.EN
             set { _email = value; }
         }
 
-        public int Telefono
+        public string Telefono
         {
-            get { return telefono; }
-            set { telefono = value; }
+            get { return _telefono; }
+            set { _telefono = value; }
         }
 
         public string PaginaWeb
