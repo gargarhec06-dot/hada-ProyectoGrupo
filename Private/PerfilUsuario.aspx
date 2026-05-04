@@ -37,10 +37,10 @@
                     </div>
                 </div>
                 <div class="card-footer text-end">
-                    <asp:Button ID="btnEditarPerfil" runat="server" Text="Editar Perfil" 
-                      OnClick="btnEditarPerfil_Click" CssClass="btn btn-primary" />
                      <asp:Button ID="btnMisJugadores" runat="server" Text="Mis Jugadores" 
                         OnClick="btnMisJugadores_Click" CssClass="btn btn-info" />
+                    <asp:Button ID="btnEditarPerfil" runat="server" Text="Editar Perfil" 
+                      OnClick="btnEditarPerfil_Click" CssClass="btn btn-primary" />
                     <asp:Button ID="btnCerrarSesion" runat="server" Text="Cerrar Sesión" 
                      OnClick="btnCerrarSesion_Click" CssClass="btn btn-danger" />
                 </div>

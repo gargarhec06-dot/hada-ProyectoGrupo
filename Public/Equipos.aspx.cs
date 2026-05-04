@@ -27,7 +27,8 @@ namespace hada_ProyectoGrupo.Public
             {
                 new ENEquipo (1,"TSM", DateTime.Now, "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/TSM_Logo.svg/500px-TSM_Logo.svg.png" , "Especializado en shooters", 1),
                 new ENEquipo (2,"KOI", DateTime.Now, "https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/a/a5/KOI_%28Spanish_Team%29logo_square.png/revision/latest?cb=20221224091735" , "Especializado en survivals", 2),
-                new ENEquipo (3,"FAZE", DateTime.Now, "https://cdn.shopify.com/s/files/1/0667/9547/1031/files/logo6_2.png?v=1770079941" , "Especializado en speedruns", 3)
+                new ENEquipo (3,"FAZE", DateTime.Now, "https://cdn.shopify.com/s/files/1/0667/9547/1031/files/logo6_2.png?v=1770079941" , "Especializado en speedruns", 3),
+                 new ENEquipo (4,"LOL", DateTime.Now, "https://cdn.shopify.com/s/files/1/0667/9547/1031/files/logo6_2.png?v=1770079941" , "Especializado en speedruns", 4)
             };
             rptEquipos.DataSource = lista;
             rptEquipos.DataBind();

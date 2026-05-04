@@ -42,6 +42,15 @@ namespace hada_ProyectoGrupo.Private
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNombre;
 
         /// <summary>
+        /// Control txtTelefono.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTelefono;
+
+        /// <summary>
         /// Control txtEmail.
         /// </summary>
         /// <remarks>
@@ -96,13 +105,13 @@ namespace hada_ProyectoGrupo.Private
         protected global::System.Web.UI.WebControls.TextBox txtFinContrato;
 
         /// <summary>
-        /// Control chkActivo.
+        /// Control rptTorneos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkActivo;
+        protected global::System.Web.UI.WebControls.Repeater rptTorneos;
 
         /// <summary>
         /// Control btnGuardar.

@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using hada_ProyectoGrupo.Library.CAD;
 using hada_ProyectoGrupo.Library.EN;
+using System;
+using System.Collections.Generic;
 
 namespace hada_ProyectoGrupo.Public
 {
@@ -19,12 +20,8 @@ namespace hada_ProyectoGrupo.Public
 
         private void CargarPatrocinadores()
         {
-            List<ENPatrocinador> lista = new List<ENPatrocinador>
-            {
-                new ENPatrocinador { IdPatrocinador = 1, Nombre = "Red Bull", Email = "redbull@email.com", PaginaWeb = "https://www.redbull.com", InicioContrato = DateTime.Now, FinContrato = DateTime.Now.AddYears(1), Activo = true },
-                new ENPatrocinador { IdPatrocinador = 2, Nombre = "Logitech", Email = "logitech@email.com", PaginaWeb = "https://www.logitech.com", InicioContrato = DateTime.Now, FinContrato = DateTime.Now.AddYears(1), Activo = true },
-                new ENPatrocinador { IdPatrocinador = 3, Nombre = "Nvidia", Email = "nvidia@email.com", PaginaWeb = "https://www.nvidia.com", InicioContrato = DateTime.Now, FinContrato = DateTime.Now.AddMonths(6), Activo = false }
-            };
+            CADPatrocinador cad = new CADPatrocinador();
+            List<ENPatrocinador> lista = cad.ReadAll();
             rptPatrocinadores.DataSource = lista;
             rptPatrocinadores.DataBind();
         }

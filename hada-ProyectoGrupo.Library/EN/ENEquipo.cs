@@ -109,5 +109,10 @@ namespace hada_ProyectoGrupo.Library.EN
             CADEquipo cad = new CADEquipo();
             return cad.Delete(this);
         }
+        public List<ENEquipo> ReadAll()
+        {
+            CADEquipo cad = new CADEquipo();
+            return cad.ReadAll();
+        }
     }
 }
