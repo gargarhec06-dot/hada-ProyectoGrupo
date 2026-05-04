@@ -19,6 +19,7 @@ namespace hada_ProyectoGrupo.Library.EN
         private string _hardware;
         private bool _buscando_equipo;
         private int _equipo_actual;
+        private int _juego;
 
         public ENJugador()
         {
@@ -26,15 +27,16 @@ namespace hada_ProyectoGrupo.Library.EN
             _email_usuario = "";
             _apodo = "";
             _rol_principal = "";
-            _kda_promedio = 0;
-            _winrate = 0;
+            _kda_promedio = 0.0f;
+            _winrate = 0.0f;
             _nivel = 1;
             _hardware = "";
             _buscando_equipo = false;
             _equipo_actual = 0;
+            _juego = 0;
         }
 
-        public ENJugador(int codigo, string email, string apodo, string rol, float kda, float winrate, int nivel, string hardware, bool buscando, int equipo)
+        public ENJugador(int codigo, string email, string apodo, string rol, float kda, float winrate, int nivel, string hardware, bool buscando, int equipo,int juego)
         {
             _codigo = codigo;
             _email_usuario = email;
@@ -46,6 +48,7 @@ namespace hada_ProyectoGrupo.Library.EN
             _hardware = hardware;
             _buscando_equipo = buscando;
             _equipo_actual = equipo;
+            _juego = juego;
         }
 
         // Constructor para los parametro obligatorios
@@ -55,8 +58,8 @@ namespace hada_ProyectoGrupo.Library.EN
             _apodo = apodo;
             _nivel = 1; 
             _buscando_equipo = false;
-            _kda_promedio = 0;
-            _winrate = 0;
+            _kda_promedio = 0.0f;
+            _winrate = 0.0f;
         }
 
         public int Codigo
@@ -119,6 +122,12 @@ namespace hada_ProyectoGrupo.Library.EN
             set { _equipo_actual = value; }
         }
 
+        public int Juego
+        {
+            get { return _juego; }
+            set { _juego = value; }
+        }
+
         public bool Create()
         {
             CADJugador cad = new CADJugador();
@@ -142,5 +151,12 @@ namespace hada_ProyectoGrupo.Library.EN
             CADJugador cad = new CADJugador();
             return cad.Delete(this);
         }
+
+        public List<ENJugador> ReadAll()
+        {
+            CADJugador cad = new CADJugador();
+            return cad.ReadAll();
+        }
+
     }
 }
