@@ -17,8 +17,8 @@
         </ItemTemplate>
     </asp:Repeater>
 </div>
-       <asp:Panel ID="pnlJugador" runat="server" Visible="false" style="margin-top: 20px;">
-    <asp:Button ID="btnCrear" runat="server" Text="CREAR NUEVO EQUIPO" OnClick="btnCrear_Click" CssClass="btn btn-success" />
-</asp:Panel>
+    <asp:Panel ID="pnlJugador" runat="server" Visible="false" style="margin-top: 20px;">
+        <asp:Button ID="btnCrear" runat="server" Text="CREAR NUEVO EQUIPO" OnClick="btnCrear_Click" CssClass="btn btn-success" />
+    </asp:Panel>
 </asp:Content>
 
