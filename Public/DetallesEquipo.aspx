@@ -6,13 +6,11 @@
 
 <div style="display:flex; align-items:flex-start; gap:40px;">
     <div>
-        <p><strong>Nombre :</strong> <asp:Label ID="lblNombre" runat="server"/></p>
-
-        <p><strong>Fecha de Creación :</strong> <asp:Label ID="lblFecha" runat="server"/></p>
-
-        <p><strong>Descripción :</strong> <asp:Label ID="lblDescripción" runat="server"/></p>
-
-        <p><strong>ID Capitán :</strong> <asp:Label ID="lblCapitan" runat="server"/></p>
+         <p><strong>Nombre :</strong> <asp:TextBox ID="txtNombre" runat="server" /></p>
+        <p><strong>Fecha de Creación :</strong> <asp:TextBox ID="txtFecha" runat="server" /></p>
+        <p><strong>Descripción :</strong> <asp:TextBox ID="txtDescripcion" runat="server" TextMode="MultiLine" /></p>
+        <p><strong>ID Capitán :</strong> <asp:TextBox ID="txtCapitan" runat="server" /></p>
+        <p><strong>URL Logo :</strong> <asp:TextBox ID="txtLogo" runat="server" /></p>
     </div>
     <div>
         <asp:Image ID="imgLogo" runat="server" Width="200px" />
@@ -20,13 +18,14 @@
 
 </div>
 
- <asp:Button ID="btnVolver" runat="server" Text="Volver" 
-     OnClick="btnVolver_Click" CssClass="btn btn-secondary" />
+ <asp:Button ID="btnVolver" runat="server" Text="Volver" OnClick="btnVolver_Click" CssClass="btn btn-secondary" />
            <asp:Panel ID="pnlJugador" runat="server" Visible="false" style="margin-top: 20px;">
     <asp:Button ID="btnCrear" runat="server" Text="CREAR" OnClick="btnCrear_Click" CssClass="btn btn-success" />
      <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" OnClick="btnEliminar_Click" CssClass="btn btn-success" />
      <asp:Button ID="btnModificar" runat="server" Text="Modificar" OnClick="btnModificar_Click" CssClass="btn btn-success" />
     <asp:Button ID="ButtonUnirse" runat="server" Text="Unirse" OnClick="btnUnirse_Click" CssClass="btn btn-success" />
 </asp:Panel>
+
+    <asp:Label ID="lblMensaje" runat="server" ForeColor="Red" />
 
 </asp:Content>

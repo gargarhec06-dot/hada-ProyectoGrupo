@@ -47,7 +47,7 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                string query = "SELECT * FROM Equipo WHERE codigo = @id_e";
+                string query = "SELECT * FROM Equipo WHERE id_equipo = @id_e";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@id_e", en.Id_equipo);
                 SqlDataReader dr = com.ExecuteReader();
@@ -55,7 +55,7 @@ namespace hada_ProyectoGrupo.Library.CAD
                 {
                     en.Nombre = dr["nombre"].ToString();
                     en.Fecha_creacion = (DateTime)dr["fecha_creacion"];
-                    en.Logo_url = dr[" logo_url"].ToString();
+                    en.Logo_url = dr["logo_url"].ToString();
                     en.Descripcion = dr["descripcion"].ToString();
                     en.Id_capitan = (int)dr["id_capitan"];
                     ok = true;
