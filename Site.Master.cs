@@ -11,7 +11,23 @@ namespace hada_ProyectoGrupo
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            var itemLogin = Menu1.FindItem("Login");
+            var itemPerfil = Menu1.FindItem("Perfil");
+            var itemRegistro = Menu1.FindItem("Registro");
 
+            if (Session["Email"] != null)
+            {
+                if (itemLogin != null)
+                    Menu1.Items.Remove(itemLogin);
+
+                if (itemRegistro != null)
+                    Menu1.Items.Remove(itemRegistro);
+            }
+            else
+            {
+                if (itemPerfil != null)
+                    Menu1.Items.Remove(itemPerfil);
+            }
         }
     }
 }

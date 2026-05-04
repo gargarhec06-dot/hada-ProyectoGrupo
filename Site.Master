@@ -14,16 +14,16 @@
         <!-- Debería estar centrado pero .NET se carga el estilado -->
         <asp:Menu ID="Menu1" runat="server" Orientation="Horizontal" class="navbar navbar-expand-lg navbar-light bg-light navbar-toggler w-100 pt-3 pb-3 justify-content-between">
             <Items>
-                <asp:MenuItem Text="Inicio" NavigateUrl="~/Default.aspx"/>
-                <asp:MenuItem Text="Torneos" NavigateUrl="~/Public/Torneos.aspx"/>
-                <asp:MenuItem Text="Equipos" NavigateUrl="~/Public/Equipos.aspx"/>
-                 <asp:MenuItem Text="VideoJuegos" NavigateUrl="~/Public/VideoJuegos.aspx"/>
-                <asp:MenuItem Text="Noticias" NavigateUrl="~/Public/Noticias.aspx"/>
+                <asp:MenuItem Text="Inicio" NavigateUrl="~/Default.aspx" Value="Inicio"/>
+                <asp:MenuItem Text="Torneos" NavigateUrl="~/Public/Torneos.aspx" />
+                <asp:MenuItem Text="Equipos" NavigateUrl="~/Public/Equipos.aspx" />
+                 <asp:MenuItem Text="VideoJuegos" NavigateUrl="~/Public/VideoJuegos.aspx" />
+                <asp:MenuItem Text="Noticias" NavigateUrl="~/Public/Noticias.aspx" />
                 <asp:MenuItem Text="Patrocinadores" NavigateUrl="~/Public/Patrocinadores.aspx"/>
-                 <asp:MenuItem Text="Jugadores" NavigateUrl="~/Public/Jugadores.aspx"/>
-                <asp:MenuItem Text="Registro" NavigateUrl="~/Public/Registro.aspx"/>
-                <asp:MenuItem Text="Login" NavigateUrl="~/Public/Login.aspx"/>
-                <asp:MenuItem Text="Mi Perfil" NavigateUrl="~/private/PerfilUsuario.aspx"/>
+                 <asp:MenuItem Text="Jugadores" NavigateUrl="~/Public/Jugadores.aspx" />
+                <asp:MenuItem Text="Registro" NavigateUrl="~/Public/Registro.aspx" Value="Registro"/>
+                <asp:MenuItem Text="Login" NavigateUrl="~/Public/Login.aspx" Value="Login"/>
+                <asp:MenuItem Text="Mi Perfil" NavigateUrl="~/private/PerfilUsuario.aspx" Value="Perfil"/>
             </Items>
         </asp:Menu>
        
