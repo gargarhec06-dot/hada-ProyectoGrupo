@@ -79,7 +79,9 @@
     </asp:Repeater>
 
     <br/>
-    <asp:Button ID="btnGuardar" runat="server" Text="Guardar" OnClick="btnGuardar_Click"/>
-    <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" OnClick="btnCancelar_Click"/>
-    <asp:Label ID="lblMensaje" runat="server" ForeColor="Red"/>
+
+          <asp:Button ID="btnGuardar" runat="server" Text="Guardar" OnClick="btnGuardar_Click"/>
+          <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" OnClick="btnCancelar_Click"/>
+          <asp:Label ID="lblMensaje" runat="server" ForeColor="Red"/>
+    
 </asp:Content>

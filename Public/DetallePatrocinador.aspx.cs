@@ -41,6 +41,7 @@ namespace hada_ProyectoGrupo.Public
                 hlWeb.NavigateUrl = p.PaginaWeb;
                 lblInicioContrato.Text = p.InicioContrato.ToShortDateString();
                 lblFinContrato.Text = p.FinContrato.ToShortDateString();
+                lbltelefono.Text = p.Telefono;
             }
         }
 
@@ -60,7 +61,7 @@ namespace hada_ProyectoGrupo.Public
         protected void btnEditar_Click(object sender, EventArgs e)
         {
             int id = int.Parse(Request.QueryString["id"]);
-            Response.Redirect("~/Private/GestionPatrocinador.aspx?id=" + id);
+            Response.Redirect("~/Private/EditarPatrocinador.aspx?id=" + id);
         }
 
         protected void btnEliminar_Click(object sender, EventArgs e)

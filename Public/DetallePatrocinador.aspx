@@ -14,7 +14,7 @@
         <p><strong>Página Web:</strong> <asp:HyperLink ID="hlWeb" runat="server"/></p>
         <p><strong>Inicio Contrato:</strong> <asp:Label ID="lblInicioContrato" runat="server"/></p>
         <p><strong>Fin Contrato:</strong> <asp:Label ID="lblFinContrato" runat="server"/></p>
-        <p><strong>Estado:</strong> <asp:Label ID="lblActivo" runat="server"/></p>
+        <p><strong>Telefono:</strong> <asp:Label ID="lbltelefono" runat="server"/></p>
     </div>
 
 

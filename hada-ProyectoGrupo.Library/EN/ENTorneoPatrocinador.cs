@@ -10,5 +10,7 @@ namespace hada_ProyectoGrupo.Library.EN
     {
         public string NombreTorneo { get; set; }
         public decimal Cantidad { get; set; }
+
+        public int CodigoTorneo { get; set; }
     }
 }
