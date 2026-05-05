@@ -42,15 +42,6 @@ namespace hada_ProyectoGrupo.Public
         protected global::System.Web.UI.WebControls.TextBox txtDescripcion;
 
         /// <summary>
-        /// Control txtCapitan.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCapitan;
-
-        /// <summary>
         /// Control txtLogo.
         /// </summary>
         /// <remarks>
@@ -58,6 +49,24 @@ namespace hada_ProyectoGrupo.Public
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtLogo;
+
+        /// <summary>
+        /// Control hfIdCapitan.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIdCapitan;
+
+        /// <summary>
+        /// Control lblCapitanNombre.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCapitanNombre;
 
         /// <summary>
         /// Control imgLogo.
@@ -114,13 +123,13 @@ namespace hada_ProyectoGrupo.Public
         protected global::System.Web.UI.WebControls.Button btnModificar;
 
         /// <summary>
-        /// Control ButtonUnirse.
+        /// Control btnUnirse.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonUnirse;
+        protected global::System.Web.UI.WebControls.Button btnUnirse;
 
         /// <summary>
         /// Control pnlSeleccionJugador.
