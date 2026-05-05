@@ -123,6 +123,42 @@ namespace hada_ProyectoGrupo.Public
         protected global::System.Web.UI.WebControls.Button ButtonUnirse;
 
         /// <summary>
+        /// Control pnlSeleccionJugador.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlSeleccionJugador;
+
+        /// <summary>
+        /// Control ddlJugadores.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlJugadores;
+
+        /// <summary>
+        /// Control btnConfirmar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnConfirmar;
+
+        /// <summary>
+        /// Control btnCancelarSeleccion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancelarSeleccion;
+
+        /// <summary>
         /// Control lblMensaje.
         /// </summary>
         /// <remarks>

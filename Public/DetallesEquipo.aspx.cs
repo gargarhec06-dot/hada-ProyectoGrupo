@@ -1,4 +1,5 @@
-﻿using hada_ProyectoGrupo.Library.EN;
+﻿using hada_ProyectoGrupo.Library.CAD;
+using hada_ProyectoGrupo.Library.EN;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,17 @@ namespace hada_ProyectoGrupo.Public
     public partial class DetallesEquipo : System.Web.UI.Page
     {
         private ENEquipo equipo;
+        private string accionPendiente; //Lo uso para la condicion de unirse y crear
+        private int idEquipo;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 if (Request.QueryString["id"] != null)
                 {
-                    int id = int.Parse(Request.QueryString["id"]);
-                    CargarEquipo(id);
-                    if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == false)
+                    idEquipo = int.Parse(Request.QueryString["id"]);
+                    CargarEquipo(idEquipo);
+                    if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == false)//Pensandolmelo
                     {
                         pnlJugador.Visible = true;
                     }
@@ -77,37 +80,12 @@ namespace hada_ProyectoGrupo.Public
 
         protected void btnCrear_Click(object sender, EventArgs e)
         {
-            try
-            {
-                ENEquipo equipo = new ENEquipo();
-
-                equipo.Nombre = txtNombre.Text;
-                equipo.Fecha_creacion = DateTime.Now;
-                equipo.Logo_url = txtLogo.Text;
-                equipo.Descripcion = txtDescripcion.Text;
-                equipo.Id_capitan = int.Parse(txtCapitan.Text);
-
-                if (equipo.Read())
-                {
-                    lblMensaje.Text = "El equipo ya existe";
-                    lblMensaje.ForeColor = System.Drawing.Color.Green;
-                }
-                else if (equipo.Create())
-                {
-                    lblMensaje.Text = "Equipo creado correctamente";
-                    lblMensaje.ForeColor = System.Drawing.Color.Green;
-                }
-                else
-                {
-                    lblMensaje.Text = "ERROR";
-                    lblMensaje.ForeColor = System.Drawing.Color.Red;
-                }
-            }
-            catch (Exception ex)
-            {
-                lblMensaje.Text = ex.Message;
-            }
+            accionPendiente = "CREAR";
+            CargarJugadoresDisponibles();
+            pnlSeleccionJugador.Visible = true;
         }
+
+
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
@@ -208,7 +186,199 @@ namespace hada_ProyectoGrupo.Public
 
         protected void btnUnirse_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Public/Equipos.aspx");
+            accionPendiente = "UNIRSE";
+            CargarJugadoresParaUnirse(idEquipo);
+            pnlSeleccionJugador.Visible = true;
         }
+
+        private void CargarJugadoresDisponibles()
+        {
+            string emailUsuario = Session["Email"].ToString();
+
+            // Obtengo todos los jugadores del usuario
+            List<ENJugador> todosJugadores = new CADJugador().ReadAll();
+            List<ENJugador> jugadoresDisponibles = new List<ENJugador>();
+
+            foreach (ENJugador j in todosJugadores)
+            {
+                if (j.Email_usuario == emailUsuario && j.Equipo_actual == 0)
+                {
+                    jugadoresDisponibles.Add(j);
+                }
+            }
+
+            ddlJugadores.DataSource = jugadoresDisponibles;
+            ddlJugadores.DataTextField = "Apodo";
+            ddlJugadores.DataValueField = "Codigo";
+            ddlJugadores.DataBind();
+
+            if (ddlJugadores.Items.Count == 0)
+            {
+                lblMensaje.Text = "No tienes jugadores disponibles. Crea un jugador primero.";
+                lblMensaje.ForeColor = System.Drawing.Color.Red;
+                pnlSeleccionJugador.Visible = false;
+            }
+        }
+
+        private void CargarJugadoresParaUnirse(int idequipo)
+        {
+            string emailUsuario = Session["Email"].ToString();
+
+            // Obtener el equipo y su capitán
+            ENEquipo equipoActual = new ENEquipo();
+            equipoActual.Id_equipo = idequipo;
+            equipoActual.Read();
+
+            // Obtener el videojuego del capitán
+            ENJugador capitan = new ENJugador();
+            capitan.Codigo = equipoActual.Id_capitan;
+            capitan.Read();
+            int juegoCapitan = capitan.Juego;
+
+            // Obtener jugadores del usuario que no estén en equipo y jueguen el mismo juego
+            List<ENJugador> todosJugadores = new CADJugador().ReadAll();
+            List<ENJugador> jugadoresValidos = new List<ENJugador>();
+
+            foreach (ENJugador j in todosJugadores)
+            {
+                if (j.Email_usuario == emailUsuario && j.Equipo_actual == 0 && j.Juego == juegoCapitan)
+                {
+                    jugadoresValidos.Add(j);
+                }
+            }
+
+            ddlJugadores.DataSource = jugadoresValidos;
+            ddlJugadores.DataTextField = "Apodo";
+            ddlJugadores.DataValueField = "Codigo";
+            ddlJugadores.DataBind();
+
+            if (ddlJugadores.Items.Count == 0)
+            {
+                lblMensaje.Text = "No tienes jugadores disponibles que jueguen al mismo juego que el capitán.";
+                lblMensaje.ForeColor = System.Drawing.Color.Red;
+                pnlSeleccionJugador.Visible = false;
+            }
+        }
+
+        protected void btnConfirmar_Click(object sender, EventArgs e)
+        {
+            int codigoJugador = int.Parse(ddlJugadores.SelectedValue);
+
+            if (accionPendiente == "CREAR")
+            {
+                CrearEquipoConCapitan(codigoJugador);
+            }
+            else if (accionPendiente == "UNIRSE")
+            {
+                UnirseEquipo(codigoJugador, idEquipo);
+            }
+
+            pnlSeleccionJugador.Visible = false;
+        }
+        private void CrearEquipoConCapitan(int codigoCapitan)
+        {
+            try
+            {
+                ENJugador capitan = new ENJugador();
+                capitan.Codigo = codigoCapitan;
+                capitan.Read();
+
+                ENEquipo nuevoEquipo = new ENEquipo();
+                nuevoEquipo.Id_equipo = 0; // La BD lo generará automáticamente
+                nuevoEquipo.Nombre = txtNombre.Text;
+                nuevoEquipo.Fecha_creacion = DateTime.Now;
+                nuevoEquipo.Logo_url = txtLogo.Text;
+                nuevoEquipo.Descripcion = txtDescripcion.Text;
+                nuevoEquipo.Id_capitan = codigoCapitan;
+
+                if (nuevoEquipo.Create())
+                {
+                    // Obtener el equipo recién creado (por nombre y capitán)
+                    ENEquipo equipoCreado = ObtenerEquipoPorCapitan(codigoCapitan);
+
+                    if (equipoCreado != null)
+                    {
+                        // Actualizar el jugador con el equipo actual
+                        capitan.Equipo_actual = equipoCreado.Id_equipo;
+                        capitan.Update();
+
+                        lblMensaje.Text = "Equipo creado correctamente";
+                        lblMensaje.ForeColor = System.Drawing.Color.Green;
+
+                        // Redirigir al nuevo equipo
+                        Response.Redirect("~/Public/DetallesEquipo.aspx?id=" + equipoCreado.Id_equipo);
+                    }
+                    else
+                    {
+                        lblMensaje.Text = "ERROR: No se pudo obtener el ID del equipo";
+                        lblMensaje.ForeColor = System.Drawing.Color.Red;
+                    }
+                }
+                else
+                {
+                    lblMensaje.Text = "ERROR al crear el equipo";
+                    lblMensaje.ForeColor = System.Drawing.Color.Red;
+                }
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = "Error: " + ex.Message;
+                lblMensaje.ForeColor = System.Drawing.Color.Red;
+            }
+        }
+
+        private ENEquipo ObtenerEquipoPorCapitan(int codigoCapitan)
+        {
+            List<ENEquipo> equipos = new CADEquipo().ReadAll();
+            foreach (ENEquipo eq in equipos)
+            {
+                if (eq.Id_capitan == codigoCapitan)
+                {
+                    return eq;
+                }
+            }
+            return null;
+        }
+        private void UnirseEquipo(int codigoJugador, int idEquipo)
+        {
+            try
+            {
+                ENJugador jugador = new ENJugador();
+                jugador.Codigo = codigoJugador;
+                jugador.Read();
+
+                // Verificar que no esté ya en un equipo
+                if (jugador.Equipo_actual != 0)
+                {
+                    lblMensaje.Text = "Este jugador ya pertenece a un equipo";
+                    lblMensaje.ForeColor = System.Drawing.Color.Red;
+                    return;
+                }
+
+                jugador.Equipo_actual = idEquipo;
+
+                if (jugador.Update())
+                {
+                    lblMensaje.Text = "Jugador unido al equipo correctamente";
+                    lblMensaje.ForeColor = System.Drawing.Color.Green;
+                    Response.Redirect("~/Public/DetallesEquipo.aspx?id=" + idEquipo);
+                }
+                else
+                {
+                    lblMensaje.Text = "ERROR al unir el jugador al equipo";
+                    lblMensaje.ForeColor = System.Drawing.Color.Red;
+                }
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = "Error: " + ex.Message;
+                lblMensaje.ForeColor = System.Drawing.Color.Red;
+            }
+        }
+        protected void btnCancelarSeleccion_Click(object sender, EventArgs e)
+        {
+            pnlSeleccionJugador.Visible = false;
+        }
+
     }
 }

@@ -25,6 +25,17 @@
      <asp:Button ID="btnModificar" runat="server" Text="Modificar" OnClick="btnModificar_Click" CssClass="btn btn-success" />
     <asp:Button ID="ButtonUnirse" runat="server" Text="Unirse" OnClick="btnUnirse_Click" CssClass="btn btn-success" />
 </asp:Panel>
+                <asp:Panel ID="pnlSeleccionJugador" runat="server" Visible="false" style="margin-top: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 5px;">
+    <h3>Selecciona un jugador</h3>
+    <p>
+        <asp:DropDownList ID="ddlJugadores" runat="server" CssClass="form-control">
+        </asp:DropDownList>
+    </p>
+    <p>
+        <asp:Button ID="btnConfirmar" runat="server" Text="Confirmar" OnClick="btnConfirmar_Click" CssClass="btn btn-primary" />
+        <asp:Button ID="btnCancelarSeleccion" runat="server" Text="Cancelar" OnClick="btnCancelarSeleccion_Click" CssClass="btn btn-secondary" />
+    </p>
+</asp:Panel>
 
     <asp:Label ID="lblMensaje" runat="server" ForeColor="Red" />
 

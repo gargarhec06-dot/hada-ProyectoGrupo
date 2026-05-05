@@ -124,7 +124,7 @@ namespace hada_ProyectoGrupo.Library.CAD
                     en.Id_equipo = (int)dr["id_equipo"];
                     en.Nombre = dr["nombre"].ToString();
                     en.Fecha_creacion = (DateTime)dr["fecha_creacion"];
-                    en.Logo_url = dr[" logo_url"].ToString();
+                    en.Logo_url = dr["logo_url"].ToString();
                     en.Descripcion = dr["descripcion"].ToString();
                     en.Id_capitan = (int)dr["id_capitan"];
                     lista.Add(en);

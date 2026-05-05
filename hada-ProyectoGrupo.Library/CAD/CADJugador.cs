@@ -30,7 +30,7 @@ namespace hada_ProyectoGrupo.Library.CAD
                 string query = "INSERT INTO Jugador (codigo,email_usuario,apodo,winrate,nivel,hardware,buscando_equipo,equipo_actual,juego,rol,kda) VALUES (@cod,@email,@apodo,@win,@niv,@hard,@buse,@equip,@juego,@rol,@kda)";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@cod", en.Codigo);
-                com.Parameters.AddWithValue("@emal", en.Email_usuario);
+                com.Parameters.AddWithValue("@email", en.Email_usuario);
                 com.Parameters.AddWithValue("@apodo", en.Apodo);
                 com.Parameters.AddWithValue("@win", en.Winrate);
                 com.Parameters.AddWithValue("@niv", en.Nivel);
@@ -90,7 +90,7 @@ namespace hada_ProyectoGrupo.Library.CAD
                 string query = "UPDATE Jugador SET codigo=@cod ,email=@email , apodo=@apodo , winrate=@win , nivel=@niv , hardware=@hard , buscando_equipo=@buse , equipo_actual=@equip , juego=@juego , rol=@rol , kda=@kda WHERE codigo=@cod";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@cod", en.Codigo);
-                com.Parameters.AddWithValue("@emal", en.Email_usuario);
+                com.Parameters.AddWithValue("@email", en.Email_usuario);
                 com.Parameters.AddWithValue("@apodo", en.Apodo);
                 com.Parameters.AddWithValue("@win", en.Winrate);
                 com.Parameters.AddWithValue("@niv", en.Nivel);
@@ -116,7 +116,7 @@ namespace hada_ProyectoGrupo.Library.CAD
                 c.Open();
                 string query = "DELETE FROM Jugador WHERE codigo = @cod";
                 SqlCommand com = new SqlCommand(query, c);
-                com.Parameters.AddWithValue("@id_e", en.Codigo);
+                com.Parameters.AddWithValue("@cod", en.Codigo);
                 if (com.ExecuteNonQuery() > 0) ok = true;
             }
             catch (Exception) { ok = false; }
@@ -130,23 +130,24 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                string query = "SELECT * FROM Equipo";
+                string query = "SELECT * FROM Jugador";
                 SqlCommand com = new SqlCommand(query, c);
                 SqlDataReader dr = com.ExecuteReader();
                 while (dr.Read())
                 {
                     ENJugador en = new ENJugador();
-                    com.Parameters.AddWithValue("@cod", en.Codigo);
-                    com.Parameters.AddWithValue("@emal", en.Email_usuario);
-                    com.Parameters.AddWithValue("@apodo", en.Apodo);
-                    com.Parameters.AddWithValue("@win", en.Winrate);
-                    com.Parameters.AddWithValue("@niv", en.Nivel);
-                    com.Parameters.AddWithValue("@hard", en.Hardware);
-                    com.Parameters.AddWithValue("@buse", en.Buscando_equipo);
-                    com.Parameters.AddWithValue("@equip", en.Equipo_actual);
-                    com.Parameters.AddWithValue("@juego", en.Juego);
-                    com.Parameters.AddWithValue("@rol", en.Rol_principal);
-                    com.Parameters.AddWithValue("@kda", en.Kda_promedio);
+                    // Leer los valores del DataReader y asignarlos al objeto
+                    en.Codigo = (int)dr["codigo"];
+                    en.Email_usuario = dr["email_usuario"].ToString();
+                    en.Apodo = dr["apodo"].ToString();
+                    en.Winrate = (float)dr["winrate"];
+                    en.Nivel = (int)dr["Nivel"];
+                    en.Hardware = dr["hardware"].ToString();
+                    en.Buscando_equipo = (bool)dr["buscando_equipo"];
+                    en.Equipo_actual = (int)dr["equipo_actual"];
+                    en.Juego = (int)dr["Juego"];
+                    en.Rol_principal = dr["rol"].ToString();
+                    en.Kda_promedio = (float)dr["kda"];
                     lista.Add(en);
                 }
                 dr.Close();
