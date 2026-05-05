@@ -16,12 +16,18 @@ namespace hada_ProyectoGrupo.Public
         private int idEquipo;
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["Email"] == null)
+            {
+                Response.Redirect("~/Public/Login.aspx");
+                return;
+            }
             if (!IsPostBack)
             {
                 if (Request.QueryString["id"] != null)
                 {
                     idEquipo = int.Parse(Request.QueryString["id"]);
                     CargarEquipo(idEquipo);
+                    Session["EsAdmin"] = false;  // temporal para probar
                     if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == false)//Pensandolmelo
                     {
                         pnlJugador.Visible = true;
@@ -201,17 +207,29 @@ namespace hada_ProyectoGrupo.Public
         {
             string emailUsuario = Session["Email"].ToString();
 
-            // Obtengo todos los jugadores del usuario
+            // DEBUG: Mostrar el email de sesión
+            lblMensaje.Text = "Email sesión: " + emailUsuario;
+
             List<ENJugador> todosJugadores = new CADJugador().ReadAll();
+
+            // DEBUG: Mostrar cuántos jugadores hay en total
+            lblMensaje.Text += " - Total jugadores: " + todosJugadores.Count;
+
             List<ENJugador> jugadoresDisponibles = new List<ENJugador>();
 
             foreach (ENJugador j in todosJugadores)
             {
+                // DEBUG: Mostrar cada jugador
+                lblMensaje.Text += "<br/>Jugador: " + j.Email_usuario + " - Equipo: " + j.Equipo_actual;
+
                 if (j.Email_usuario == emailUsuario && j.Equipo_actual == 0)
                 {
                     jugadoresDisponibles.Add(j);
+                    lblMensaje.Text += " ✅ SELECCIONADO";
                 }
             }
+
+            lblMensaje.Text += "<br/>Jugadores disponibles: " + jugadoresDisponibles.Count;
 
             ddlJugadores.DataSource = jugadoresDisponibles;
             ddlJugadores.DataTextField = "Apodo";
@@ -220,8 +238,7 @@ namespace hada_ProyectoGrupo.Public
 
             if (ddlJugadores.Items.Count == 0)
             {
-                lblMensaje.Text = "No tienes jugadores disponibles. Crea un jugador primero.";
-                lblMensaje.ForeColor = System.Drawing.Color.Red;
+                lblMensaje.Text += "<br/>No tienes jugadores disponibles. Crea un jugador primero.";
                 pnlSeleccionJugador.Visible = false;
             }
         }
