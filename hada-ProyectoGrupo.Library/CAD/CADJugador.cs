@@ -63,14 +63,14 @@ namespace hada_ProyectoGrupo.Library.CAD
                     en.Codigo = (int)dr["codigo"];
                     en.Email_usuario = dr["email_usuario"].ToString();
                     en.Apodo = dr["apodo"].ToString();
-                    en.Winrate = (float)dr["winrate"];
+                    en.Winrate = Convert.ToSingle(dr["winrate"]);
                     en.Nivel = (int)dr["Nivel"];
                     en.Hardware = dr["hardware"].ToString();
                     en.Buscando_equipo = (bool)dr["buscando_equipo"];
                     en.Equipo_actual = (int)dr["equipo_actual"];
                     en.Juego = (int)dr["Juego"];
                     en.Rol_principal = dr["rol"].ToString();
-                    en.Kda_promedio = (float)dr["kda"];
+                    en.Kda_promedio = Convert.ToSingle(dr["kda"]);
                     ok = true;
                 }
                 dr.Close();
@@ -140,19 +140,19 @@ namespace hada_ProyectoGrupo.Library.CAD
                     en.Codigo = (int)dr["codigo"];
                     en.Email_usuario = dr["email_usuario"].ToString();
                     en.Apodo = dr["apodo"].ToString();
-                    en.Winrate = (float)dr["winrate"];
+                    en.Winrate = Convert.ToSingle(dr["winrate"]);
                     en.Nivel = (int)dr["Nivel"];
                     en.Hardware = dr["hardware"].ToString();
                     en.Buscando_equipo = (bool)dr["buscando_equipo"];
                     en.Equipo_actual = (int)dr["equipo_actual"];
                     en.Juego = (int)dr["Juego"];
                     en.Rol_principal = dr["rol"].ToString();
-                    en.Kda_promedio = (float)dr["kda"];
+                    en.Kda_promedio = Convert.ToSingle(dr["kda"]);
                     lista.Add(en);
                 }
                 dr.Close();
             }
-            catch (Exception) { }
+            catch (Exception ex) { throw new Exception("Error en ReadAll: " + ex.Message); }
             finally { c.Close(); }
             return lista;
         }
