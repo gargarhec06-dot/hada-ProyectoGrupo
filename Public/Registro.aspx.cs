@@ -28,9 +28,9 @@ namespace hada_ProyectoGrupo.Public
                 );
 
                 bool okUsuario = usuario.Register();
-                bool okJugador = jugador.Create();
+                
 
-                if (okUsuario && okJugador)
+                if (okUsuario)
                 {
                     lblMensaje.ForeColor = System.Drawing.Color.Green;
                     lblMensaje.Text = "Registro exitoso. Ya puedes iniciar sesión.";
