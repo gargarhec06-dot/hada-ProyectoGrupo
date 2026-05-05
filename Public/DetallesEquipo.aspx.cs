@@ -29,7 +29,13 @@ namespace hada_ProyectoGrupo.Public
                 }
                 else
                 {
-                    Response.Redirect("~/Public/Equipos.aspx");
+                    pnlJugador.Visible = true;
+                    // Limpiar campos para un nuevo equipo
+                    txtNombre.Text = "";
+                    txtFecha.Text = DateTime.Now.ToString("dd/MM/yyyy");
+                    txtDescripcion.Text = "";
+                    txtCapitan.Text = "";
+                    txtLogo.Text = "";
                 }
             }
         }
