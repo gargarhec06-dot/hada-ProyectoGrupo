@@ -13,16 +13,17 @@ namespace hada_ProyectoGrupo.Library.CAD
 
         public CADPatrocinador() { }
 
-        public bool Create(ENPatrocinador en)
+        public int Create(ENPatrocinador en)
         {
-            bool ok = false;
+            int nuevoId = -1;
             try
             {
                 using (SqlConnection con = new SqlConnection(connectionString))
                 {
                     con.Open();
                     string query = "INSERT INTO Patrocinador (Nombre, Telefono, Email, PaginaWeb, InicioContrato, FinContrato) " +
-                                   "VALUES (@Nombre, @Telefono, @Email, @PaginaWeb, @InicioContrato, @FinContrato)";
+                                   "VALUES (@Nombre, @Telefono, @Email, @PaginaWeb, @InicioContrato, @FinContrato); " +
+                                   "SELECT SCOPE_IDENTITY();"; // devuelve el ID recién insertado
                     SqlCommand cmd = new SqlCommand(query, con);
                     cmd.Parameters.AddWithValue("@Nombre", en.Nombre);
                     cmd.Parameters.AddWithValue("@Telefono", en.Telefono);
@@ -30,15 +31,14 @@ namespace hada_ProyectoGrupo.Library.CAD
                     cmd.Parameters.AddWithValue("@PaginaWeb", (object)en.PaginaWeb ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@InicioContrato", en.InicioContrato);
                     cmd.Parameters.AddWithValue("@FinContrato", en.FinContrato);
-                    cmd.ExecuteNonQuery();
-                    ok = true;
+                    nuevoId = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Create Patrocinador failed. Error: {0}", ex.Message);
             }
-            return ok;
+            return nuevoId;
         }
 
         public bool Read(ENPatrocinador en)
@@ -214,6 +214,57 @@ namespace hada_ProyectoGrupo.Library.CAD
             return ok;
         }
 
+
+        public List<ENTorneoPatrocinador> ReadPatrocinios(int idPatrocinador)
+        {
+            List<ENTorneoPatrocinador> lista = new List<ENTorneoPatrocinador>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    con.Open();
+                    string query = "SELECT Codigo, Cantidad FROM Patrocinio WHERE IdPatrocinador = @id";
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    cmd.Parameters.AddWithValue("@id", idPatrocinador);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        lista.Add(new ENTorneoPatrocinador
+                        {
+                            CodigoTorneo = (int)reader["Codigo"],
+                            Cantidad = Convert.ToDecimal(reader["Cantidad"])
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("ReadPatrocinios failed. Error: {0}", ex.Message);
+            }
+            return lista;
+        }
+
+        public bool DeletePatrocinios(int idPatrocinador)
+        {
+            bool ok = false;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    con.Open();
+                    string query = "DELETE FROM Patrocinio WHERE IdPatrocinador = @id";
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    cmd.Parameters.AddWithValue("@id", idPatrocinador);
+                    cmd.ExecuteNonQuery();
+                    ok = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("DeletePatrocinios failed. Error: {0}", ex.Message);
+            }
+            return ok;
+        }
 
 
     }

@@ -23,6 +23,7 @@ namespace hada_ProyectoGrupo.Private
             if (!IsPostBack)
             {
                 CargarTorneos();
+                
 
                 if (Request.QueryString["id"] != null)
                 {
@@ -40,10 +41,35 @@ namespace hada_ProyectoGrupo.Private
 
         private void CargarTorneos()
         {
-            CADTorneo cad = new CADTorneo();
-            List<ENTorneo> torneos = cad.ReadAll();
+            CADTorneo cadTorneo = new CADTorneo();
+            List<ENTorneo> torneos = cadTorneo.ReadAll();
             rptTorneos.DataSource = torneos;
             rptTorneos.DataBind();
+
+            // Si estamos editando, marcar los torneos ya patrocinados
+            if (!esNuevo)
+            {
+                CADPatrocinador cadPat = new CADPatrocinador();
+                List<ENTorneoPatrocinador> patrocinios = cadPat.ReadPatrocinios(idPatrocinador);
+
+                foreach (RepeaterItem item in rptTorneos.Items)
+                {
+                    HiddenField hf = (HiddenField)item.FindControl("hfCodigoTorneo");
+                    CheckBox chk = (CheckBox)item.FindControl("chkTorneo");
+                    TextBox txt = (TextBox)item.FindControl("txtCantidad");
+
+                    if (hf != null)
+                    {
+                        int codigo = int.Parse(hf.Value);
+                        ENTorneoPatrocinador pat = patrocinios.Find(p => p.CodigoTorneo == codigo);
+                        if (pat != null)
+                        {
+                            chk.Checked = true;
+                            txt.Text = pat.Cantidad.ToString();
+                        }
+                    }
+                }
+            }
         }
 
         private void CargarPatrocinador(int id)
@@ -77,27 +103,30 @@ namespace hada_ProyectoGrupo.Private
                 p.FinContrato = DateTime.Parse(txtFinContrato.Text);
 
                 CADPatrocinador cad = new CADPatrocinador();
-                bool ok;
 
                 if (esNuevo)
                 {
-                    ok = cad.Create(p);
-                    if (ok)
+                    int nuevoId = cad.Create(p);
+                    if (nuevoId > 0)
                     {
-                        // Guardar patrocinios de torneos seleccionados
+                        p.IdPatrocinador = nuevoId;
                         GuardarPatrocinios(p);
+                        Response.Redirect("~/Public/Patrocinadores.aspx");
+                    }
+                    else
+                    {
+                        lblMensaje.Text = "Error al crear el patrocinador.";
                     }
                 }
                 else
                 {
                     p.IdPatrocinador = idPatrocinador;
-                    ok = cad.Update(p);
+                    bool ok = cad.Update(p);
+                    if (ok)
+                        Response.Redirect("~/Public/Patrocinadores.aspx");
+                    else
+                        lblMensaje.Text = "Error al actualizar el patrocinador.";
                 }
-
-                if (ok)
-                    Response.Redirect("~/Public/Patrocinadores.aspx");
-                else
-                    lblMensaje.Text = "Error al guardar el patrocinador.";
             }
             catch (Exception ex)
             {
