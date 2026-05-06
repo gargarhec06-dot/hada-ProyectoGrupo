@@ -24,6 +24,10 @@
         </asp:Repeater>
     </div>
 
+        <asp:Panel ID="pnlAdmin3" runat="server" Visible="false" style="margin-top: 20px;">
+        <asp:Button ID="btnCrear" runat="server" Text="+ Crear Nuevo Jugador" 
+            OnClick="btnCrear_Click" CssClass="btn btn-success" />
+    </asp:Panel>
     <asp:Label ID="lblMensaje" runat="server" ForeColor="Red" />
 
 </asp:Content>

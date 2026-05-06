@@ -13,11 +13,10 @@ namespace hada_ProyectoGrupo.Library.CAD
     {
         private string s;
 
-        public CADJugador() {
+        public CADJugador()
+        {
             s = ConfigurationManager.ConnectionStrings["HadaEsports"].ToString();
         }
-
-        //Falta implementar juego y vida
 
         public bool Create(ENJugador en)
         {
@@ -33,11 +32,11 @@ namespace hada_ProyectoGrupo.Library.CAD
                 com.Parameters.AddWithValue("@apodo", en.Apodo);
                 com.Parameters.AddWithValue("@win", en.Winrate);
                 com.Parameters.AddWithValue("@niv", en.Nivel);
-                com.Parameters.AddWithValue("@hard", (object)en.Hardware ?? DBNull.Value);
+                com.Parameters.AddWithValue("@hard", string.IsNullOrEmpty(en.Hardware) ? (object)DBNull.Value : en.Hardware);
                 com.Parameters.AddWithValue("@buse", en.Buscando_equipo);
                 com.Parameters.AddWithValue("@equip", en.Equipo_actual == 0 ? (object)DBNull.Value : en.Equipo_actual);
                 com.Parameters.AddWithValue("@juego", en.Juego == 0 ? (object)DBNull.Value : en.Juego);
-                com.Parameters.AddWithValue("@rol", (object)en.Rol_principal ?? DBNull.Value);
+                com.Parameters.AddWithValue("@rol", string.IsNullOrEmpty(en.Rol_principal) ? (object)DBNull.Value : en.Rol_principal);
                 com.Parameters.AddWithValue("@kda", en.Kda_promedio);
                 if (com.ExecuteNonQuery() > 0) ok = true;
             }
@@ -62,14 +61,14 @@ namespace hada_ProyectoGrupo.Library.CAD
                     en.Codigo = (int)dr["codigo"];
                     en.Email_usuario = dr["email_usuario"].ToString();
                     en.Apodo = dr["apodo"].ToString();
-                    en.Winrate = Convert.ToSingle(dr["winrate"]);
-                    en.Nivel = (int)dr["Nivel"];
-                    en.Hardware = dr["hardware"].ToString();
-                    en.Buscando_equipo = (bool)dr["buscando_equipo"];
-                    en.Equipo_actual = (int)dr["equipo_actual"];
-                    en.Juego = (int)dr["Juego"];
-                    en.Rol_principal = dr["rol"].ToString();
-                    en.Kda_promedio = Convert.ToSingle(dr["kda"]);
+                    en.Winrate = dr["winrate"] == DBNull.Value ? 0f : Convert.ToSingle(dr["winrate"]);
+                    en.Nivel = dr["nivel"] == DBNull.Value ? 1 : (int)dr["nivel"];
+                    en.Hardware = dr["hardware"] == DBNull.Value ? "" : dr["hardware"].ToString();
+                    en.Buscando_equipo = dr["buscando_equipo"] == DBNull.Value ? false : (bool)dr["buscando_equipo"];
+                    en.Equipo_actual = dr["equipo_actual"] == DBNull.Value ? 0 : (int)dr["equipo_actual"];
+                    en.Juego = dr["juego"] == DBNull.Value ? 0 : (int)dr["juego"];
+                    en.Rol_principal = dr["rol"] == DBNull.Value ? "" : dr["rol"].ToString();
+                    en.Kda_promedio = dr["KDA"] == DBNull.Value ? 0f : Convert.ToSingle(dr["KDA"]);
                     ok = true;
                 }
                 dr.Close();
@@ -86,18 +85,18 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                string query = @"UPDATE Jugador SET email_usuario=@email, apodo=@apodo,winrate=@win,nivel=@niv,hardware=@hard,buscando_equipo=@buse,equipo_actual=@equip,juego=@juego,rol=@rol,kda=@kda WHERE codigo=@cod";
+                string query = @"UPDATE Jugador SET email_usuario=@email, apodo=@apodo, winrate=@win, nivel=@niv, hardware=@hard, buscando_equipo=@buse, equipo_actual=@equip, juego=@juego, rol=@rol, KDA=@kda WHERE codigo=@cod";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@cod", en.Codigo);
                 com.Parameters.AddWithValue("@email", en.Email_usuario);
                 com.Parameters.AddWithValue("@apodo", en.Apodo);
                 com.Parameters.AddWithValue("@win", en.Winrate);
                 com.Parameters.AddWithValue("@niv", en.Nivel);
-                com.Parameters.AddWithValue("@hard", en.Hardware);
+                com.Parameters.AddWithValue("@hard", string.IsNullOrEmpty(en.Hardware) ? (object)DBNull.Value : en.Hardware);
                 com.Parameters.AddWithValue("@buse", en.Buscando_equipo);
-                com.Parameters.AddWithValue("@equip", en.Equipo_actual);
-                com.Parameters.AddWithValue("@juego", en.Juego);
-                com.Parameters.AddWithValue("@rol", en.Rol_principal);
+                com.Parameters.AddWithValue("@equip", en.Equipo_actual == 0 ? (object)DBNull.Value : en.Equipo_actual);
+                com.Parameters.AddWithValue("@juego", en.Juego == 0 ? (object)DBNull.Value : en.Juego);
+                com.Parameters.AddWithValue("@rol", string.IsNullOrEmpty(en.Rol_principal) ? (object)DBNull.Value : en.Rol_principal);
                 com.Parameters.AddWithValue("@kda", en.Kda_promedio);
                 if (com.ExecuteNonQuery() > 0) ok = true;
             }
@@ -122,6 +121,7 @@ namespace hada_ProyectoGrupo.Library.CAD
             finally { c.Close(); }
             return ok;
         }
+
         public List<ENJugador> ReadAll()
         {
             List<ENJugador> lista = new List<ENJugador>();
@@ -135,18 +135,17 @@ namespace hada_ProyectoGrupo.Library.CAD
                 while (dr.Read())
                 {
                     ENJugador en = new ENJugador();
-                    // Leer los valores del DataReader y asignarlos al objeto
                     en.Codigo = (int)dr["codigo"];
                     en.Email_usuario = dr["email_usuario"].ToString();
                     en.Apodo = dr["apodo"].ToString();
-                    en.Winrate = Convert.ToSingle(dr["winrate"]);
-                    en.Nivel = (int)dr["Nivel"];
-                    en.Hardware = dr["hardware"].ToString();
-                    en.Buscando_equipo = (bool)dr["buscando_equipo"];
-                    en.Equipo_actual = (int)dr["equipo_actual"];
-                    en.Juego = (int)dr["Juego"];
-                    en.Rol_principal = dr["rol"].ToString();
-                    en.Kda_promedio = Convert.ToSingle(dr["kda"]);
+                    en.Winrate = dr["winrate"] == DBNull.Value ? 0f : Convert.ToSingle(dr["winrate"]);
+                    en.Nivel = dr["nivel"] == DBNull.Value ? 1 : (int)dr["nivel"];
+                    en.Hardware = dr["hardware"] == DBNull.Value ? "" : dr["hardware"].ToString();
+                    en.Buscando_equipo = dr["buscando_equipo"] == DBNull.Value ? false : (bool)dr["buscando_equipo"];
+                    en.Equipo_actual = dr["equipo_actual"] == DBNull.Value ? 0 : (int)dr["equipo_actual"];
+                    en.Juego = dr["juego"] == DBNull.Value ? 0 : (int)dr["juego"];
+                    en.Rol_principal = dr["rol"] == DBNull.Value ? "" : dr["rol"].ToString();
+                    en.Kda_promedio = dr["KDA"] == DBNull.Value ? 0f : Convert.ToSingle(dr["KDA"]);
                     lista.Add(en);
                 }
                 dr.Close();

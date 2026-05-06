@@ -13,6 +13,10 @@ namespace hada_ProyectoGrupo.Public
             {
                 CargarJugadores();
             }
+            if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == false)
+            {
+                pnlAdmin3.Visible = true;
+            }
         }
 
         private void CargarJugadores()
@@ -56,6 +60,11 @@ namespace hada_ProyectoGrupo.Public
                 lblMensaje.Text = "Error: " + ex.Message;
                 lblMensaje.ForeColor = System.Drawing.Color.Red;
             }
+        }
+
+        protected void btnCrear_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/private/Jugador.aspx");
         }
     }
 }
