@@ -21,24 +21,23 @@ namespace hada_ProyectoGrupo.Library.CAD
 
         public bool Create(ENJugador en)
         {
-            bool ok = true;
-
+            bool ok = false;
             SqlConnection c = new SqlConnection(s);
             try
             {
                 c.Open();
-                string query = "INSERT INTO Jugador (codigo,email_usuario,apodo,winrate,nivel,hardware,buscando_equipo,equipo_actual,juego,rol,kda) VALUES (@cod,@email,@apodo,@win,@niv,@hard,@buse,@equip,@juego,@rol,@kda)";
+                string query = "INSERT INTO Jugador (email_usuario, apodo, winrate, nivel, hardware, buscando_equipo, equipo_actual, juego, rol, KDA) " +
+                               "VALUES (@email, @apodo, @win, @niv, @hard, @buse, @equip, @juego, @rol, @kda)";
                 SqlCommand com = new SqlCommand(query, c);
-                com.Parameters.AddWithValue("@cod", en.Codigo);
                 com.Parameters.AddWithValue("@email", en.Email_usuario);
                 com.Parameters.AddWithValue("@apodo", en.Apodo);
                 com.Parameters.AddWithValue("@win", en.Winrate);
                 com.Parameters.AddWithValue("@niv", en.Nivel);
-                com.Parameters.AddWithValue("@hard", en.Hardware);
+                com.Parameters.AddWithValue("@hard", (object)en.Hardware ?? DBNull.Value);
                 com.Parameters.AddWithValue("@buse", en.Buscando_equipo);
-                com.Parameters.AddWithValue("@equip", en.Equipo_actual);
-                com.Parameters.AddWithValue("@juego", en.Juego);
-                com.Parameters.AddWithValue("@rol", en.Rol_principal);
+                com.Parameters.AddWithValue("@equip", en.Equipo_actual == 0 ? (object)DBNull.Value : en.Equipo_actual);
+                com.Parameters.AddWithValue("@juego", en.Juego == 0 ? (object)DBNull.Value : en.Juego);
+                com.Parameters.AddWithValue("@rol", (object)en.Rol_principal ?? DBNull.Value);
                 com.Parameters.AddWithValue("@kda", en.Kda_promedio);
                 if (com.ExecuteNonQuery() > 0) ok = true;
             }
