@@ -1,10 +1,7 @@
 ﻿using hada_ProyectoGrupo.Library.EN;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace hada_ProyectoGrupo.Public
 {
@@ -15,34 +12,50 @@ namespace hada_ProyectoGrupo.Public
             if (!IsPostBack)
             {
                 CargarJugadores();
-                if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == false)
-                {
-                    pnlJugador.Visible = true;
-                }
             }
         }
 
-        public void CargarJugadores()
+        private void CargarJugadores()
         {
             try
             {
-                ENJugador jugador = new ENJugador();
-                List<ENJugador> lista = jugador.ReadAll();  // Leer de la BD
+                List<ENJugador> todosLosJugadores = new ENJugador().ReadAll();
 
-                rptJugadores.DataSource = lista;
-                rptJugadores.DataBind();
+                if (Session["Email"] != null)
+                {
+                    // Si está logueado, mostrar SOLO sus jugadores
+                    string emailLogueado = Session["Email"].ToString();
+                    List<ENJugador> misJugadores = new List<ENJugador>();
+
+                    foreach (ENJugador j in todosLosJugadores)
+                    {
+                        if (j.Email_usuario == emailLogueado)
+                        {
+                            misJugadores.Add(j);
+                        }
+                    }
+
+                    rptJugadores.DataSource = misJugadores;
+                    rptJugadores.DataBind();
+
+                    if (misJugadores.Count == 0)
+                    {
+                        lblMensaje.Text = "No tienes jugadores creados.";
+                        lblMensaje.ForeColor = System.Drawing.Color.Red;
+                    }
+                }
+                else
+                {
+                    // Si NO está logueado, mostrar TODOS los jugadores
+                    rptJugadores.DataSource = todosLosJugadores;
+                    rptJugadores.DataBind();
+                }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error al cargar jugadores: {0}", ex.Message);
-                Response.Write("<script>alert('Error al cargar los jugadores');</script>");
-
+                lblMensaje.Text = "Error: " + ex.Message;
+                lblMensaje.ForeColor = System.Drawing.Color.Red;
             }
-        }
-
-        protected void btnCrear_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/Private/Jugador.aspx");
         }
     }
 }
