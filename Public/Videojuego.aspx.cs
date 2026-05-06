@@ -91,5 +91,21 @@ namespace hada_ProyectoGrupo.Public
                 entry.Delete();
             }
         }
+
+        protected void AdminAdd_Click(object sender, EventArgs e)
+        {
+            if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"])
+            {
+                ENVideojuego entry = new ENVideojuego(
+                    int.Parse(CodigoAdminBox.Text),
+                    NombreAdminBox.Text,
+                    DescripcionAdminBox.Text,
+                    TipoAdminBox.Text,
+                    int.Parse(EdadMinimaAdminBox.Text)
+                );
+
+                entry.Create();
+            }
+        }
     }
 }
