@@ -87,13 +87,13 @@ namespace hada_ProyectoGrupo.Public
         protected global::System.Web.UI.WebControls.Button btnVolver;
 
         /// <summary>
-        /// Control pnlJugador.
+        /// Control pnlAcciones.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlJugador;
+        protected global::System.Web.UI.WebControls.Panel pnlAcciones;
 
         /// <summary>
         /// Control btnCrear.
@@ -105,15 +105,6 @@ namespace hada_ProyectoGrupo.Public
         protected global::System.Web.UI.WebControls.Button btnCrear;
 
         /// <summary>
-        /// Control btnEliminar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEliminar;
-
-        /// <summary>
         /// Control btnModificar.
         /// </summary>
         /// <remarks>
@@ -121,6 +112,15 @@ namespace hada_ProyectoGrupo.Public
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnModificar;
+
+        /// <summary>
+        /// Control btnEliminar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnEliminar;
 
         /// <summary>
         /// Control btnUnirse.
