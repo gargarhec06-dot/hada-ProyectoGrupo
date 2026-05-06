@@ -12,7 +12,7 @@ namespace hada_ProyectoGrupo.Library.EN
         private int _codigo;
         private string _nombre;
         private string _descripcion;
-        private string _tipo;   //El tipo puede ser : SH (Shooter) , SU(Supervivencia), ST(Estrategia) , FG(Fighter)
+        private string _tipo;   //El tipo puede ser : SH (Shooter) , SU(Supervivencia), ST(Estrategia) , FG(Fighter), SP(Speedrun)
         private int _edadMinima;
 
 
