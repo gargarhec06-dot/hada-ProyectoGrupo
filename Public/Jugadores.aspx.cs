@@ -34,7 +34,8 @@ namespace hada_ProyectoGrupo.Public
             }
             catch (Exception ex)
             {
-                Response.Write("Error: " + ex.Message);
+                Console.WriteLine("Error al cargar jugadores: {0}", ex.Message);
+                Response.Write("<script>alert('Error al cargar los jugadores');</script>");
 
             }
         }

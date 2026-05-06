@@ -21,17 +21,17 @@
     <h3>Torneos patrocinados</h3>
     <asp:Repeater ID="rptTorneos" runat="server">
         <HeaderTemplate>
-            <table>
-                <tr>
-                    <th>Torneo</th>
-                    <th>Cantidad aportada</th>
-                </tr>
-        </HeaderTemplate>
+    <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 400px;">
+        <tr style="background-color: #f0f0f0;">
+            <th style="text-align: left; padding: 8px;">Torneo</th>
+            <th style="text-align: left; padding: 8px;">Cantidad aportada</th>
+        </tr>
+           </HeaderTemplate>
         <ItemTemplate>
-                <tr>
-                    <td><%# Eval("NombreTorneo") %></td>
-                    <td><%# Eval("Cantidad") %> €</td>
-                </tr>
+           <tr>
+               <td style="padding: 8px;"><%# Eval("NombreTorneo") %></td>
+               <td style="padding: 8px;"><%# Eval("Cantidad") %> €</td>
+            </tr>
         </ItemTemplate>
         <FooterTemplate>
             </table>

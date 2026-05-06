@@ -9,7 +9,12 @@ namespace hada_ProyectoGrupo.Private
 {
     public partial class EditarPatrocinador : System.Web.UI.Page
     {
-        private int idPatrocinador = 0;
+        // Guardar idPatrocinador en ViewState para que sobreviva al postback
+        private int IdPatrocinador
+        {
+            get { return ViewState["IdPatrocinador"] != null ? (int)ViewState["IdPatrocinador"] : 0; }
+            set { ViewState["IdPatrocinador"] = value; }
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -21,62 +26,60 @@ namespace hada_ProyectoGrupo.Private
 
             if (!IsPostBack)
             {
-                if (Request.QueryString["id"] != null && int.TryParse(Request.QueryString["id"], out idPatrocinador))
+                if (Request.QueryString["id"] != null && int.TryParse(Request.QueryString["id"], out int id))
                 {
-                    CargarPatrocinador(idPatrocinador);
-                    CargarTorneosConPatrocinios(idPatrocinador);
+                    IdPatrocinador = id;
+                    CargarPatrocinador(id);
+                    CargarTorneos(id);
                 }
                 else
                 {
                     Response.Redirect("~/Public/Patrocinadores.aspx");
                 }
             }
+            
         }
 
         private void CargarPatrocinador(int id)
         {
-            try
-            {
-                CADPatrocinador cad = new CADPatrocinador();
-                ENPatrocinador patrocinador = new ENPatrocinador();
-                patrocinador.IdPatrocinador = id;
+            CADPatrocinador cad = new CADPatrocinador();
+            ENPatrocinador p = new ENPatrocinador();
+            p.IdPatrocinador = id;
 
-                if (cad.Read(patrocinador))
-                {
-                    txtNombre.Text = patrocinador.Nombre;
-                    txtTelefono.Text = patrocinador.Telefono;
-                    txtEmail.Text = patrocinador.Email;
-                    txtWeb.Text = patrocinador.PaginaWeb;
-                    txtInicioContrato.Text = patrocinador.InicioContrato.ToString("yyyy-MM-dd");
-                    txtFinContrato.Text = patrocinador.FinContrato.ToString("yyyy-MM-dd");
-                }
-            }
-            catch (Exception ex)
+            if (cad.Read(p))
             {
-                lblMensaje.Text = "Error al cargar: " + ex.Message;
+                txtNombre.Text = p.Nombre;
+                txtTelefono.Text = p.Telefono;
+                txtEmail.Text = p.Email;
+                txtWeb.Text = p.PaginaWeb;
+                txtInicioContrato.Text = p.InicioContrato.ToString("yyyy-MM-dd");
+                txtFinContrato.Text = p.FinContrato.ToString("yyyy-MM-dd");
             }
         }
 
-        private void CargarTorneosConPatrocinios(int idPatrocinador)
+        private void CargarTorneos(int id)
         {
             try
             {
-                // 1. Obtener TODOS los torneos de la BD
                 CADTorneo cadTorneo = new CADTorneo();
-                List<ENTorneo> todosLosTorneos = cadTorneo.ReadAll();
+                List<ENTorneo> torneos = cadTorneo.ReadAll();
 
-                // 2. Obtener los torneos que YA patrocina este patrocinador (guardar en ViewState o Session)
-                CADPatrocinador cadPat = new CADPatrocinador();
-                List<ENTorneoPatrocinador> torneosPatrocinados = cadPat.ReadTorneos(idPatrocinador);
 
-                // Guardar en Session para usarlos después del DataBind
-                Session["TorneosPatrocinados"] = torneosPatrocinados;
 
-                // 3. PRIMERO: Hacer el DataBind (esto crea los controles)
-                rptTorneos.DataSource = todosLosTorneos;
+                if (torneos.Count == 0)
+                {
+                    lblMensaje.Text += " - La BD no tiene torneos o hay error de conexión";
+                    return;
+                }
+
+                rptTorneos.DataSource = torneos;
                 rptTorneos.DataBind();
 
-                // 4. SEGUNDO: Recorrer las filas y marcar los checkboxes
+                CADPatrocinador cadPat = new CADPatrocinador();
+                List<ENTorneoPatrocinador> patrocinios = cadPat.ReadPatrocinios(id);
+
+                lblMensaje.Text += " | Patrocinios: " + patrocinios.Count;
+
                 foreach (RepeaterItem item in rptTorneos.Items)
                 {
                     HiddenField hf = (HiddenField)item.FindControl("hfCodigoTorneo");
@@ -85,44 +88,28 @@ namespace hada_ProyectoGrupo.Private
 
                     if (hf != null && int.TryParse(hf.Value, out int codigoTorneo))
                     {
-                        ENTorneoPatrocinador existente = torneosPatrocinados.Find(t => t.CodigoTorneo == codigoTorneo);
-
-                        if (existente != null)
+                        ENTorneoPatrocinador pat = patrocinios.Find(p => p.CodigoTorneo == codigoTorneo);
+                        if (pat != null)
                         {
                             chk.Checked = true;
-                            txt.Text = existente.Cantidad.ToString();
-                            txt.Enabled = true;
+                            txt.Text = pat.Cantidad.ToString();
                         }
                         else
                         {
                             chk.Checked = false;
                             txt.Text = "0";
-                            txt.Enabled = false;
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = "Error al cargar torneos: " + ex.Message;
+                lblMensaje.Text = "Error en CargarTorneos: " + ex.Message;
             }
         }
 
-        protected void chkPatrocina_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox chk = (CheckBox)sender;
-            RepeaterItem item = (RepeaterItem)chk.NamingContainer;
-            TextBox txt = (TextBox)item.FindControl("txtCantidad");
+        
 
-            if (txt != null)
-            {
-                txt.Enabled = chk.Checked;
-                if (!chk.Checked)
-                {
-                    txt.Text = "0";
-                }
-            }
-        }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
@@ -130,59 +117,43 @@ namespace hada_ProyectoGrupo.Private
 
             try
             {
-                if (idPatrocinador == 0 && Request.QueryString["id"] != null)
-                {
-                    idPatrocinador = int.Parse(Request.QueryString["id"]);
-                }
-
-                // 1. Actualizar datos del patrocinador
-                ENPatrocinador patrocinador = new ENPatrocinador();
-                patrocinador.IdPatrocinador = idPatrocinador;
-                patrocinador.Nombre = txtNombre.Text;
-                patrocinador.Telefono = txtTelefono.Text;
-                patrocinador.Email = txtEmail.Text;
-                patrocinador.PaginaWeb = txtWeb.Text;
-                patrocinador.InicioContrato = DateTime.Parse(txtInicioContrato.Text);
-
-                if (string.IsNullOrEmpty(txtFinContrato.Text))
-                {
-                    patrocinador.FinContrato = patrocinador.InicioContrato.AddYears(1);
-                }
-                else
-                {
-                    patrocinador.FinContrato = DateTime.Parse(txtFinContrato.Text);
-                }
+                ENPatrocinador p = new ENPatrocinador();
+                p.IdPatrocinador = IdPatrocinador;
+                p.Nombre = txtNombre.Text;
+                p.Telefono = txtTelefono.Text;
+                p.Email = txtEmail.Text;
+                p.PaginaWeb = txtWeb.Text;
+                p.InicioContrato = DateTime.Parse(txtInicioContrato.Text);
+                p.FinContrato = DateTime.Parse(txtFinContrato.Text);
 
                 CADPatrocinador cad = new CADPatrocinador();
-                bool exitoUpdate = cad.Update(patrocinador);
+                bool ok = cad.Update(p);
 
-                if (!exitoUpdate)
+                if (!ok)
                 {
-                    lblMensaje.Text = "Error al actualizar los datos";
+                    lblMensaje.Text = "Error al actualizar el patrocinador.";
                     return;
                 }
 
-                // 2. Actualizar torneos patrocinados
-                // Primero, eliminar TODOS los patrocinios actuales
-                cad.DeletePatrocinios(idPatrocinador);
+                cad.DeletePatrocinios(IdPatrocinador);
 
-                // Después, insertar SOLO los que están marcados
                 foreach (RepeaterItem item in rptTorneos.Items)
                 {
                     CheckBox chk = (CheckBox)item.FindControl("chkPatrocina");
                     TextBox txt = (TextBox)item.FindControl("txtCantidad");
                     HiddenField hf = (HiddenField)item.FindControl("hfCodigoTorneo");
 
-                    if (chk != null && chk.Checked && hf != null && int.TryParse(hf.Value, out int codigoTorneo))
+                    if (chk != null && chk.Checked && hf != null)
                     {
+                        int codigoTorneo = int.Parse(hf.Value);
                         if (int.TryParse(txt.Text, out int cantidad) && cantidad > 0)
                         {
-                            cad.CreatePatrocinio(idPatrocinador, codigoTorneo, cantidad);
+                            cad.CreatePatrocinio(IdPatrocinador, codigoTorneo, cantidad);
                         }
                     }
                 }
 
-                Response.Redirect("~/Public/DetallePatrocinador.aspx?id=" + idPatrocinador);
+                Response.Redirect("~/Public/DetallePatrocinador.aspx?id=" + IdPatrocinador);
             }
             catch (Exception ex)
             {
@@ -192,11 +163,7 @@ namespace hada_ProyectoGrupo.Private
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
-            if (idPatrocinador == 0 && Request.QueryString["id"] != null)
-            {
-                idPatrocinador = int.Parse(Request.QueryString["id"]);
-            }
-            Response.Redirect("~/Public/DetallePatrocinador.aspx?id=" + idPatrocinador);
+            Response.Redirect("~/Public/Patrocinadores.aspx");
         }
     }
 }

@@ -22,10 +22,7 @@ namespace hada_ProyectoGrupo.Public
                 usuario.Apellidos = txtApellidos.Text;
                 usuario.Pais = txtPais.Text;
 
-                ENJugador jugador = new ENJugador(
-                    txtEmail.Text,
-                    txtApodo.Text
-                );
+                
 
                 bool okUsuario = usuario.Register();
                 
