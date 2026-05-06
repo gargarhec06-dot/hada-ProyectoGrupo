@@ -87,7 +87,7 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                string query = "UPDATE Jugador SET codigo=@cod ,email=@email , apodo=@apodo , winrate=@win , nivel=@niv , hardware=@hard , buscando_equipo=@buse , equipo_actual=@equip , juego=@juego , rol=@rol , kda=@kda WHERE codigo=@cod";
+                string query = @"UPDATE Jugador SET email_usuario=@email, apodo=@apodo,winrate=@win,nivel=@niv,hardware=@hard,buscando_equipo=@buse,equipo_actual=@equip,juego=@juego,rol=@rol,kda=@kda WHERE codigo=@cod";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@cod", en.Codigo);
                 com.Parameters.AddWithValue("@email", en.Email_usuario);

@@ -9,8 +9,16 @@ namespace hada_ProyectoGrupo.Public
 {
     public partial class DetallesJugador : System.Web.UI.Page
     {
-        private int codigoJugador;
-        private bool esPropietario;
+        private int codigoJugador
+        {
+            get { return ViewState["codigoJugador"] != null ? (int)ViewState["codigoJugador"] : 0; }
+            set { ViewState["codigoJugador"] = value; }
+        }
+        private bool esPropietario
+        {
+            get { return ViewState["esPropietario"] != null ? (bool)ViewState["esPropietario"] : false; }
+            set { ViewState["esPropietario"] = value; }
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -158,8 +166,9 @@ namespace hada_ProyectoGrupo.Public
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
+            Response.Write("Codigo: " + codigoJugador);
             try
-            {
+            {   
                 ENJugador jugador = new ENJugador();
                 jugador.Codigo = codigoJugador;
                 jugador.Read();
