@@ -15,40 +15,51 @@ namespace hada_ProyectoGrupo.Public
             // Se debe de obtener el videojuego en un futuro con esta variable
             string code = Request.QueryString["codigo"];
 
-            ENVideojuego videojuego = new ENVideojuego(9, "Rivals of Ather 2", "Juego de lucha plataformero modero con luchadores inspirandose en elementos. Normalmente jugado en modalidad 1v1, 3 stocks, 8 minutos.", "Fighting", 12);
-
-            NombreLabel.Text = videojuego.Nombre;
-            CodigoLabel.Text = videojuego.Codigo.ToString();
-            DescripcionLabel.Text = videojuego.Descripcion;
-            TipoLabel.Text = videojuego.Tipo;
-            EdadMinimaLabel.Text = videojuego.EdadMinima.ToString();
-
-            // Para observar el panel de admin
-            string is_admin = Request.QueryString["admin"];
-            if (is_admin != null)
-            {
-                DebugLabel.Text = "Admin detectado";
-
-                NombreAdminBox.Text = NombreLabel.Text;
-                CodigoAdminBox.Text = CodigoLabel.Text;
-                DescripcionAdminBox.Text = DescripcionLabel.Text;
-                TipoAdminBox.Text = TipoLabel.Text;
-                EdadMinimaAdminBox.Text = EdadMinimaLabel.Text;
+            if (string.IsNullOrEmpty(code)) {
+                DebugLabel.Text = "No se encontró ningún argumento para el código del juego";
+                return;
             }
-            // Quitar Visible elimina por completo el html client side.
-            // Notese que no tengo claras las implicaciones de seguridad, pero eso debería ser solventable con una verificación de cookie.
+
+            ENVideojuego videojuego = new ENVideojuego(int.Parse(code), "", "", "", 0);
+            bool result = videojuego.Read();
+
+            if (result) {
+                NombreLabel.Text = videojuego.Nombre;
+                CodigoLabel.Text = videojuego.Codigo.ToString();
+                DescripcionLabel.Text = videojuego.Descripcion;
+                TipoLabel.Text = videojuego.Tipo;
+                EdadMinimaLabel.Text = videojuego.EdadMinima.ToString();
+
+                // Para observar el panel de admin
+                if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"])
+                {
+                    DebugLabel.Text = "Admin detectado";
+
+                    activate_admin();
+
+                    NombreAdminBox.Text = NombreLabel.Text;
+                    CodigoAdminBox.Text = CodigoLabel.Text;
+                    DescripcionAdminBox.Text = DescripcionLabel.Text;
+                    TipoAdminBox.Text = TipoLabel.Text;
+                    EdadMinimaAdminBox.Text = EdadMinimaLabel.Text;
+                }
+            }
             else
             {
-                NombreAdminBox.Visible = false;
-                CodigoAdminBox.Visible = false;
-                DescripcionAdminBox.Visible = false;
-                TipoAdminBox.Visible = false;
-                EdadMinimaAdminBox.Visible = false;
-
-                AdminDelete.Visible = false;
-                AdminUpdate.Visible = false;
-                AdminAdd.Visible = false;
+                DebugLabel.Text = "No se encontró";
             }
+        }
+        private void activate_admin()
+        {
+            NombreAdminBox.Visible = true;
+            CodigoAdminBox.Visible = true;
+            DescripcionAdminBox.Visible = true;
+            TipoAdminBox.Visible = true;
+            EdadMinimaAdminBox.Visible = true;
+
+            AdminDelete.Visible = true;
+            AdminUpdate.Visible = true;
+            AdminAdd.Visible = true;
         }
     }
 }
