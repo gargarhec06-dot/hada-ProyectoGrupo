@@ -32,7 +32,7 @@ namespace hada_ProyectoGrupo.Library.CAD
                 com.Parameters.AddWithValue("@em", en.EdadMinima);
                 if (com.ExecuteNonQuery() > 0) ok = true;
             }
-            catch (Exception ex) { throw new Exception("Error al crear videojuego: " + ex.Message); }
+            catch (Exception ex) { throw new Exception("Error al crear videojuego: " + ex.Message.ToString()); }
             finally { c.Close(); }
             return ok;
         }
@@ -71,7 +71,7 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                string query = "UPDATE Videojuego SET (nombre=@nom, descripcion=@desc, tipo=@tipo, edadminima=@ed) WHERE codigo = @cod";
+                string query = "UPDATE Videojuego SET nombre=@nom, descripcion=@desc, tipo=@tipo, edadminima=@em WHERE codigo=@cod";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@cod", en.Codigo);
                 com.Parameters.AddWithValue("@nom", en.Nombre);
@@ -80,7 +80,7 @@ namespace hada_ProyectoGrupo.Library.CAD
                 com.Parameters.AddWithValue("@em", en.EdadMinima);
                 if (com.ExecuteNonQuery() > 0) ok = true;
             }
-            catch (Exception ex) { throw new Exception("Error al crear videojuego: " + ex.Message); }
+            catch (Exception ex) { throw new Exception("Error al hacer update videojuego: " + ex.Message.ToString()); }
             finally { c.Close(); }
             return ok;
         }
@@ -92,7 +92,7 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                string query = "DELETE FROM Equipo WHERE codigo = @cod";
+                string query = "DELETE FROM Videojuego WHERE codigo = @cod";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@cod", en.Codigo);
                 if (com.ExecuteNonQuery() > 0) ok = true;

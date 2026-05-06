@@ -31,7 +31,7 @@
         </div>
     </div>
     <asp:Label Text="" ID="DebugLabel" runat="server"/>
-    <asp:Button Text="Actualizar entrada" ID="AdminUpdate" runat="server" Visible="false"/>
-    <asp:Button Text="Borrar entrada" ID="AdminDelete" runat="server" Visible="false"/>
-    <asp:Button Text="Añadir entrada" ID="AdminAdd" runat="server" Visible="false"/>
+    <asp:Button Text="Actualizar entrada" ID="AdminUpdate" runat="server" Visible="false" OnClick="AdminUpdate_Click" CssClass="btn btn-info"/>
+    <asp:Button Text="Añadir entrada" ID="AdminAdd" runat="server" Visible="false" CssClass="btn btn-info"/>
+    <asp:Button Text="Borrar entrada" ID="AdminDelete" runat="server" Visible="false" OnClick="AdminDelete_Click" OnClientClick="return confirm('¿Estás seguro de eliminar este videojuego?')" CssClass="btn btn-danger"/>
 </asp:Content>

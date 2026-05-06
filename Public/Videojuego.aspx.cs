@@ -33,15 +33,18 @@ namespace hada_ProyectoGrupo.Public
                 // Para observar el panel de admin
                 if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"])
                 {
-                    DebugLabel.Text = "Admin detectado";
+                    //DebugLabel.Text = "Admin detectado";
 
                     activate_admin();
 
-                    NombreAdminBox.Text = NombreLabel.Text;
-                    CodigoAdminBox.Text = CodigoLabel.Text;
-                    DescripcionAdminBox.Text = DescripcionLabel.Text;
-                    TipoAdminBox.Text = TipoLabel.Text;
-                    EdadMinimaAdminBox.Text = EdadMinimaLabel.Text;
+                    if (!IsPostBack)
+                    {
+                        NombreAdminBox.Text = NombreLabel.Text;
+                        CodigoAdminBox.Text = CodigoLabel.Text;
+                        DescripcionAdminBox.Text = DescripcionLabel.Text;
+                        TipoAdminBox.Text = TipoLabel.Text;
+                        EdadMinimaAdminBox.Text = EdadMinimaLabel.Text;
+                    }
                 }
             }
             else
@@ -60,6 +63,33 @@ namespace hada_ProyectoGrupo.Public
             AdminDelete.Visible = true;
             AdminUpdate.Visible = true;
             AdminAdd.Visible = true;
+        }
+
+        protected void AdminUpdate_Click(object sender, EventArgs e)
+        {
+            if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"])
+            {
+                ENVideojuego entry = new ENVideojuego(
+                    int.Parse(CodigoAdminBox.Text),
+                    NombreAdminBox.Text,
+                    DescripcionAdminBox.Text,
+                    TipoAdminBox.Text,
+                    int.Parse(EdadMinimaAdminBox.Text)
+                );
+
+                entry.Update();
+            }
+        }
+
+        protected void AdminDelete_Click(object sender, EventArgs e)
+        {
+            if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"])
+            {
+                ENVideojuego entry = new ENVideojuego();
+                entry.Codigo = int.Parse(CodigoAdminBox.Text);
+
+                entry.Delete();
+            }
         }
     }
 }
