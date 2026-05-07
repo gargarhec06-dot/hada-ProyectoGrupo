@@ -55,8 +55,11 @@ namespace hada_ProyectoGrupo.Public
 
             foreach (ENJugador jugador in jugadores)
             {
-                List<ENEquipo> equipos = cadEquipo.ReadByCapitan(jugador.Codigo);
-                equiposCapitan.AddRange(equipos);
+                ENEquipo equipo = cadEquipo.ReadByCapitan(jugador.Codigo);
+                if (equipo != null)
+                {
+                    equiposCapitan.Add(equipo);
+                }
             }
 
             if (equiposCapitan.Count == 0)
