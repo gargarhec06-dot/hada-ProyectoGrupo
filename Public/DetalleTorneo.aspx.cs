@@ -55,10 +55,10 @@ namespace hada_ProyectoGrupo.Public
         }
 
 
-        // Este método se implementará cuando se tenga acceso a la base de datos (siguiente entrega)
         protected void btnInscribirse_Click(object sender, EventArgs e)
         {
-            
+            int codigo = int.Parse(Request.QueryString["codigo"]);
+            Response.Redirect("~/Public/Inscripcion.aspx?codigo=" + codigo);
         }
     }
 }

@@ -174,11 +174,11 @@ namespace hada_ProyectoGrupo.Library.CAD
                     en.Email_usuario = dr["email_usuario"].ToString();
                     en.Apodo = dr["apodo"].ToString();
                     en.Equipo_actual = dr["equipo_actual"] == DBNull.Value ? 0 : (int)dr["equipo_actual"];
-                    en.Rol = dr["rol"].ToString();
-                    en.Kda = dr["kda"] == DBNull.Value ? 0 : float.Parse(dr["kda"].ToString());
+                    en.Rol_principal = dr["rol"] == DBNull.Value ? "" : dr["rol"].ToString();
+                    en.Kda_promedio = dr["KDA"] == DBNull.Value ? 0f : Convert.ToSingle(dr["KDA"]);
                     en.Nivel = dr["nivel"] == DBNull.Value ? 0 : (int)dr["nivel"];
-                    en.Winrate = dr["winrate"] == DBNull.Value ? 0 : float.Parse(dr["winrate"].ToString());
-                    en.Buscando_equipo = (bool)dr["buscando_equipo"];
+                    en.Winrate = dr["winrate"] == DBNull.Value ? 0f : Convert.ToSingle(dr["winrate"]);
+                    en.Buscando_equipo = dr["buscando_equipo"] == DBNull.Value ? false : (bool)dr["buscando_equipo"];
                     lista.Add(en);
                 }
                 dr.Close();

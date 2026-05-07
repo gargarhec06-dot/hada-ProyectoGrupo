@@ -149,5 +149,33 @@ namespace hada_ProyectoGrupo.Library.CAD
             finally { c.Close(); }
             return lastId;
         }
+
+        // este método lo usamos para saber si un jugador es capitán de un equipo, necesario para poder implementar la inscripción de un equipo a un
+        // torneo (solo el capitán puede inscribir al equipo)
+        public List<ENEquipo> ReadByCapitan(int codigoJugador)
+        {
+            List<ENEquipo> lista = new List<ENEquipo>();
+            SqlConnection c = new SqlConnection(s);
+            try
+            {
+                c.Open();
+                string query = "SELECT * FROM Equipo WHERE id_capitan = @cap";
+                SqlCommand com = new SqlCommand(query, c);
+                com.Parameters.AddWithValue("@cap", codigoJugador);
+                SqlDataReader dr = com.ExecuteReader();
+                while (dr.Read())
+                {
+                    ENEquipo en = new ENEquipo();
+                    en.Id_equipo = (int)dr["id_equipo"];
+                    en.Nombre = dr["nombre"].ToString();
+                    en.Id_capitan = (int)dr["id_capitan"];
+                    lista.Add(en);
+                }
+                dr.Close();
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            finally { c.Close(); }
+            return lista;
+        }
     }
 }
