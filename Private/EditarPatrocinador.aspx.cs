@@ -78,7 +78,7 @@ namespace hada_ProyectoGrupo.Private
                 CADPatrocinador cadPat = new CADPatrocinador();
                 List<ENTorneoPatrocinador> patrocinios = cadPat.ReadPatrocinios(id);
 
-                lblMensaje.Text += " | Patrocinios: " + patrocinios.Count;
+                
 
                 foreach (RepeaterItem item in rptTorneos.Items)
                 {

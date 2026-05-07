@@ -37,6 +37,12 @@
         </asp:DropDownList>
     </div>
 
+    <div>
+    <asp:Label runat="server" Text="Videojuego:"/>
+    <asp:DropDownList ID="ddlVideojuego" runat="server">
+        <asp:ListItem Text="Selecciona un videojuego" Value="0"/>
+    </asp:DropDownList>
+    </div>
     
 
     <div>
