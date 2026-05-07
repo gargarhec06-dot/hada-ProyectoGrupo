@@ -36,9 +36,8 @@
         <p><strong>Hardware:</strong> 
             <asp:Label ID="lblHardware" runat="server" />
             <asp:DropDownList ID="ddlHardware" runat="server" Visible="false">
-                <asp:ListItem Text="Teclado" Value="Teclado" />
-                <asp:ListItem Text="Mando" Value="Mando" />
-                <asp:ListItem Text="Ratón" Value="Ratón" />
+                <asp:ListItem Text="teclado" Value="teclado" />
+                <asp:ListItem Text="mando" Value="mando" />
             </asp:DropDownList>
         </p>
         <p><strong>Buscando Equipo:</strong> 
