@@ -219,6 +219,42 @@ namespace hada_ProyectoGrupo.Library.CAD
             return lista;
         }
 
+        public bool QuitarCapitania(int codigoJugador)
+        {
+            bool ok = false;
+            SqlConnection c = new SqlConnection(s);
+            try
+            {
+                c.Open();
+                string sql = "UPDATE Equipo SET id_capitan = NULL WHERE id_capitan = @cod";
+                SqlCommand com = new SqlCommand(sql, c);
+                com.Parameters.AddWithValue("@cod", codigoJugador);
+                com.ExecuteNonQuery();
+                ok = true;
+            }
+            catch (Exception ex) { System.Diagnostics.Debug.WriteLine("Error QuitarCapitania: " + ex.Message); }
+            finally { c.Close(); }
+            return ok;
+        }
+
+        public bool QuitarDeEquipo(int codigoJugador)
+        {
+            bool ok = false;
+            SqlConnection c = new SqlConnection(s);
+            try
+            {
+                c.Open();
+                string sql = "UPDATE Jugador SET equipo_actual = NULL WHERE codigo = @cod";
+                SqlCommand com = new SqlCommand(sql, c);
+                com.Parameters.AddWithValue("@cod", codigoJugador);
+                com.ExecuteNonQuery();
+                ok = true;
+            }
+            catch (Exception ex) { System.Diagnostics.Debug.WriteLine("Error QuitarDeEquipo: " + ex.Message); }
+            finally { c.Close(); }
+            return ok;
+        }
+
 
     }
 }

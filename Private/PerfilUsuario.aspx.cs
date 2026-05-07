@@ -82,15 +82,35 @@ namespace hada_ProyectoGrupo.Private
 
             try
             {
-                // 1. Buscar el jugador por email
                 CADJugador cadJugador = new CADJugador();
+                CADEquipo cadEquipo = new CADEquipo();
                 List<ENJugador> jugadores = cadJugador.ReadAllByEmail(email);
+
+                // Comprobar si algún jugador es capitán de algún equipo
+                List<string> equiposComoCapitan = new List<string>();
                 foreach (ENJugador jugador in jugadores)
                 {
+                    ENEquipo equipo = cadEquipo.ReadByCapitan(jugador.Codigo);
+                    if (equipo != null)
+                    {
+                        equiposComoCapitan.Add(equipo.Nombre);
+                    }
+                }
+
+                if (equiposComoCapitan.Count > 0)
+                {
+                    string nombres = string.Join(", ", equiposComoCapitan);
+                    Response.Write("<script>alert('No puedes eliminar la cuenta porque eres capitán de los siguientes equipos: " + nombres + ". Elimínalos primero.');</script>");
+                    return;
+                }
+
+                // Si no es capitán de ningún equipo, proceder con la eliminación
+                foreach (ENJugador jugador in jugadores)
+                {
+                    cadJugador.QuitarDeEquipo(jugador.Codigo);
                     cadJugador.Delete(jugador);
                 }
 
-                // 2. Eliminar el usuario
                 CADUsuario cadUsuario = new CADUsuario();
                 ENUsuario usuario = new ENUsuario();
                 usuario.Email = email;
@@ -107,10 +127,6 @@ namespace hada_ProyectoGrupo.Private
                     {
                         Response.Write("<script>alert('No se pudo eliminar la cuenta');</script>");
                     }
-                }
-                else
-                {
-                    Response.Write("<script>alert('Usuario no encontrado');</script>");
                 }
             }
             catch (Exception ex)

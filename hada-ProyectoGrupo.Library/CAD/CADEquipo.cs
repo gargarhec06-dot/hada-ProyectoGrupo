@@ -165,5 +165,28 @@ namespace hada_ProyectoGrupo.Library.CAD
             finally { c.Close(); }
             return lastId;
         }
+        public ENEquipo ReadByCapitan(int idCapitan)
+        {
+            ENEquipo en = null;
+            SqlConnection c = new SqlConnection(s);
+            try
+            {
+                c.Open();
+                string query = "SELECT * FROM Equipo WHERE id_capitan = @id";
+                SqlCommand com = new SqlCommand(query, c);
+                com.Parameters.AddWithValue("@id", idCapitan);
+                SqlDataReader dr = com.ExecuteReader();
+                if (dr.Read())
+                {
+                    en = new ENEquipo();
+                    en.Id_equipo = (int)dr["id_equipo"];
+                    en.Nombre = dr["nombre"].ToString();
+                }
+                dr.Close();
+            }
+            catch (Exception) { }
+            finally { c.Close(); }
+            return en;
+        }
     }
 }
