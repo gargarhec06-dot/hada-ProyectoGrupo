@@ -10,8 +10,21 @@ namespace hada_ProyectoGrupo.Public
     public partial class DetallesEquipo : System.Web.UI.Page
     {
         private ENEquipo equipo;
-        private string accionPendiente;
-        private int idEquipo;
+        private string accionPendiente
+        {
+            get { return ViewState["AccionPendiente"] as string; }
+            set { ViewState["AccionPendiente"] = value; }
+        }
+
+        private int idEquipo
+        {
+            get
+            { return ViewState["IdEquipo"] != null ? (int)ViewState["IdEquipo"] : 0;}
+            set
+            {
+                ViewState["IdEquipo"] = value;
+            }
+        }
         private string emailLogueado;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -386,6 +399,7 @@ namespace hada_ProyectoGrupo.Public
                 capitan.Read();
 
                 ENEquipo nuevoEquipo = new ENEquipo();
+                // NO asignes Id_equipo, la BD lo genera automáticamente
                 nuevoEquipo.Nombre = txtNombre.Text;
                 nuevoEquipo.Fecha_creacion = DateTime.Now;
                 nuevoEquipo.Logo_url = txtLogo.Text;
@@ -394,7 +408,12 @@ namespace hada_ProyectoGrupo.Public
 
                 if (nuevoEquipo.Create())
                 {
-                    int idEquipoCreado = ObtenerUltimoIdEquipo();
+                    // Después de crear, leer el equipo para obtener su ID
+                    ENEquipo equipoCreado = new ENEquipo();
+                    equipoCreado.Nombre = txtNombre.Text;
+
+                    // Buscar por nombre (único) para obtener el ID
+                    int idEquipoCreado = ObtenerIdEquipoPorNombre(txtNombre.Text);
 
                     if (idEquipoCreado > 0)
                     {
@@ -403,7 +422,6 @@ namespace hada_ProyectoGrupo.Public
 
                         lblMensaje.Text = "Equipo creado correctamente";
                         lblMensaje.ForeColor = System.Drawing.Color.Green;
-
                         Response.Redirect("~/Public/DetallesEquipo.aspx?id=" + idEquipoCreado);
                     }
                     else
@@ -425,10 +443,17 @@ namespace hada_ProyectoGrupo.Public
             }
         }
 
-        private int ObtenerUltimoIdEquipo()
+        private int ObtenerIdEquipoPorNombre(string nombre)
         {
-            CADEquipo cad = new CADEquipo();
-            return cad.GetLastId();
+            List<ENEquipo> equipos = new CADEquipo().ReadAll();
+            foreach (ENEquipo eq in equipos)
+            {
+                if (eq.Nombre == nombre)
+                {
+                    return eq.Id_equipo;
+                }
+            }
+            return 0;
         }
 
         private void UnirseEquipo(int codigoJugador, int idEquipo)
