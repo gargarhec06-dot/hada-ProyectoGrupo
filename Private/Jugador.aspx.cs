@@ -1,4 +1,5 @@
-﻿using hada_ProyectoGrupo.Library.EN;
+﻿using hada_ProyectoGrupo.Library.CAD;
+using hada_ProyectoGrupo.Library.EN;
 using System;
 using System.Collections.Generic;
 using System.Web.UI.WebControls;
@@ -18,7 +19,7 @@ namespace hada_ProyectoGrupo.Private
 
             if (!IsPostBack)
             {
-                ;
+
             }
         }
 
@@ -38,6 +39,7 @@ namespace hada_ProyectoGrupo.Private
                 jugador.Hardware = ddlHardware.SelectedValue;
                 jugador.Buscando_equipo = chkBuscandoEquipo.Checked;
 
+
                 bool ok = jugador.Create();
 
                 if (ok)
@@ -45,7 +47,8 @@ namespace hada_ProyectoGrupo.Private
                     lblMensaje.ForeColor = System.Drawing.Color.Green;
                     lblMensaje.Text = "Jugador creado correctamente.";
                     txtApodo.Text = "";
-                    
+                    Response.Redirect("~/Public/Jugadores.aspx");
+
                 }
                 else
                 {

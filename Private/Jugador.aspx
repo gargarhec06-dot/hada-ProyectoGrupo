@@ -37,6 +37,8 @@
         </asp:DropDownList>
     </div>
 
+    
+
     <div>
         <asp:Label runat="server" Text="¿Buscando equipo?"/>
         <asp:CheckBox ID="chkBuscandoEquipo" runat="server"/>

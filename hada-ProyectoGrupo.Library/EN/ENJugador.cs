@@ -36,7 +36,7 @@ namespace hada_ProyectoGrupo.Library.EN
             _juego = 0;
         }
 
-        public ENJugador(int codigo, string email, string apodo, string rol, float kda, float winrate, int nivel, string hardware, bool buscando, int equipo,int juego)
+        public ENJugador(int codigo, string email, string apodo, string rol, float kda, float winrate, int nivel, string hardware, bool buscando, int equipo, int juego)
         {
             _codigo = codigo;
             _email_usuario = email;
@@ -51,15 +51,20 @@ namespace hada_ProyectoGrupo.Library.EN
             _juego = juego;
         }
 
-        // Constructor para los parametro obligatorios
+        // Constructor para los parámetros obligatorios
         public ENJugador(string email, string apodo)
         {
+            _codigo = 0;
             _email_usuario = email;
             _apodo = apodo;
-            _nivel = 1; 
-            _buscando_equipo = false;
+            _rol_principal = "";
             _kda_promedio = 0.0f;
             _winrate = 0.0f;
+            _nivel = 1;
+            _hardware = "";
+            _buscando_equipo = false;
+            _equipo_actual = 0;
+            _juego = 0;
         }
 
         public int Codigo
@@ -104,10 +109,16 @@ namespace hada_ProyectoGrupo.Library.EN
             set { _nivel = value; }
         }
 
+        // Validación del CHECK constraint de la tabla: solo 'teclado', 'mando' o vacío
         public string Hardware
         {
             get { return _hardware; }
-            set { _hardware = value; }
+            set
+            {
+                if (value != null && value != "" && value != "teclado" && value != "mando")
+                    throw new ArgumentException("Hardware debe ser 'teclado' o 'mando'.");
+                _hardware = value ?? "";
+            }
         }
 
         public bool Buscando_equipo
@@ -157,6 +168,5 @@ namespace hada_ProyectoGrupo.Library.EN
             CADJugador cad = new CADJugador();
             return cad.ReadAll();
         }
-
     }
 }

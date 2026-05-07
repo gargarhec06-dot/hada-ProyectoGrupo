@@ -25,9 +25,8 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                string query = "INSERT INTO Equipo (id_equipo, nombre,fecha_creacion, logo_url, descripcion, id_capitan) VALUES (@id_e, @nom, @fech, @log, @des, @id_c)";
+                string query = "INSERT INTO Equipo (nombre,fecha_creacion, logo_url, descripcion, id_capitan) VALUES (@nom, @fech, @log, @des, @id_c)";
                 SqlCommand com = new SqlCommand(query, c);
-                com.Parameters.AddWithValue("@id_e", en.Id_equipo);
                 com.Parameters.AddWithValue("@nom", en.Nombre);
                 com.Parameters.AddWithValue("@fech", en.Fecha_creacion);
                 com.Parameters.AddWithValue("@log", en.Logo_url);
@@ -35,7 +34,7 @@ namespace hada_ProyectoGrupo.Library.CAD
                 com.Parameters.AddWithValue("@id_c", en.Id_capitan);
                 if (com.ExecuteNonQuery() > 0) ok = true;
             }
-            catch (Exception) { ok = false; }
+            catch (Exception ex) { throw new Exception("Error al crear equipo: " + ex.Message); }
             finally { c.Close(); }
             return ok;
         }
@@ -135,6 +134,20 @@ namespace hada_ProyectoGrupo.Library.CAD
             catch (Exception) { }
             finally { c.Close(); }
             return lista;
+        }
+        public int GetLastId()
+        {
+            int lastId = 0;
+            SqlConnection c = new SqlConnection(s);
+            try
+            {
+                c.Open();
+                SqlCommand com = new SqlCommand("SELECT ISNULL(MAX(id_equipo), 0) FROM Equipo", c);
+                lastId = (int)com.ExecuteScalar();
+            }
+            catch (Exception) { }
+            finally { c.Close(); }
+            return lastId;
         }
     }
 }

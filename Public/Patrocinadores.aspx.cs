@@ -12,9 +12,12 @@ namespace hada_ProyectoGrupo.Public
             if (!IsPostBack)
             {
                 CargarPatrocinadores();
-                if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == true) {
-                    pnlAdmin.Visible = true;
-                }
+                
+            }
+
+            if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == true)
+            {
+                pnlAdmin.Visible = true;
             }
         }
 
@@ -28,7 +31,7 @@ namespace hada_ProyectoGrupo.Public
 
         protected void btnCrear_Click(object sender, EventArgs e)
         {
-                        Response.Redirect("~/private/GestionPatrocinadore.aspx");
+                        Response.Redirect("~/private/GestionPatrocinador.aspx");
         }
 
     }

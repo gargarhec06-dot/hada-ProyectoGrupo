@@ -102,7 +102,7 @@ namespace hada_ProyectoGrupo.Library.EN
             set { _activo = value; }
         }
 
-        public bool Create()
+        public int Create()
         {
             CADPatrocinador cad = new CADPatrocinador();
             return cad.Create(this);
