@@ -1,4 +1,5 @@
-﻿using hada_ProyectoGrupo.Library.EN;
+﻿using hada_ProyectoGrupo.Library.CAD;
+using hada_ProyectoGrupo.Library.EN;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,17 +15,22 @@ namespace hada_ProyectoGrupo.Public
         {
             if (!IsPostBack)
             {
-                if (int.TryParse(Request.QueryString["codigo"], out int codigo))
+                if (Request.QueryString["codigo"] == null)
                 {
-                    // Usamos ReadAll() y filtramos, igual que en Torneos.aspx
-                    ENTorneo enTemp = new ENTorneo();
-                    List<ENTorneo> lista = enTemp.ReadAll();
-                    ENTorneo en = lista.FirstOrDefault(t => t.Codigo == codigo);
+                    MostrarError();
+                    return;
+                }
 
-                    if (en != null)
-                        MostrarTorneo(en);
-                    else
-                        MostrarError();
+                int codigo = int.Parse(Request.QueryString["codigo"]);
+
+                ENTorneo enTemp = new ENTorneo();
+                List<ENTorneo> lista = enTemp.ReadAll();
+                ENTorneo en = lista.FirstOrDefault(t => t.Codigo == codigo);
+
+                if (en != null)
+                {
+                    MostrarTorneo(en);
+                    CargarEquipos(codigo);
                 }
                 else
                 {
@@ -59,6 +65,23 @@ namespace hada_ProyectoGrupo.Public
         {
             int codigo = int.Parse(Request.QueryString["codigo"]);
             Response.Redirect("~/Public/Inscripcion.aspx?codigo=" + codigo);
+        }
+
+        private void CargarEquipos(int codigoTorneo)
+        {
+            CADInscripcion cad = new CADInscripcion();
+            List<ENEquipo> equipos = cad.ReadEquiposByTorneo(codigoTorneo);
+
+            if (equipos.Count > 0)
+            {
+                rptEquipos.DataSource = equipos;
+                rptEquipos.DataBind();
+            }
+            else
+            {
+                rptEquipos.Visible = false;
+                lblSinEquipos.Visible = true;
+            }
         }
     }
 }

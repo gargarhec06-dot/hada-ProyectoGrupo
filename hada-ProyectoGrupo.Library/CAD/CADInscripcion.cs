@@ -24,7 +24,7 @@ namespace hada_ProyectoGrupo.Library.CAD
             {
                 c.Open(); 
 
-                string query = "INSERT INTO Inscripcion (id_inscripcion, id_equipo, id_torneo, fecha_inscripcion, estado, cuota_pagada, moneda) " +
+                string query = "INSERT INTO Inscripcion (id_equipo, id_torneo, fecha_inscripcion, estado, cuota_pagada, moneda) " +
                                "VALUES (@eq, @tor, @fec, @est, @cuo, @mon)";
 
                 SqlCommand com = new SqlCommand(query, c); 
@@ -138,6 +138,34 @@ namespace hada_ProyectoGrupo.Library.CAD
                     en.Cuota_pagada = float.Parse(dr["cuota_pagada"].ToString()); 
                     en.Moneda = dr["moneda"].ToString(); 
                     lista.Add(en); 
+                }
+                dr.Close();
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            finally { c.Close(); }
+            return lista;
+        }
+
+        public List<ENEquipo> ReadEquiposByTorneo(int idTorneo)
+        {
+            List<ENEquipo> lista = new List<ENEquipo>();
+            SqlConnection c = new SqlConnection(s);
+            try
+            {
+                c.Open();
+                string query = @"SELECT e.id_equipo, e.nombre 
+                         FROM Equipo e
+                         JOIN Inscripcion i ON e.id_equipo = i.id_equipo
+                         WHERE i.id_torneo = @tor AND i.estado != 'Rechazado'";
+                SqlCommand com = new SqlCommand(query, c);
+                com.Parameters.AddWithValue("@tor", idTorneo);
+                SqlDataReader dr = com.ExecuteReader();
+                while (dr.Read())
+                {
+                    ENEquipo en = new ENEquipo();
+                    en.Id_equipo = (int)dr["id_equipo"];
+                    en.Nombre = dr["nombre"].ToString();
+                    lista.Add(en);
                 }
                 dr.Close();
             }

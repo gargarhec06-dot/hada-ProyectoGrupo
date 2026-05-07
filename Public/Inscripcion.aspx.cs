@@ -42,7 +42,7 @@ namespace hada_ProyectoGrupo.Public
                 lblTorneo.Text = torneo.Nombre;
 
             CADJugador cadJugador = new CADJugador();
-            List<ENJugador> jugadores = cadJugador.ReadByEmail(usuario.Email);
+            List<ENJugador> jugadores = cadJugador.ReadAllByEmail(usuario.Email);
 
             if (jugadores.Count == 0)
             {
@@ -77,19 +77,37 @@ namespace hada_ProyectoGrupo.Public
         {
             int codigoTorneo = int.Parse(Request.QueryString["codigo"]);
             int idEquipo = int.Parse(ddlEquipos.SelectedValue);
+            ENUsuario usuario = (ENUsuario)Session["UsuarioActual"];
+
+            ENTorneo torneo = new ENTorneo();
+            torneo.Codigo = codigoTorneo;
+            torneo.Read();
+
+            if (usuario.Saldo_cartera < torneo.PrecioInscripcion)
+            {
+                lblMensaje.Text = "Saldo insuficiente. Necesitas " + torneo.PrecioInscripcion + "€ y tienes " + usuario.Saldo_cartera + "€";
+                return;
+            }
 
             ENInscripcion inscripcion = new ENInscripcion();
             inscripcion.Id_equipo = idEquipo;
             inscripcion.Id_torneo = codigoTorneo;
             inscripcion.Fecha_inscripcion = DateTime.Now;
-            inscripcion.Estado = "Pendiente";
-            inscripcion.Cuota_pagada = 0;
+            inscripcion.Cuota_pagada = torneo.PrecioInscripcion;
             inscripcion.Moneda = "EUR";
 
             if (inscripcion.Create())
+            {
+                usuario.Saldo_cartera = usuario.Saldo_cartera - torneo.PrecioInscripcion;
+                usuario.Update();
+                Session["UsuarioActual"] = usuario;
+
                 Response.Redirect("~/Public/Torneos.aspx");
+            }
             else
-                lblMensaje.Text = "Error al inscribir. Es posible que el equipo ya este inscrito.";
+            {
+                lblMensaje.Text = "Error al inscribir. Es MUY posible que el equipo ya esté inscrito";
+            }
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)

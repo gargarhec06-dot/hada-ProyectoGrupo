@@ -96,6 +96,24 @@ namespace hada_ProyectoGrupo.Public
         protected global::System.Web.UI.WebControls.Label lblCosteOrganizacion;
 
         /// <summary>
+        /// Control rptEquipos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptEquipos;
+
+        /// <summary>
+        /// Control lblSinEquipos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSinEquipos;
+
+        /// <summary>
         /// Control pnlError.
         /// </summary>
         /// <remarks>
