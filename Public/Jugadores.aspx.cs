@@ -25,7 +25,7 @@ namespace hada_ProyectoGrupo.Public
             {
                 List<ENJugador> todosLosJugadores = new ENJugador().ReadAll();
 
-                if (Session["Email"] != null)
+                if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == false)
                 {
                     // Si está logueado, mostrar SOLO sus jugadores
                     string emailLogueado = Session["Email"].ToString();

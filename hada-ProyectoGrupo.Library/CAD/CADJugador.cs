@@ -155,8 +155,45 @@ namespace hada_ProyectoGrupo.Library.CAD
             return lista;
         }
 
-        // para saber que jugadores están asociados con un usuario
-        public List<ENJugador> ReadByEmail(string email)
+        public ENJugador ReadByEmail(string email)
+        {
+            ENJugador en = null;
+            SqlConnection c = new SqlConnection(s);
+            try
+            {
+                c.Open();
+                string query = "SELECT * FROM Jugador WHERE email_usuario = @email";
+                SqlCommand com = new SqlCommand(query, c);
+                com.Parameters.AddWithValue("@email", email);
+                SqlDataReader dr = com.ExecuteReader();
+
+                if (dr.Read())
+                {
+                    en = new ENJugador();
+                    en.Codigo = (int)dr["codigo"];
+                    en.Email_usuario = dr["email_usuario"].ToString();
+                    en.Apodo = dr["apodo"].ToString();
+                    en.Winrate = dr["winrate"] == DBNull.Value ? 0f : Convert.ToSingle(dr["winrate"]);
+                    en.Nivel = dr["nivel"] == DBNull.Value ? 1 : (int)dr["nivel"];
+                    en.Hardware = dr["hardware"] == DBNull.Value ? "" : dr["hardware"].ToString();
+                    en.Buscando_equipo = dr["buscando_equipo"] == DBNull.Value ? false : (bool)dr["buscando_equipo"];
+                    en.Equipo_actual = dr["equipo_actual"] == DBNull.Value ? 0 : (int)dr["equipo_actual"];
+                    en.Juego = dr["juego"] == DBNull.Value ? 0 : (int)dr["juego"];
+                    en.Rol_principal = dr["rol"] == DBNull.Value ? "" : dr["rol"].ToString();
+                    en.Kda_promedio = dr["KDA"] == DBNull.Value ? 0f : Convert.ToSingle(dr["KDA"]);
+                }
+                dr.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error en ReadByEmail: " + ex.Message);
+            }
+            finally { c.Close(); }
+            return en;  // Devuelve null si no encuentra el jugador
+        }
+
+
+        public List<ENJugador> ReadAllByEmail(string email)
         {
             List<ENJugador> lista = new List<ENJugador>();
             SqlConnection c = new SqlConnection(s);
@@ -173,19 +210,15 @@ namespace hada_ProyectoGrupo.Library.CAD
                     en.Codigo = (int)dr["codigo"];
                     en.Email_usuario = dr["email_usuario"].ToString();
                     en.Apodo = dr["apodo"].ToString();
-                    en.Equipo_actual = dr["equipo_actual"] == DBNull.Value ? 0 : (int)dr["equipo_actual"];
-                    en.Rol_principal = dr["rol"] == DBNull.Value ? "" : dr["rol"].ToString();
-                    en.Kda_promedio = dr["KDA"] == DBNull.Value ? 0f : Convert.ToSingle(dr["KDA"]);
-                    en.Nivel = dr["nivel"] == DBNull.Value ? 0 : (int)dr["nivel"];
-                    en.Winrate = dr["winrate"] == DBNull.Value ? 0f : Convert.ToSingle(dr["winrate"]);
-                    en.Buscando_equipo = dr["buscando_equipo"] == DBNull.Value ? false : (bool)dr["buscando_equipo"];
                     lista.Add(en);
                 }
                 dr.Close();
             }
-            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            catch (Exception ex) { throw new Exception("Error en ReadAllByEmail: " + ex.Message); }
             finally { c.Close(); }
             return lista;
         }
+
+
     }
 }

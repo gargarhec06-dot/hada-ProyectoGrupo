@@ -86,19 +86,99 @@ namespace hada_ProyectoGrupo.Library.CAD
 
         }
 
+        public bool Read(ENUsuario en)
+        {
+            bool ok = false;
+            SqlConnection c = new SqlConnection(constring);
+            try
+            {
+                c.Open();
+                string sql = "SELECT * FROM Usuario WHERE email = @email";
+                SqlCommand com = new SqlCommand(sql, c);
+                com.Parameters.AddWithValue("@email", en.Email);
+                SqlDataReader dr = com.ExecuteReader();
+
+                if (dr.Read())
+                {
+                    en.Email = dr["email"].ToString();
+                    en.Password = dr["password"].ToString();
+                    en.Nombre = dr["nombre"]?.ToString() ?? "";
+                    en.Apellidos = dr["apellidos"]?.ToString() ?? "";
+                    en.Fecha_Nacimiento = dr["fecha_nacimiento"] == DBNull.Value ? DateTime.Now : (DateTime)dr["fecha_nacimiento"];
+                    en.Pais = dr["pais"]?.ToString() ?? "";
+                    en.Saldo_cartera = dr["saldo_cartera"] == DBNull.Value ? 0 : Convert.ToSingle(dr["saldo_cartera"]);  // ← ToSingle
+                    en.Verificado = dr["verificado"] != DBNull.Value && (bool)dr["verificado"];
+                    ok = true;
+                }
+                dr.Close();
+            }
+            catch (Exception)
+            {
+                ok = false;
+            }
+            finally { c.Close(); }
+            return ok;
+        }
+
         public bool Update(ENUsuario en)
         {
-            bool ok = true; 
+            bool ok = false;
+            SqlConnection c = new SqlConnection(constring);
+            try
+            {
+                c.Open();
+                string sql = @"UPDATE Usuario 
+                       SET nombre = @nombre, apellidos = @apellidos, pais = @pais";
 
+                // Si hay contraseña nueva, la actualizamos
+                if (!string.IsNullOrEmpty(en.Password))
+                {
+                    sql += ", password = @password";
+                }
 
+                sql += " WHERE email = @email";
+
+                SqlCommand com = new SqlCommand(sql, c);
+                com.Parameters.AddWithValue("@nombre", en.Nombre);
+                com.Parameters.AddWithValue("@apellidos", (object)en.Apellidos ?? DBNull.Value);
+                com.Parameters.AddWithValue("@pais", (object)en.Pais ?? DBNull.Value);
+                com.Parameters.AddWithValue("@email", en.Email);
+
+                if (!string.IsNullOrEmpty(en.Password))
+                {
+                    com.Parameters.AddWithValue("@password", en.Password);
+                }
+
+                if (com.ExecuteNonQuery() > 0) ok = true;
+            }
+            catch (Exception)
+            {
+                ok = false;
+            }
+            finally { c.Close(); }
             return ok;
         }
 
         public bool Delete(ENUsuario en)
         {
-            bool ok = true; 
-
-
+            bool ok = false;
+            SqlConnection c = new SqlConnection(constring);
+            try
+            {
+                c.Open();
+                string sql = "DELETE FROM Usuario WHERE email = @email";
+                SqlCommand com = new SqlCommand(sql, c);
+                com.Parameters.AddWithValue("@email", en.Email);
+                int filas = com.ExecuteNonQuery();
+                ok = filas > 0;
+            }
+            catch (Exception ex)
+            {
+                // Guardar el error para depurar
+                System.Diagnostics.Debug.WriteLine("Error al eliminar: " + ex.Message);
+                ok = false;
+            }
+            finally { c.Close(); }
             return ok;
         }
     }

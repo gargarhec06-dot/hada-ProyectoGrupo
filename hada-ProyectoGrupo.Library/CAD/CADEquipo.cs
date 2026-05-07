@@ -22,20 +22,36 @@ namespace hada_ProyectoGrupo.Library.CAD
         {
             bool ok = false;
             SqlConnection c = new SqlConnection(s);
+
             try
             {
                 c.Open();
-                string query = "INSERT INTO Equipo (nombre,fecha_creacion, logo_url, descripcion, id_capitan) VALUES (@nom, @fech, @log, @des, @id_c)";
+
+                string query = @"INSERT INTO Equipo
+                        (nombre, fecha_creacion, logo_url, descripcion, id_capitan)
+                        VALUES
+                        (@nom, @fech, @log, @des, @id_c)";
+
                 SqlCommand com = new SqlCommand(query, c);
+
                 com.Parameters.AddWithValue("@nom", en.Nombre);
                 com.Parameters.AddWithValue("@fech", en.Fecha_creacion);
                 com.Parameters.AddWithValue("@log", en.Logo_url);
                 com.Parameters.AddWithValue("@des", en.Descripcion);
                 com.Parameters.AddWithValue("@id_c", en.Id_capitan);
-                if (com.ExecuteNonQuery() > 0) ok = true;
+
+                if (com.ExecuteNonQuery() > 0)
+                    ok = true;
             }
-            catch (Exception ex) { throw new Exception("Error al crear equipo: " + ex.Message); }
-            finally { c.Close(); }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al crear equipo: " + ex.Message);
+            }
+            finally
+            {
+                c.Close();
+            }
+
             return ok;
         }
 

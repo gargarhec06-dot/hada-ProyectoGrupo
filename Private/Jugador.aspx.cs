@@ -19,6 +19,13 @@ namespace hada_ProyectoGrupo.Private
 
             if (!IsPostBack)
             {
+                CADVideojuego cadVj = new CADVideojuego();
+                ddlVideojuego.DataSource = cadVj.ReadAll();
+                ddlVideojuego.DataTextField = "Nombre";
+                ddlVideojuego.DataValueField = "Codigo";
+                ddlVideojuego.DataBind();
+                ddlVideojuego.Items.Insert(0, new ListItem("Selecciona un videojuego", "0"));
+
 
             }
         }
@@ -38,7 +45,7 @@ namespace hada_ProyectoGrupo.Private
                 jugador.Rol_principal = ddlRol.SelectedValue;
                 jugador.Hardware = ddlHardware.SelectedValue;
                 jugador.Buscando_equipo = chkBuscandoEquipo.Checked;
-
+                jugador.Juego = int.Parse(ddlVideojuego.SelectedValue);
 
                 bool ok = jugador.Create();
 
