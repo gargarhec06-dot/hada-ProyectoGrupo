@@ -25,11 +25,10 @@ namespace hada_ProyectoGrupo.Library.CAD
                 c.Open(); 
 
                 string query = "INSERT INTO Inscripcion (id_inscripcion, id_equipo, id_torneo, fecha_inscripcion, estado, cuota_pagada, moneda) " +
-                               "VALUES (@id, @eq, @tor, @fec, @est, @cuo, @mon)";
+                               "VALUES (@eq, @tor, @fec, @est, @cuo, @mon)";
 
                 SqlCommand com = new SqlCommand(query, c); 
                 
-                com.Parameters.AddWithValue("@id", en.Id_inscripcion); 
                 com.Parameters.AddWithValue("@eq", en.Id_equipo); 
                 com.Parameters.AddWithValue("@tor", en.Id_torneo); 
                 com.Parameters.AddWithValue("@fec", en.Fecha_inscripcion); 

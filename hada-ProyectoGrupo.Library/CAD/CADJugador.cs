@@ -156,5 +156,38 @@ namespace hada_ProyectoGrupo.Library.CAD
             finally { c.Close(); }
             return lista;
         }
+
+        // para saber que jugadores están asociados con un usuario
+        public List<ENJugador> ReadByEmail(string email)
+        {
+            List<ENJugador> lista = new List<ENJugador>();
+            SqlConnection c = new SqlConnection(s);
+            try
+            {
+                c.Open();
+                string query = "SELECT * FROM Jugador WHERE email_usuario = @email";
+                SqlCommand com = new SqlCommand(query, c);
+                com.Parameters.AddWithValue("@email", email);
+                SqlDataReader dr = com.ExecuteReader();
+                while (dr.Read())
+                {
+                    ENJugador en = new ENJugador();
+                    en.Codigo = (int)dr["codigo"];
+                    en.Email_usuario = dr["email_usuario"].ToString();
+                    en.Apodo = dr["apodo"].ToString();
+                    en.Equipo_actual = dr["equipo_actual"] == DBNull.Value ? 0 : (int)dr["equipo_actual"];
+                    en.Rol = dr["rol"].ToString();
+                    en.Kda = dr["kda"] == DBNull.Value ? 0 : float.Parse(dr["kda"].ToString());
+                    en.Nivel = dr["nivel"] == DBNull.Value ? 0 : (int)dr["nivel"];
+                    en.Winrate = dr["winrate"] == DBNull.Value ? 0 : float.Parse(dr["winrate"].ToString());
+                    en.Buscando_equipo = (bool)dr["buscando_equipo"];
+                    lista.Add(en);
+                }
+                dr.Close();
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            finally { c.Close(); }
+            return lista;
+        }
     }
 }
