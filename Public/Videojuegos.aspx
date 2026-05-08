@@ -24,5 +24,8 @@
                 </asp:Repeater>
             </tbody>
         </table>
+        <div>
+            <asp:Button id="CreateVideojuego" visible="false" class="btn btn-success" Text="+ Crear videojuego" runat="server" OnClick="CreateVideojuego_Click"/>
+        </div>
     </div>
 </asp:Content>

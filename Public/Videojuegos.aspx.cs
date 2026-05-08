@@ -16,6 +16,16 @@ namespace hada_ProyectoGrupo.Public
 
             tableGenerator.DataSource = list;
             tableGenerator.DataBind();
+
+            if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"])
+            {
+                CreateVideojuego.Visible = true;
+            }
+        }
+
+        protected void CreateVideojuego_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Videojuego.aspx");
         }
     }
 }
