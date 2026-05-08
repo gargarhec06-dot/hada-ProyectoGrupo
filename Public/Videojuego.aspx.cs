@@ -16,8 +16,21 @@ namespace hada_ProyectoGrupo.Public
             string code = Request.QueryString["codigo"];
 
             if (string.IsNullOrEmpty(code)) {
-                DebugLabel.Text = "No se encontró ningún argumento para el código del juego";
-                return;
+                if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"])
+                {
+                    activate_admin();
+
+                    AdminDelete.Visible = false;
+                    AdminUpdate.Visible = false;
+                    AdminAdd.Visible = true;
+
+                    return;
+                }
+                else
+                {
+                      DebugLabel.Text = "No se encontró ningún argumento para el código del juego";
+                      return;
+                }
             }
 
             ENVideojuego videojuego = new ENVideojuego(int.Parse(code), "", "", "", 0);
@@ -62,7 +75,7 @@ namespace hada_ProyectoGrupo.Public
 
             AdminDelete.Visible = true;
             AdminUpdate.Visible = true;
-            AdminAdd.Visible = true;
+            //AdminAdd.Visible = true;
         }
 
         protected void AdminUpdate_Click(object sender, EventArgs e)
@@ -77,7 +90,14 @@ namespace hada_ProyectoGrupo.Public
                     int.Parse(EdadMinimaAdminBox.Text)
                 );
 
-                entry.Update();
+                if (entry.Update())
+                {
+                    Response.Redirect(Request.Url.ToString());
+                }
+                else
+                {
+                    DebugLabel.Text = "No se pudo actualizar la entrada";
+                }
             }
         }
 
@@ -88,7 +108,14 @@ namespace hada_ProyectoGrupo.Public
                 ENVideojuego entry = new ENVideojuego();
                 entry.Codigo = int.Parse(CodigoAdminBox.Text);
 
-                entry.Delete();
+                if (entry.Delete())
+                {
+                    Response.Redirect("Videojuegos.aspx");
+                }
+                else
+                {
+                    DebugLabel.Text = "Algo fue mal y no se pudo borrar";
+                }
             }
         }
 
@@ -97,14 +124,25 @@ namespace hada_ProyectoGrupo.Public
             if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"])
             {
                 ENVideojuego entry = new ENVideojuego(
-                    int.Parse(CodigoAdminBox.Text),
+                    0,
                     NombreAdminBox.Text,
                     DescripcionAdminBox.Text,
                     TipoAdminBox.Text,
                     int.Parse(EdadMinimaAdminBox.Text)
                 );
 
-                entry.Create();
+                if (entry.Create())
+                {
+                    // Obetener último videojuego añadido
+                    ENVideojuego new_entry = entry.ReadAll().Last();
+                    int new_code = new_entry.Codigo;
+
+                    Response.Redirect("Videojuego.aspx?codigo=" + new_code.ToString());
+                }
+                else
+                {
+                    DebugLabel.Text = "Algo fue mal a la hora de crear la entrada";
+                }
             }
         }
     }

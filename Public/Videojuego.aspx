@@ -29,9 +29,16 @@
             <asp:Label Text="" ID="EdadMinimaLabel" runat="server"/>
             <asp:TextBox TextMode="Number" Visible="false" ID="EdadMinimaAdminBox" runat="server"/>
         </div>
+        <div>
+            <asp:Label Text="" ID="DebugLabel" runat="server"/>
+        </div>
+        <div>
+            <asp:Button Text="Actualizar entrada" ID="AdminUpdate" runat="server" Visible="false" OnClick="AdminUpdate_Click" CssClass="btn btn-info"/>
+            <asp:Button Text="Añadir entrada" ID="AdminAdd" runat="server" Visible="false" CssClass="btn btn-info" OnClick="AdminAdd_Click"/>
+            <asp:Button Text="Borrar entrada" ID="AdminDelete" runat="server" Visible="false" OnClick="AdminDelete_Click" OnClientClick="return confirm('¿Estás seguro de eliminar este videojuego?')" CssClass="btn btn-danger"/>
+        </div>
+        <div>
+            <a href="Videojuegos.aspx" class="btn btn-secondary">Volver</a>
+        </div>
     </div>
-    <asp:Label Text="" ID="DebugLabel" runat="server"/>
-    <asp:Button Text="Actualizar entrada" ID="AdminUpdate" runat="server" Visible="false" OnClick="AdminUpdate_Click" CssClass="btn btn-info"/>
-    <asp:Button Text="Añadir entrada" ID="AdminAdd" runat="server" Visible="false" CssClass="btn btn-info" OnClick="AdminAdd_Click"/>
-    <asp:Button Text="Borrar entrada" ID="AdminDelete" runat="server" Visible="false" OnClick="AdminDelete_Click" OnClientClick="return confirm('¿Estás seguro de eliminar este videojuego?')" CssClass="btn btn-danger"/>
 </asp:Content>
