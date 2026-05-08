@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace hada_ProyectoGrupo.Public
 {
@@ -12,29 +13,40 @@ namespace hada_ProyectoGrupo.Public
             if (!IsPostBack)
             {
                 CargarNoticias();
+
+                // Lógica segura: Si es null o no es admin, el panel se queda oculto
                 if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == true)
                 {
                     pnlAdmin.Visible = true;
+                }
+                else
+                {
+                    pnlAdmin.Visible = false;
                 }
             }
         }
 
         public void CargarNoticias()
         {
-            List<ENNoticia> lista = new List<ENNoticia>
+            try
             {
-                new ENNoticia(1, "¡Nuevo Torneo!", "Se anuncia la competición de verano.", DateTime.Now, "admin@hada.com"),
-                new ENNoticia(2, "Actualización", "Nuevos parches y mejoras de rendimiento.", DateTime.Now, "admin@hada.com"),
-                new ENNoticia(3, "Resultados", "Ya tenemos a los campeones del split.", DateTime.Now, "admin@hada.com")
-            };
+                ENNoticia noticia = new ENNoticia();
+                List<ENNoticia> lista = noticia.ReadAll();
 
-            rptNoticias.DataSource = lista;
-            rptNoticias.DataBind();
+                rptNoticias.DataSource = lista;
+                rptNoticias.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al cargar noticias: {0}", ex.Message);
+                // No lanzamos alert para no molestar al usuario anónimo, 
+                // solo si es un error crítico de conexión.
+            }
         }
 
         protected void btnCrear_Click(object sender, EventArgs e)
         {
-            Response.Redirect("CrearNoticia.aspx");
+            Response.Redirect("~/Public/DetallesNoticia.aspx");
         }
     }
 }

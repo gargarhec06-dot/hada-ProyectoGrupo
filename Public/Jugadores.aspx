@@ -14,7 +14,7 @@
                         <h1><%# Eval("Apodo") %></h1>
                     </div>
                     <h2><%# Eval("Rol_principal") %></h2>
-                    <h3>Equipo: <%# Eval("Equipo_actual") %></h3>
+                    <h3>Equipo: <%# Eval("NombreEquipo") %></h3>
                     <asp:HyperLink ID="hlDetalles" runat="server" 
                         NavigateUrl='<%# "~/Public/DetallesJugador.aspx?codigo=" + Eval("Codigo") %>'
                         Text="Ver detalles" CssClass="btn btn-info" 
