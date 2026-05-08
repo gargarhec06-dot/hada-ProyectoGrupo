@@ -20,6 +20,7 @@ namespace hada_ProyectoGrupo.Library.EN
         private bool _buscando_equipo;
         private int _equipo_actual;
         private int _juego;
+        private string _nombreEquipo;
 
         public ENJugador()
         {
@@ -34,6 +35,7 @@ namespace hada_ProyectoGrupo.Library.EN
             _buscando_equipo = false;
             _equipo_actual = 0;
             _juego = 0;
+            _nombreEquipo = "EN NINGUNO";
         }
 
         public ENJugador(int codigo, string email, string apodo, string rol, float kda, float winrate, int nivel, string hardware, bool buscando, int equipo, int juego)
@@ -107,6 +109,12 @@ namespace hada_ProyectoGrupo.Library.EN
         {
             get { return _nivel; }
             set { _nivel = value; }
+        }
+
+        public string NombreEquipo
+        {
+            get { return _nombreEquipo; }
+            set { _nombreEquipo = value; }
         }
 
         // Validación del CHECK constraint de la tabla: solo 'teclado', 'mando' o vacío

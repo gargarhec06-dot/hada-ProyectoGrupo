@@ -96,6 +96,14 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
+
+                // Primero desasignar a todos los jugadores del equipo
+                string queryJugadores = "UPDATE Jugador SET equipo_actual = NULL, buscando_equipo = 1 WHERE equipo_actual = @id_e";
+                SqlCommand comJugadores = new SqlCommand(queryJugadores, c);
+                comJugadores.Parameters.AddWithValue("@id_e", en.Id_equipo);
+                comJugadores.ExecuteNonQuery();
+
+                // Luego eliminar el equipo
                 string query = "DELETE FROM Equipo WHERE id_equipo = @id_e";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@id_e", en.Id_equipo);
