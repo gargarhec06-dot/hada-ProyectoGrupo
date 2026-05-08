@@ -123,7 +123,7 @@ namespace hada_ProyectoGrupo.Library.CAD
             return ok;
         }
 
-        // Nuevo método siguiendo el estilo de CADTorneo
+        
         public List<ENEquipo> ReadAll()
         {
             List<ENEquipo> lista = new List<ENEquipo>();
