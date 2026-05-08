@@ -10,9 +10,9 @@ namespace hada_ProyectoGrupo.Public
     public partial class DetallesEquipo : System.Web.UI.Page
     {
         private ENEquipo equipo;
-        private string accionPendiente
+        private string accionPendiente //Lo usamos para que no perdamos su valor despues de recargar la pagina
         {
-            get { return ViewState["AccionPendiente"] as string; }
+            get { return ViewState["AccionPendiente"] as string; } //El viewState guarda datos entre los postback de la misma pagina
             set { ViewState["AccionPendiente"] = value; }
         }
 
@@ -44,7 +44,7 @@ namespace hada_ProyectoGrupo.Public
                     idEquipo = int.Parse(Request.QueryString["id"]);
                     CargarEquipo(idEquipo);
 
-                    // Verificar permisos y mostrar botones según quién es el capitán
+                    // Permite verificar permisos y mostrar botones según quién es el capitán
                     VerificarPermisos();
                 }
                 else
@@ -53,7 +53,7 @@ namespace hada_ProyectoGrupo.Public
                     pnlAcciones.Visible = true;
                     pnlSeleccionJugador.Visible = false;
 
-                    // Limpiar campos para un nuevo equipo
+                    // Limpio todos los campos para un nuevo equipo
                     txtNombre.Text = "";
                     txtFecha.Text = DateTime.Now.ToString("dd/MM/yyyy");
                     txtDescripcion.Text = "";
@@ -153,12 +153,12 @@ namespace hada_ProyectoGrupo.Public
 
             bool esCapitan = (capitan.Email_usuario == emailLogueado);
 
-            // Si es el capitán → puede modificar y eliminar
+            // Si es el capitán -> puede modificar y eliminar
             btnModificar.Visible = esCapitan;
             btnEliminar.Visible = esCapitan;
             btnCrear.Visible = false;
 
-            // Si NO es el capitán → puede unirse (si tiene jugadores disponibles)
+            // Si no -> puede unirse (si tiene jugadores disponibles)
             btnUnirse.Visible = !esCapitan;
         }
 
@@ -184,7 +184,7 @@ namespace hada_ProyectoGrupo.Public
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-            // Verificar permisos nuevamente por seguridad
+            // Verificar por si acaso
             if (!VerificarEsCapitan())
             {
                 lblMensaje.Text = "No tienes permiso para modificar este equipo. Solo el capitán puede hacerlo.";
@@ -234,7 +234,7 @@ namespace hada_ProyectoGrupo.Public
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
-            // Verificar permisos nuevamente por seguridad
+            // Verificar por si acaso
             if (!VerificarEsCapitan())
             {
                 lblMensaje.Text = "No tienes permiso para eliminar este equipo. Solo el capitán puede hacerlo.";
@@ -399,7 +399,6 @@ namespace hada_ProyectoGrupo.Public
                 capitan.Read();
 
                 ENEquipo nuevoEquipo = new ENEquipo();
-                // NO asignes Id_equipo, la BD lo genera automáticamente
                 nuevoEquipo.Nombre = txtNombre.Text;
                 nuevoEquipo.Fecha_creacion = DateTime.Now;
                 nuevoEquipo.Logo_url = txtLogo.Text;
