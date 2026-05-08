@@ -12,21 +12,31 @@ namespace hada_ProyectoGrupo.Public
             {
                 if (Request.QueryString["id"] != null)
                 {
-                    // MODO LECTURA
+                    // MODO LECTURA/EDICIÓN (Noticia existente)
                     int id = int.Parse(Request.QueryString["id"]);
                     CargarDatos(id);
                 }
                 else
                 {
-                    // MODO CREACIÓN
+                    // MODO CREACIÓN (Noticia nueva)
                     if (Session["EsAdmin"] == null || (bool)Session["EsAdmin"] == false)
                     {
                         Response.Redirect("Login.aspx");
                     }
                     else
                     {
-                        // Si es admin y va a crear una nueva, habilitamos los campos
+                        // 1. Habilitamos escritura en Título y Contenido
                         ConfigurarInterfaz(true);
+
+                        // 2. RELLENO AUTOMÁTICO (Para que el admin vea qué se va a guardar)
+                        txtFecha.Text = DateTime.Now.ToString("yyyy-MM-dd");
+                        txtAutor.Text = Session["Email"].ToString();
+
+                        // 3. HACER VISIBLE EL BOTÓN DE GUARDAR/CREAR
+                        pnlAcciones.Visible = true;
+                        btnCrear.Visible = true;     // Este es el botón para noticias nuevas
+                        btnModificar.Visible = false; // Ocultamos modificar (no existe aún)
+                        btnEliminar.Visible = false;  // Ocultamos eliminar
                     }
                 }
             }
@@ -52,7 +62,6 @@ namespace hada_ProyectoGrupo.Public
             bool esAdmin = Session["EsAdmin"] != null && (bool)Session["EsAdmin"];
             string emailLogueado = Session["Email"]?.ToString();
 
-            // ¿Tiene permiso para editar? (Es admin o es su propia noticia)
             bool puedeEditar = esAdmin || (emailLogueado != null && emailLogueado == autorNoticia);
 
             if (puedeEditar)
@@ -60,22 +69,20 @@ namespace hada_ProyectoGrupo.Public
                 pnlAcciones.Visible = true;
                 btnModificar.Visible = true;
                 btnEliminar.Visible = true;
-                btnCrear.Visible = esAdmin;
-                ConfigurarInterfaz(true); // Habilitar escritura
+                btnCrear.Visible = false; // False porque estamos editando una vieja, no creando nueva
+                ConfigurarInterfaz(true);
             }
             else
             {
-                pnlAcciones.Visible = false; // Oculta el panel de botones de edición
-                ConfigurarInterfaz(false); // Bloquear escritura (Solo lectura)
+                pnlAcciones.Visible = false;
+                ConfigurarInterfaz(false);
             }
         }
 
-        // Método auxiliar para bloquear o desbloquear los TextBox
         private void ConfigurarInterfaz(bool editable)
         {
             txtTitulo.ReadOnly = !editable;
             txtContenido.ReadOnly = !editable;
-            // La fecha y el autor siempre deberían ser ReadOnly para evitar errores de integridad
             txtFecha.ReadOnly = true;
             txtAutor.ReadOnly = true;
         }
@@ -87,8 +94,8 @@ namespace hada_ProyectoGrupo.Public
             ENNoticia en = new ENNoticia();
             en.Titulo = txtTitulo.Text;
             en.Contenido = txtContenido.Text;
-            en.FechaPublicacion = DateTime.Now;
-            en.EmailUsuario = Session["Email"].ToString();
+            en.FechaPublicacion = DateTime.Now; // Fecha del servidor por seguridad
+            en.EmailUsuario = Session["Email"].ToString(); // Usuario real de la sesión
 
             if (en.Create()) Response.Redirect("Noticias.aspx");
         }
