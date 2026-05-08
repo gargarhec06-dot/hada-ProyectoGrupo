@@ -14,10 +14,14 @@ namespace hada_ProyectoGrupo.Public
             {
                 CargarNoticias();
 
-                
+                // Lógica segura: Si es null o no es admin, el panel se queda oculto
                 if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == true)
                 {
                     pnlAdmin.Visible = true;
+                }
+                else
+                {
+                    pnlAdmin.Visible = false;
                 }
             }
         }
@@ -26,7 +30,6 @@ namespace hada_ProyectoGrupo.Public
         {
             try
             {
-               
                 ENNoticia noticia = new ENNoticia();
                 List<ENNoticia> lista = noticia.ReadAll();
 
@@ -35,15 +38,14 @@ namespace hada_ProyectoGrupo.Public
             }
             catch (Exception ex)
             {
-                
                 Console.WriteLine("Error al cargar noticias: {0}", ex.Message);
-                Response.Write("<script>alert('Error al cargar las noticias');</script>");
+                // No lanzamos alert para no molestar al usuario anónimo, 
+                // solo si es un error crítico de conexión.
             }
         }
 
         protected void btnCrear_Click(object sender, EventArgs e)
         {
-            // Redirigimos a la página de detalles (modo creación) 
             Response.Redirect("~/Public/DetallesNoticia.aspx");
         }
     }
