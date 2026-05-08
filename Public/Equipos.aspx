@@ -9,7 +9,7 @@
         <ItemTemplate>
             <div style="border:1px solid #ccc; padding:10px; text-align:center;">
                 <h3><%# Eval("Nombre") %></h3>
-                <img src='<%# Eval("Logo_url") %>' alt="Logo" width="100" />
+                <!-- img src='<%# Eval("Logo_url") %>' alt="Logo" width="100" -->
                 <asp:HyperLink runat="server" 
                     NavigateUrl='<%# "~/Public/DetallesEquipo.aspx?id=" + Eval("Id_equipo") %>'
                     Text="Ver detalle"/>
