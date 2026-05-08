@@ -23,7 +23,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <h5 class="text-muted mb-3"> Información General</h5>
+                            <h5 class="text-muted mb-3"> Información general</h5>
                             <table class="table table-borderless table-sm">
                                 <tr>
                                     <th> Código</th>
@@ -44,20 +44,40 @@
                             </table>
                         </div>
                         <div class="col-md-6">
-                            <h5 class="text-muted mb-3"> Datos Económicos</h5>
+                            <h5 class="text-muted mb-3"> Datos económicos</h5>
                             <table class="table table-borderless table-sm">
                                 <tr>
-                                    <th> Precio Inscripción</th>
+                                    <th> Precio inscripción</th>
                                     <td><asp:Label ID="lblPrecioInscripcion" runat="server" /></td>
                                 </tr>
                                 <tr>
-                                    <th> Coste Organización</th>
+                                    <th> Coste organización</th>
                                     <td><asp:Label ID="lblCosteOrganizacion" runat="server" /></td>
                                 </tr>
                             </table>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="container mt-4">
+                <h4>Equipos inscritos</h4>
+                <asp:Repeater ID="rptEquipos" runat="server">
+                    <HeaderTemplate>
+                        <ul class="list-group">
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <%# Eval("Nombre") %>
+                            <span class="badge bg-success">Inscrito</span>
+                        </li>
+                    </ItemTemplate>
+                    <FooterTemplate>
+                        </ul>
+                    </FooterTemplate>
+                </asp:Repeater>
+
+                <asp:Label ID="lblSinEquipos" runat="server" Text="No hay equipos inscritos aún." 
+                           CssClass="text-muted" Visible="false"/>
             </div>
         </div>
     </asp:Panel>

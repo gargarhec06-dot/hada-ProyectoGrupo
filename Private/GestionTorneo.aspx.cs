@@ -73,7 +73,7 @@ namespace hada_ProyectoGrupo.Private
             en.PrecioInscripcion = float.Parse(txtInscripcion.Text);
             en.CosteOrganizacion = float.Parse(txtOrganizacion.Text);
             en.Profesional = chkProfesional.Checked;
-            en.Ubicacion = "Presencial";
+            en.Ubicacion = txtUbicacion.Text;
 
             bool operacionOk = esNuevo ? en.Create() : en.Update();
 

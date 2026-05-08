@@ -23,9 +23,8 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                string query = "INSERT INTO Torneo (codigo, id_videojuego, precioInscripcion, nombre, descripcion, profesional, costeOrganizacion, fecha, ubicacion) VALUES (@cod, @vid, @pre, @nom, @des, @pro, @cos, @fec, @ubi)";
+                string query = "INSERT INTO Torneo (id_videojuego, precioInscripcion, nombre, descripcion, profesional, costeOrganizacion, fecha, ubicacion) VALUES (@vid, @pre, @nom, @des, @pro, @cos, @fec, @ubi)";
                 SqlCommand com = new SqlCommand(query, c);
-                com.Parameters.AddWithValue("@cod", en.Codigo);
                 com.Parameters.AddWithValue("@vid", en.IdVideojuego);
                 com.Parameters.AddWithValue("@pre", en.PrecioInscripcion);
                 com.Parameters.AddWithValue("@nom", en.Nombre);
@@ -36,7 +35,11 @@ namespace hada_ProyectoGrupo.Library.CAD
                 com.Parameters.AddWithValue("@ubi", en.Ubicacion);
                 if (com.ExecuteNonQuery() > 0) ok = true;
             }
-            catch (Exception) { ok = false; }
+            catch (Exception ex) 
+            {
+                ok = false;
+                System.Diagnostics.Debug.WriteLine("ERROR CREATE TORNEO: " + ex.Message);
+            }
             finally { c.Close(); }
             return ok;
         }

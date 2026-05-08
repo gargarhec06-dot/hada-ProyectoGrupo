@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 
-
 namespace hada_ProyectoGrupo.Library.CAD
 {
     public class CADEquipo
@@ -15,43 +14,28 @@ namespace hada_ProyectoGrupo.Library.CAD
         private string s;
         public CADEquipo()
         {
-            s= ConfigurationManager.ConnectionStrings["HadaEsports"].ToString();
+            s = ConfigurationManager.ConnectionStrings["HadaEsports"].ToString();
         }
 
         public bool Create(ENEquipo en)
         {
             bool ok = false;
             SqlConnection c = new SqlConnection(s);
-
             try
             {
                 c.Open();
-
-                string query = @"INSERT INTO Equipo
-                        (nombre, fecha_creacion, logo_url, descripcion, id_capitan)
-                        VALUES
-                        (@nom, @fech, @log, @des, @id_c)";
-
+                string query = @"INSERT INTO Equipo (nombre, fecha_creacion, logo_url, descripcion, id_capitan)
+                                 VALUES (@nom, @fech, @log, @des, @id_c)";
                 SqlCommand com = new SqlCommand(query, c);
-
                 com.Parameters.AddWithValue("@nom", en.Nombre);
                 com.Parameters.AddWithValue("@fech", en.Fecha_creacion);
                 com.Parameters.AddWithValue("@log", en.Logo_url);
                 com.Parameters.AddWithValue("@des", en.Descripcion);
                 com.Parameters.AddWithValue("@id_c", en.Id_capitan);
-
-                if (com.ExecuteNonQuery() > 0)
-                    ok = true;
+                if (com.ExecuteNonQuery() > 0) ok = true;
             }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al crear equipo: " + ex.Message);
-            }
-            finally
-            {
-                c.Close();
-            }
-
+            catch (Exception ex) { throw new Exception("Error al crear equipo: " + ex.Message); }
+            finally { c.Close(); }
             return ok;
         }
 
@@ -85,13 +69,12 @@ namespace hada_ProyectoGrupo.Library.CAD
 
         public bool Update(ENEquipo en)
         {
-
             bool ok = false;
             SqlConnection c = new SqlConnection(s);
             try
             {
                 c.Open();
-                string query = "UPDATE Equipo SET nombre=@nom , fecha_creacion=@fech , logo_url=@log , descripcion=@des ,  id_capitan=@id_c WHERE id_equipo=@id_e";
+                string query = "UPDATE Equipo SET nombre=@nom, fecha_creacion=@fech, logo_url=@log, descripcion=@des, id_capitan=@id_c WHERE id_equipo=@id_e";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@id_e", en.Id_equipo);
                 com.Parameters.AddWithValue("@nom", en.Nombre);
@@ -123,7 +106,6 @@ namespace hada_ProyectoGrupo.Library.CAD
             return ok;
         }
 
-        
         public List<ENEquipo> ReadAll()
         {
             List<ENEquipo> lista = new List<ENEquipo>();
@@ -151,6 +133,7 @@ namespace hada_ProyectoGrupo.Library.CAD
             finally { c.Close(); }
             return lista;
         }
+
         public int GetLastId()
         {
             int lastId = 0;
@@ -164,6 +147,32 @@ namespace hada_ProyectoGrupo.Library.CAD
             catch (Exception) { }
             finally { c.Close(); }
             return lastId;
+        }
+
+        // Devuelve el equipo del que es capitán el jugador, o null si no es capitán de ninguno
+        public ENEquipo ReadByCapitan(int idCapitan)
+        {
+            ENEquipo en = null;
+            SqlConnection c = new SqlConnection(s);
+            try
+            {
+                c.Open();
+                string query = "SELECT * FROM Equipo WHERE id_capitan = @id";
+                SqlCommand com = new SqlCommand(query, c);
+                com.Parameters.AddWithValue("@id", idCapitan);
+                SqlDataReader dr = com.ExecuteReader();
+                if (dr.Read())
+                {
+                    en = new ENEquipo();
+                    en.Id_equipo = (int)dr["id_equipo"];
+                    en.Nombre = dr["nombre"].ToString();
+                    en.Id_capitan = (int)dr["id_capitan"];
+                }
+                dr.Close();
+            }
+            catch (Exception) { }
+            finally { c.Close(); }
+            return en;
         }
     }
 }

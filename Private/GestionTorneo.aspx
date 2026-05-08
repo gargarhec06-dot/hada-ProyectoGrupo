@@ -50,8 +50,8 @@
         </div>
 
         <div style="margin-bottom: 10px;">
-            <strong>Premio:</strong><br />
-            <asp:TextBox ID="txtPremio" runat="server" Width="100%" />
+            <strong>Ubicacion:</strong><br />
+            <asp:TextBox ID="txtUbicacion" runat="server" Width="100%" />
         </div>
 
         <div style="margin-bottom: 10px;">
