@@ -266,6 +266,57 @@ namespace hada_ProyectoGrupo.Library.CAD
             return ok;
         }
 
+        public List<ENPatrocinador> ReadFiltrado(string nombre, int codigoTorneo)
+        {
+            List<ENPatrocinador> lista = new List<ENPatrocinador>();
+            SqlConnection c = new SqlConnection(connectionString);
+            try
+            {
+                c.Open();
+                string query = "SELECT DISTINCT P.* FROM Patrocinador P ";
+
+                if (codigoTorneo > 0)
+                    query += "JOIN Patrocinio PT ON P.IdPatrocinador = PT.IdPatrocinador ";
+
+                query += "WHERE 1=1 ";
+
+                if (!string.IsNullOrEmpty(nombre))
+                    query += "AND P.Nombre LIKE @nombre ";
+
+                if (codigoTorneo > 0)
+                    query += "AND PT.Codigo = @codigo ";
+
+                SqlCommand com = new SqlCommand(query, c);
+
+                if (!string.IsNullOrEmpty(nombre))
+                    com.Parameters.AddWithValue("@nombre", "%" + nombre + "%");
+
+                if (codigoTorneo > 0)
+                    com.Parameters.AddWithValue("@codigo", codigoTorneo);
+
+                SqlDataReader dr = com.ExecuteReader();
+                while (dr.Read())
+                {
+                    ENPatrocinador p = new ENPatrocinador();
+                    p.IdPatrocinador = Convert.ToInt32(dr["IdPatrocinador"]);
+                    p.Nombre = dr["Nombre"].ToString();
+                    p.Telefono = dr["Telefono"].ToString();
+                    p.Email = dr["Email"].ToString();
+                    p.PaginaWeb = dr["PaginaWeb"].ToString();
+                    p.InicioContrato = Convert.ToDateTime(dr["InicioContrato"]);
+                    p.FinContrato = Convert.ToDateTime(dr["FinContrato"]);
+                    lista.Add(p);
+                }
+                dr.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("ReadFiltrado Patrocinador failed. Error: {0}", ex.Message);
+            }
+            finally { c.Close(); }
+            return lista;
+        }
+
 
     }
 
