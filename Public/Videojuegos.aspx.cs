@@ -12,15 +12,22 @@ namespace hada_ProyectoGrupo.Public
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            List<ENVideojuego> list = new ENVideojuego().ReadAll();
-
-            tableGenerator.DataSource = list;
-            tableGenerator.DataBind();
+            LoadVideojuego(new ENVideojuego().ReadAll());
 
             if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"])
             {
                 CreateVideojuego.Visible = true;
             }
+        }
+
+        protected void LoadVideojuego(List<ENVideojuego> list)
+        {
+            foreach (ENVideojuego en in list)
+            {
+                en.Tipo = ENVideojuego.GetVideojuegoTipoToNombreLegible(ENVideojuego.GetVideojuegoTipoFromCode(en.Tipo));
+            }
+            tableGenerator.DataSource = list;
+            tableGenerator.DataBind();
         }
 
         protected void CreateVideojuego_Click(object sender, EventArgs e)

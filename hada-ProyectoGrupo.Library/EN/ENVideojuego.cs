@@ -128,7 +128,7 @@ namespace hada_ProyectoGrupo.Library.EN
                 ENVideojuegoTipo tipo = (ENVideojuegoTipo)Enum.Parse(typeof(ENVideojuegoTipo), code);
                 return tipo;
             }
-            catch (Exception _e) {
+            catch (Exception) {
                 return ENVideojuegoTipo.undefined;
             }
         }
