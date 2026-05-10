@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace hada_ProyectoGrupo.Library.EN
@@ -12,7 +13,7 @@ namespace hada_ProyectoGrupo.Library.EN
         private int _codigo;
         private string _nombre;
         private string _descripcion;
-        private string _tipo;   //El tipo puede ser : SH (Shooter) , SU(Supervivencia), ST(Estrategia) , FG(Fighter), SP(Speedrun)
+        private string _tipo;   //El tipo puede ser : SH (Shooter) , SU(Supervivencia), ST(Estrategia) , FG(Fighter), SP(Speedrun), MO (Moba)
         private int _edadMinima;
 
 
@@ -85,6 +86,63 @@ namespace hada_ProyectoGrupo.Library.EN
         {
             CADVideojuego cad = new CADVideojuego();
             return cad.ReadAll();
+        }
+
+
+        public enum ENVideojuegoTipo
+        {
+            undefined, // FAILSAFE
+            MO, // MOBA
+            SH, // Shooter
+            SP, // Speedrun
+            SU, // Supervivencia
+            ST, // Estrategia
+            FG, // Fighting
+        }
+
+        public static string GetVideojuegoTipoToNombreLegible(ENVideojuegoTipo tipo)
+        {
+            switch (tipo)
+            {
+                case ENVideojuegoTipo.MO:
+                    return "Moba";
+                case ENVideojuegoTipo.SH:
+                    return "Shooter";
+                case ENVideojuegoTipo.SP:
+                    return "Speedrun";
+                case ENVideojuegoTipo.SU:
+                    return "Supervivencia";
+                case ENVideojuegoTipo.ST:
+                    return "Estrategia";
+                case ENVideojuegoTipo.FG:
+                    return "Fighter";
+            }
+
+            return "Desconocido";
+        }
+
+        public static ENVideojuegoTipo GetVideojuegoTipoFromCode(string code)
+        {
+            try
+            {
+                ENVideojuegoTipo tipo = (ENVideojuegoTipo)Enum.Parse(typeof(ENVideojuegoTipo), code);
+                return tipo;
+            }
+            catch (Exception _e) {
+                return ENVideojuegoTipo.undefined;
+            }
+        }
+
+        public static void GetAllVideojuegoTipo()
+        {
+            Dictionary<ENVideojuegoTipo, string> tipos_videojuegos = new Dictionary<ENVideojuegoTipo, string>();
+
+            foreach (string code in Enum.GetNames(typeof(ENVideojuegoTipo)))
+            {
+                if (code == "undefined") continue;
+
+                tipos_videojuegos.Add((ENVideojuegoTipo)Enum.Parse(typeof(ENVideojuegoTipo), code), code);
+            }
         }
     }
 }
