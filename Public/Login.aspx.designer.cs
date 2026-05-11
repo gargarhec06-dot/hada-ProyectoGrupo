@@ -15,15 +15,6 @@ namespace hada_ProyectoGrupo.Public
     {
 
         /// <summary>
-        /// Control EmailLabel.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label EmailLabel;
-
-        /// <summary>
         /// Control EmailBox.
         /// </summary>
         /// <remarks>
@@ -31,15 +22,6 @@ namespace hada_ProyectoGrupo.Public
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox EmailBox;
-
-        /// <summary>
-        /// Control PasswordLabel.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PasswordLabel;
 
         /// <summary>
         /// Control PasswordBox.

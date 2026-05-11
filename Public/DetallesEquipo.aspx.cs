@@ -332,39 +332,76 @@ namespace hada_ProyectoGrupo.Public
             }
         }
 
-        private void CargarJugadoresParaUnirse(int idequipo)
+        private void CargarJugadoresParaUnirse(int idEquipo)
         {
-            ENEquipo equipoActual = new ENEquipo();
-            equipoActual.Id_equipo = idequipo;
-            equipoActual.Read();
-
-            ENJugador capitan = new ENJugador();
-            capitan.Codigo = equipoActual.Id_capitan;
-            capitan.Read();
-            int juegoCapitan = capitan.Juego;
-
-            List<ENJugador> todosJugadores = new CADJugador().ReadAll();
-            List<ENJugador> jugadoresValidos = new List<ENJugador>();
-
-            foreach (ENJugador j in todosJugadores)
+            try
             {
-                if (j.Email_usuario == emailLogueado && j.Equipo_actual == 0 && j.Juego == juegoCapitan)
+                string emailLogueado = Session["Email"].ToString();
+
+                // Obtener el equipo
+                ENEquipo equipoActual = new ENEquipo();
+                equipoActual.Id_equipo = idEquipo;
+                equipoActual.Read();
+
+                // Obtener el capitán y su juego
+                ENJugador capitan = new ENJugador();
+                capitan.Codigo = equipoActual.Id_capitan;
+                capitan.Read();
+                int juegoCapitan = capitan.Juego;
+
+                // Obtener la edad mínima del juego
+                ENVideojuego videojuego = new ENVideojuego();
+                videojuego.Codigo = juegoCapitan;
+                videojuego.Read();
+                int edadMinima = videojuego.EdadMinima;
+
+                // Obtener todos los jugadores del usuario
+                List<ENJugador> todosJugadores = new CADJugador().ReadAll();
+                List<ENJugador> jugadoresValidos = new List<ENJugador>();
+
+                foreach (ENJugador j in todosJugadores)
                 {
-                    jugadoresValidos.Add(j);
+                    if (j.Email_usuario == emailLogueado && j.Equipo_actual == 0 && j.Juego == juegoCapitan)
+                    {
+                        // Calcular edad del jugador desde la fecha de nacimiento del usuario
+                        ENUsuario usuario = new ENUsuario();
+                        usuario.Email = j.Email_usuario;
+                        usuario.Read();
+                        int edadJugador = CalcularEdad(usuario.Fecha_Nacimiento);
+
+                        // Verificar edad mínima
+                        if (edadJugador >= edadMinima)
+                        {
+                            jugadoresValidos.Add(j);
+                        }
+                    }
+                }
+
+                ddlJugadores.DataSource = jugadoresValidos;
+                ddlJugadores.DataTextField = "Apodo";
+                ddlJugadores.DataValueField = "Codigo";
+                ddlJugadores.DataBind();
+
+                if (ddlJugadores.Items.Count == 0)
+                {
+                    lblMensaje.Text = "No tienes jugadores disponibles. Requisitos: mismo juego y edad mínima " + edadMinima + " años.";
+                    lblMensaje.ForeColor = System.Drawing.Color.Red;
+                    pnlSeleccionJugador.Visible = false;
                 }
             }
-
-            ddlJugadores.DataSource = jugadoresValidos;
-            ddlJugadores.DataTextField = "Apodo";
-            ddlJugadores.DataValueField = "Codigo";
-            ddlJugadores.DataBind();
-
-            if (ddlJugadores.Items.Count == 0)
+            catch (Exception ex)
             {
-                lblMensaje.Text = "No tienes jugadores disponibles que jueguen al mismo juego que el capitán.";
+                lblMensaje.Text = "Error: " + ex.Message;
                 lblMensaje.ForeColor = System.Drawing.Color.Red;
-                pnlSeleccionJugador.Visible = false;
             }
+        }
+
+        private int CalcularEdad(DateTime fechaNacimiento)
+        {
+            DateTime hoy = DateTime.Today;
+            int edad = hoy.Year - fechaNacimiento.Year;
+            if (fechaNacimiento.Date > hoy.AddYears(-edad)) edad--;
+            return edad;
         }
 
         protected void btnConfirmar_Click(object sender, EventArgs e)

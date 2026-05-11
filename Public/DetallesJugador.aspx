@@ -12,14 +12,8 @@
             <asp:TextBox ID="txtApodo" runat="server" Visible="false" />
         </p>
         <p><strong>Rol Principal:</strong> 
-            <asp:Label ID="lblRol" runat="server" />
-            <asp:DropDownList ID="ddlRol" runat="server" Visible="false">
-                <asp:ListItem Text="Top Laner" Value="Top Laner" />
-                <asp:ListItem Text="Jungler" Value="Jungler" />
-                <asp:ListItem Text="Mid Laner" Value="Mid Laner" />
-                <asp:ListItem Text="ADC" Value="ADC" />
-                <asp:ListItem Text="Support" Value="Support" />
-            </asp:DropDownList>
+        <asp:Label ID="lblRol" runat="server" />
+        <asp:TextBox ID="txtRol" runat="server" Visible="false" />
         </p>
         <p><strong>KDA Promedio:</strong> 
             <asp:Label ID="lblKDA" runat="server" />
