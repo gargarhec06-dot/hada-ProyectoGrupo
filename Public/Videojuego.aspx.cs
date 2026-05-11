@@ -36,11 +36,23 @@ namespace hada_ProyectoGrupo.Public
             ENVideojuego videojuego = new ENVideojuego(int.Parse(code), "", "", "", 0);
             bool result = videojuego.Read();
 
+            // Cargar tipos posibles
+            if (!IsPostBack)
+            {
+                foreach (ENVideojuego.ENVideojuegoTipo tipo_no_undefined in ENVideojuego.GetAllVideojuegoTipo().Keys)
+                {
+                    TipoAdminBox.Items.Add(new ListItem(
+                            ENVideojuego.GetVideojuegoTipoToNombreLegible(tipo_no_undefined),
+                            tipo_no_undefined.ToString()
+                        ));
+                }
+            }
+
             if (result) {
                 NombreLabel.Text = videojuego.Nombre;
                 CodigoLabel.Text = videojuego.Codigo.ToString();
                 DescripcionLabel.Text = videojuego.Descripcion;
-                TipoLabel.Text = videojuego.Tipo;
+                TipoLabel.Text = ENVideojuego.GetVideojuegoTipoToNombreLegible(ENVideojuego.GetVideojuegoTipoFromCode(videojuego.Tipo));
                 EdadMinimaLabel.Text = videojuego.EdadMinima.ToString();
 
                 // Para observar el panel de admin
@@ -86,7 +98,7 @@ namespace hada_ProyectoGrupo.Public
                     int.Parse(CodigoAdminBox.Text),
                     NombreAdminBox.Text,
                     DescripcionAdminBox.Text,
-                    TipoAdminBox.Text,
+                    TipoAdminBox.SelectedValue,
                     int.Parse(EdadMinimaAdminBox.Text)
                 );
 
@@ -127,7 +139,7 @@ namespace hada_ProyectoGrupo.Public
                     0,
                     NombreAdminBox.Text,
                     DescripcionAdminBox.Text,
-                    TipoAdminBox.Text,
+                    TipoAdminBox.SelectedValue,
                     int.Parse(EdadMinimaAdminBox.Text)
                 );
 

@@ -17,7 +17,7 @@
         <div>
             <asp:Label Text="<b>Tipo:</b> " runat="server"/>
             <asp:Label Text="" ID="TipoLabel" runat="server"/>
-            <asp:TextBox ID="TipoAdminBox" Visible="false" runat="server"/>
+            <asp:DropDownList ID="TipoAdminBox" Visible="false" runat="server"/>
         </div>
         <div class="d-flex flex-column">
             <asp:Label Text="<b>Descripción:</b> " runat="server"/>
