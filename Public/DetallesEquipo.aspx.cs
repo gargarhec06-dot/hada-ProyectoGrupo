@@ -517,6 +517,11 @@ namespace hada_ProyectoGrupo.Public
 
                     if (idEquipoCreado > 0)
                     {
+                        if (capitan.Equipo_actual != 0)
+                        {
+                            lblMensaje.Text = "Este jugador ya pertenece a un equipo";
+                            return;
+                        }
                         capitan.Equipo_actual = idEquipoCreado;
                         capitan.Update();
 
@@ -599,6 +604,17 @@ namespace hada_ProyectoGrupo.Public
                     lblMensaje.Text = "Este jugador ya pertenece a un equipo";
                     lblMensaje.ForeColor = System.Drawing.Color.Red;
                     return;
+                }
+
+                foreach (ENJugador j in todosJugadores)
+                {
+                    if (j.Equipo_actual == idEquipo &&
+                        j.Email_usuario == jugador.Email_usuario)
+                    {
+                        lblMensaje.Text = "Ya tienes otro jugador en este equipo";
+                        lblMensaje.ForeColor = System.Drawing.Color.Red;
+                        return;
+                    }
                 }
 
                 jugador.Equipo_actual = idEquipo;

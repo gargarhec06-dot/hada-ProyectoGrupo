@@ -15,6 +15,24 @@ namespace hada_ProyectoGrupo.Public
     {
 
         /// <summary>
+        /// Control pnlBtnMiEquipo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlBtnMiEquipo;
+
+        /// <summary>
+        /// Control pnlBtnUnirse.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlBtnUnirse;
+
+        /// <summary>
         /// Control rptEquipos.
         /// </summary>
         /// <remarks>

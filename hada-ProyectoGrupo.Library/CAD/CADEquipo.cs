@@ -84,7 +84,6 @@ namespace hada_ProyectoGrupo.Library.CAD
                 com.Parameters.AddWithValue("@des", en.Descripcion);
                 com.Parameters.AddWithValue("@id_c", en.Id_capitan);
                 com.Parameters.AddWithValue("@max", en.Max_jugadores);
-
                 if (com.ExecuteNonQuery() > 0) ok = true;
             }
             catch (Exception) { ok = false; }
@@ -99,14 +98,11 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-
-                // Primero desasignar a todos los jugadores del equipo
                 string queryJugadores = "UPDATE Jugador SET equipo_actual = NULL, buscando_equipo = 1 WHERE equipo_actual = @id_e";
                 SqlCommand comJugadores = new SqlCommand(queryJugadores, c);
                 comJugadores.Parameters.AddWithValue("@id_e", en.Id_equipo);
                 comJugadores.ExecuteNonQuery();
 
-                // Luego eliminar el equipo
                 string query = "DELETE FROM Equipo WHERE id_equipo = @id_e";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@id_e", en.Id_equipo);
@@ -146,6 +142,51 @@ namespace hada_ProyectoGrupo.Library.CAD
             return lista;
         }
 
+        // ---------------------------------------------------------------
+        // NUEVO: devuelve todos los equipos con el conteo real de miembros
+        // El conteo viene de cuántos Jugadores tienen equipo_actual = id_equipo
+        // ---------------------------------------------------------------
+        public List<EquipoConMiembros> ReadAllConMiembros()
+        {
+            List<EquipoConMiembros> lista = new List<EquipoConMiembros>();
+            SqlConnection c = new SqlConnection(s);
+            try
+            {
+                c.Open();
+                string query = @"
+                    SELECT E.id_equipo,
+                           E.nombre,
+                           E.logo_url,
+                           E.descripcion,
+                           E.id_capitan,
+                           E.max_jugadores,
+                           COUNT(J.codigo) AS miembros_actuales
+                    FROM Equipo E
+                    LEFT JOIN Jugador J ON J.equipo_actual = E.id_equipo
+                    GROUP BY E.id_equipo, E.nombre, E.logo_url,
+                             E.descripcion, E.id_capitan, E.max_jugadores";
+
+                SqlCommand com = new SqlCommand(query, c);
+                SqlDataReader dr = com.ExecuteReader();
+                while (dr.Read())
+                {
+                    EquipoConMiembros em = new EquipoConMiembros();
+                    em.Id_equipo = (int)dr["id_equipo"];
+                    em.Nombre = dr["nombre"].ToString();
+                    em.Logo_url = dr["logo_url"] == DBNull.Value ? "" : dr["logo_url"].ToString();
+                    em.Descripcion = dr["descripcion"] == DBNull.Value ? "" : dr["descripcion"].ToString();
+                    em.Id_capitan = dr["id_capitan"] == DBNull.Value ? 0 : (int)dr["id_capitan"];
+                    em.Max_jugadores = (int)dr["max_jugadores"];
+                    em.MiembrosActuales = (int)dr["miembros_actuales"];
+                    lista.Add(em);
+                }
+                dr.Close();
+            }
+            catch (Exception) { }
+            finally { c.Close(); }
+            return lista;
+        }
+
         public int GetLastId()
         {
             int lastId = 0;
@@ -161,7 +202,6 @@ namespace hada_ProyectoGrupo.Library.CAD
             return lastId;
         }
 
-        // Devuelve el equipo del que es capitán el jugador, o null si no es capitán de ninguno
         public ENEquipo ReadByCapitan(int idCapitan)
         {
             ENEquipo en = null;
@@ -186,5 +226,20 @@ namespace hada_ProyectoGrupo.Library.CAD
             finally { c.Close(); }
             return en;
         }
+    }
+
+    // ---------------------------------------------------------------
+    // DTO ligero: ENEquipo + miembros_actuales
+    // Se usa solo en la vista de Equipos para no contaminar ENEquipo
+    // ---------------------------------------------------------------
+    public class EquipoConMiembros
+    {
+        public int Id_equipo { get; set; }
+        public string Nombre { get; set; }
+        public string Logo_url { get; set; }
+        public string Descripcion { get; set; }
+        public int Id_capitan { get; set; }
+        public int Max_jugadores { get; set; }
+        public int MiembrosActuales { get; set; }
     }
 }

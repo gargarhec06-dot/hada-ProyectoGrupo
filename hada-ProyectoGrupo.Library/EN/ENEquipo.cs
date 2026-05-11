@@ -1,9 +1,6 @@
 ﻿using hada_ProyectoGrupo.Library.CAD;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace hada_ProyectoGrupo.Library.EN
 {
@@ -17,6 +14,7 @@ namespace hada_ProyectoGrupo.Library.EN
         private string _descripcion;
         private int _id_capitan;
         private int _max_jugadores;
+        private int _miembros_actuales;  // ← NUEVO: para el conteo
 
         // Constructor por defecto
         public ENEquipo()
@@ -28,10 +26,11 @@ namespace hada_ProyectoGrupo.Library.EN
             _descripcion = "";
             _id_capitan = 0;
             _max_jugadores = 5;
+            _miembros_actuales = 0;
         }
 
         // Constructor completo
-        public ENEquipo(int id, string nombre, DateTime fecha, string logo, string descripcion, int capitan, int maxJugadores)
+        public ENEquipo(int id, string nombre, DateTime fecha, string logo, string descripcion, int capitan, int maxJugadores, int miembrosActuales)
         {
             _id_equipo = id;
             _nombre = nombre;
@@ -40,6 +39,7 @@ namespace hada_ProyectoGrupo.Library.EN
             _descripcion = descripcion;
             _id_capitan = capitan;
             _max_jugadores = maxJugadores;
+            _miembros_actuales = miembrosActuales;
         }
 
         // Constructor para parámetros obligatorios
@@ -49,6 +49,8 @@ namespace hada_ProyectoGrupo.Library.EN
             _fecha_creacion = fecha;
             _logo_url = "";
             _descripcion = "";
+            _max_jugadores = 5;
+            _miembros_actuales = 0;
         }
 
         // Propiedades públicas
@@ -94,7 +96,14 @@ namespace hada_ProyectoGrupo.Library.EN
             set { _max_jugadores = value; }
         }
 
-        // Métodos CRUD llamando al CAD
+        // NUEVA PROPIEDAD
+        public int MiembrosActuales
+        {
+            get { return _miembros_actuales; }
+            set { _miembros_actuales = value; }
+        }
+
+        // Métodos CRUD
         public bool Create()
         {
             CADEquipo cad = new CADEquipo();
@@ -118,6 +127,7 @@ namespace hada_ProyectoGrupo.Library.EN
             CADEquipo cad = new CADEquipo();
             return cad.Delete(this);
         }
+
         public List<ENEquipo> ReadAll()
         {
             CADEquipo cad = new CADEquipo();

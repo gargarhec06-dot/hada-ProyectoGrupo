@@ -117,6 +117,12 @@ namespace hada_ProyectoGrupo.Library.EN
             set { _nombreEquipo = value; }
         }
 
+        public int IdEquipo
+        {
+            get { return _equipo_actual; }
+            set { _equipo_actual = value; }
+        }
+
         // Validación del CHECK constraint de la tabla: solo 'teclado', 'mando' o vacío
         public string Hardware
         {
@@ -176,5 +182,6 @@ namespace hada_ProyectoGrupo.Library.EN
             CADJugador cad = new CADJugador();
             return cad.ReadAll();
         }
+
     }
 }

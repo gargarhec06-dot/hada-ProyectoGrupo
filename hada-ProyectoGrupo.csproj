@@ -175,7 +175,6 @@
     </Compile>
     <Compile Include="Public\Equipos.aspx.cs">
       <DependentUpon>Equipos.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Public\Equipos.aspx.designer.cs">
       <DependentUpon>Equipos.aspx</DependentUpon>
