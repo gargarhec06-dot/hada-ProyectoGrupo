@@ -2,14 +2,15 @@
 using hada_ProyectoGrupo.Library.EN;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace hada_ProyectoGrupo.Public
 {
     public partial class DetallesEquipo : System.Web.UI.Page
     {
-        private ENEquipo equipo;
         private string accionPendiente
         {
             get { return ViewState["AccionPendiente"] as string; }
@@ -44,7 +45,7 @@ namespace hada_ProyectoGrupo.Public
 
                     if (emailLogueado != null)
                     {
-                        VerificarPermisos();
+                        VerificarPermisos(idEquipo);
                     }
                     else
                     {
@@ -88,7 +89,7 @@ namespace hada_ProyectoGrupo.Public
         {
             try
             {
-                equipo = new ENEquipo();
+                ENEquipo equipo = new ENEquipo();
                 equipo.Id_equipo = id;
                 if (equipo.Read())
                 {
@@ -98,12 +99,8 @@ namespace hada_ProyectoGrupo.Public
                     txtLogo.Text = equipo.Logo_url;
                     hfIdCapitan.Value = equipo.Id_capitan.ToString();
                     ddlMaxJugadores.SelectedValue = equipo.Max_jugadores.ToString();
-                    ddlMaxJugadores.Enabled = false; // No se puede modificar después de crear
-
-                    // También mostrar en la sección de miembros
+                    ddlMaxJugadores.Enabled = false;
                     lblMaxJugadores.Text = $"Límite: {equipo.Max_jugadores} jugadores";
-
-                    CargarMiembrosEquipo(id);
 
                     if (equipo.Id_capitan > 0)
                     {
@@ -125,11 +122,11 @@ namespace hada_ProyectoGrupo.Public
                     }
                     else
                     {
-                        imgLogo.ImageUrl = "https://e7.pngegg.com/pngimages/779/61/png-clipart-logo-idea-cute-eagle-leaf-logo-thumbnail.png";
+                        imgLogo.ImageUrl = "~/Images/Equipos/default-team.png";
                     }
+                    imgLogo.Visible = true;
 
-                    // Cargar miembros del equipo
-                    CargarMiembrosEquipo(id);
+                    CargarMiembrosEquipo(id, equipo.Id_capitan, equipo.Max_jugadores);
                 }
                 else
                 {
@@ -146,7 +143,7 @@ namespace hada_ProyectoGrupo.Public
             }
         }
 
-        private void CargarMiembrosEquipo(int idEquipo)
+        private void CargarMiembrosEquipo(int idEquipo, int idCapitan, int maxJugadores)
         {
             try
             {
@@ -166,7 +163,7 @@ namespace hada_ProyectoGrupo.Public
                             j.Nivel,
                             Kda_promedio = j.Kda_promedio.ToString("0.00"),
                             Winrate = j.Winrate.ToString("0.0"),
-                            EsCapitan = (j.Codigo == equipo.Id_capitan)
+                            EsCapitan = (j.Codigo == idCapitan)
                         });
                     }
                 }
@@ -177,21 +174,20 @@ namespace hada_ProyectoGrupo.Public
                     rptMiembros.DataBind();
                     rptMiembros.Visible = true;
                     lblNoMiembros.Visible = false;
-                    lblNumMiembros.Text = $"Miembros: {contador} / {equipo.Max_jugadores}";
+                    lblNumMiembros.Text = $"Miembros: {contador} / {maxJugadores}";
                 }
                 else
                 {
                     rptMiembros.Visible = false;
                     lblNoMiembros.Visible = true;
-                    lblNumMiembros.Text = $"Miembros: 0 / {equipo.Max_jugadores}";
+                    lblNumMiembros.Text = $"Miembros: 0 / {maxJugadores}";
                 }
 
-                // Mostrar advertencia si está completo
-                if (contador >= equipo.Max_jugadores)
+                if (contador >= maxJugadores)
                 {
                     lblMensaje.Text = "Este equipo ya ha alcanzado su límite de jugadores.";
                     lblMensaje.ForeColor = System.Drawing.Color.Orange;
-                    btnUnirse.Visible = false; // Ocultar botón unirse
+                    btnUnirse.Visible = false;
                 }
             }
             catch (Exception ex)
@@ -200,7 +196,7 @@ namespace hada_ProyectoGrupo.Public
             }
         }
 
-        private void VerificarPermisos()
+        private void VerificarPermisos(int idEquipo)
         {
             if (string.IsNullOrEmpty(emailLogueado))
             {
@@ -210,7 +206,11 @@ namespace hada_ProyectoGrupo.Public
 
             pnlAcciones.Visible = true;
 
-            if (equipo.Id_capitan == 0)
+            ENEquipo equipoActual = new ENEquipo();
+            equipoActual.Id_equipo = idEquipo;
+            equipoActual.Read();
+
+            if (equipoActual.Id_capitan == 0)
             {
                 btnModificar.Visible = false;
                 btnEliminar.Visible = false;
@@ -220,7 +220,7 @@ namespace hada_ProyectoGrupo.Public
             }
 
             ENJugador capitan = new ENJugador();
-            capitan.Codigo = equipo.Id_capitan;
+            capitan.Codigo = equipoActual.Id_capitan;
 
             if (!capitan.Read())
             {
@@ -294,7 +294,7 @@ namespace hada_ProyectoGrupo.Public
                         imgLogo.ImageUrl = equipoModificar.Logo_url;
                     }
 
-                    CargarMiembrosEquipo(idEquipo);
+                    CargarEquipo(idEquipo);
                 }
                 else
                 {
@@ -503,13 +503,20 @@ namespace hada_ProyectoGrupo.Public
                 capitan.Codigo = codigoCapitan;
                 capitan.Read();
 
+                if (capitan.Equipo_actual != 0)
+                {
+                    lblMensaje.Text = "Este jugador ya pertenece a un equipo";
+                    lblMensaje.ForeColor = System.Drawing.Color.Red;
+                    return;
+                }
+
                 ENEquipo nuevoEquipo = new ENEquipo();
                 nuevoEquipo.Nombre = txtNombre.Text;
                 nuevoEquipo.Fecha_creacion = DateTime.Now;
                 nuevoEquipo.Logo_url = txtLogo.Text;
                 nuevoEquipo.Descripcion = txtDescripcion.Text;
                 nuevoEquipo.Id_capitan = codigoCapitan;
-                nuevoEquipo.Max_jugadores = int.Parse(ddlMaxJugadores.SelectedValue); // AÑADIR ESTO
+                nuevoEquipo.Max_jugadores = int.Parse(ddlMaxJugadores.SelectedValue);
 
                 if (nuevoEquipo.Create())
                 {
@@ -517,11 +524,6 @@ namespace hada_ProyectoGrupo.Public
 
                     if (idEquipoCreado > 0)
                     {
-                        if (capitan.Equipo_actual != 0)
-                        {
-                            lblMensaje.Text = "Este jugador ya pertenece a un equipo";
-                            return;
-                        }
                         capitan.Equipo_actual = idEquipoCreado;
                         capitan.Update();
 
@@ -565,12 +567,10 @@ namespace hada_ProyectoGrupo.Public
         {
             try
             {
-                // Verificar límite de jugadores
                 ENEquipo equipoActual = new ENEquipo();
                 equipoActual.Id_equipo = idEquipo;
                 equipoActual.Read();
 
-                // Contar miembros actuales
                 List<ENJugador> todosJugadores = new CADJugador().ReadAll();
                 int miembrosActuales = 0;
                 foreach (ENJugador j in todosJugadores)
@@ -606,17 +606,6 @@ namespace hada_ProyectoGrupo.Public
                     return;
                 }
 
-                foreach (ENJugador j in todosJugadores)
-                {
-                    if (j.Equipo_actual == idEquipo &&
-                        j.Email_usuario == jugador.Email_usuario)
-                    {
-                        lblMensaje.Text = "Ya tienes otro jugador en este equipo";
-                        lblMensaje.ForeColor = System.Drawing.Color.Red;
-                        return;
-                    }
-                }
-
                 jugador.Equipo_actual = idEquipo;
 
                 if (jugador.Update())
@@ -642,6 +631,7 @@ namespace hada_ProyectoGrupo.Public
         {
             pnlSeleccionJugador.Visible = false;
         }
+
         protected void rptMiembros_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
@@ -649,10 +639,8 @@ namespace hada_ProyectoGrupo.Public
                 dynamic miembro = e.Item.DataItem;
                 bool esCapitan = miembro.EsCapitan;
 
-                System.Web.UI.HtmlControls.HtmlGenericControl divMiembro =
-                    (System.Web.UI.HtmlControls.HtmlGenericControl)e.Item.FindControl("divMiembro");
-                System.Web.UI.HtmlControls.HtmlGenericControl spanCapitan =
-                    (System.Web.UI.HtmlControls.HtmlGenericControl)e.Item.FindControl("spanCapitan");
+                HtmlGenericControl divMiembro = (HtmlGenericControl)e.Item.FindControl("divMiembro");
+                HtmlGenericControl spanCapitan = (HtmlGenericControl)e.Item.FindControl("spanCapitan");
 
                 if (esCapitan)
                 {
@@ -663,6 +651,56 @@ namespace hada_ProyectoGrupo.Public
                 {
                     divMiembro.Attributes["style"] = "border:1px solid #ccc; padding:10px; margin-bottom:10px; border-radius:5px;";
                 }
+            }
+        }
+
+        protected void btnSubirLogo_Click(object sender, EventArgs e)
+        {
+            if (fuLogo.HasFile)
+            {
+                try
+                {
+                    string extension = Path.GetExtension(fuLogo.FileName).ToLower();
+                    if (extension != ".jpg" && extension != ".jpeg" && extension != ".png")
+                    {
+                        lblSubidaLogo.Text = "Solo JPG o PNG";
+                        lblSubidaLogo.ForeColor = System.Drawing.Color.Red;
+                        return;
+                    }
+
+                    if (fuLogo.PostedFile.ContentLength > 2 * 1024 * 1024)
+                    {
+                        lblSubidaLogo.Text = "Máximo 2MB";
+                        lblSubidaLogo.ForeColor = System.Drawing.Color.Red;
+                        return;
+                    }
+
+                    string nombreArchivo = "equipo_" + DateTime.Now.Ticks + extension;
+                    string ruta = Server.MapPath("~/Images/Equipos/");
+
+                    if (!Directory.Exists(ruta))
+                    {
+                        Directory.CreateDirectory(ruta);
+                    }
+
+                    fuLogo.SaveAs(ruta + nombreArchivo);
+                    txtLogo.Text = "~/Images/Equipos/" + nombreArchivo;
+                    imgLogo.ImageUrl = txtLogo.Text;
+                    imgLogo.Visible = true;
+
+                    lblSubidaLogo.Text = "Imagen subida correctamente";
+                    lblSubidaLogo.ForeColor = System.Drawing.Color.Green;
+                }
+                catch (Exception ex)
+                {
+                    lblSubidaLogo.Text = "Error: " + ex.Message;
+                    lblSubidaLogo.ForeColor = System.Drawing.Color.Red;
+                }
+            }
+            else
+            {
+                lblSubidaLogo.Text = "Selecciona una imagen";
+                lblSubidaLogo.ForeColor = System.Drawing.Color.Red;
             }
         }
     }

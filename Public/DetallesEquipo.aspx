@@ -10,6 +10,14 @@
             <p><strong>Fecha de Creación :</strong> <asp:TextBox ID="txtFecha" runat="server" /></p>
             <p><strong>Descripción :</strong> <asp:TextBox ID="txtDescripcion" runat="server" TextMode="MultiLine" /></p>
             <p><strong>URL Logo :</strong> <asp:TextBox ID="txtLogo" runat="server" /></p>
+            
+            <!-- NUEVO: Subir imagen -->
+            <p><strong>O subir imagen (JPG/PNG, máx 2MB):</strong></p>
+            <p>
+                <asp:FileUpload ID="fuLogo" runat="server" accept="image/jpeg,image/png,image/jpg" />
+                <asp:Button ID="btnSubirLogo" runat="server" Text="Subir imagen" OnClick="btnSubirLogo_Click" CssClass="btn btn-secondary btn-sm" />
+                <asp:Label ID="lblSubidaLogo" runat="server" ForeColor="Red" />
+            </p>
             <p><strong>Máximo de jugadores :</strong> 
                 <asp:DropDownList ID="ddlMaxJugadores" runat="server">
                     <asp:ListItem Text="3 jugadores" Value="3" />
