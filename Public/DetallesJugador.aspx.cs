@@ -78,8 +78,8 @@ namespace hada_ProyectoGrupo.Public
                     lblEmail.Text = jugador.Email_usuario;
                     lblApodo.Text = jugador.Apodo;
                     txtApodo.Text = jugador.Apodo;
-                    lblRol.Text = jugador.Rol_principal;
-                    ddlRol.SelectedValue = jugador.Rol_principal;
+                    txtRol.Text = jugador.Rol_principal;
+                    txtRol.Text = jugador.Rol_principal;
                     lblKDA.Text = jugador.Kda_promedio.ToString();
                     txtKDA.Text = jugador.Kda_promedio.ToString();
                     lblWinrate.Text = jugador.Winrate.ToString();
@@ -136,7 +136,7 @@ namespace hada_ProyectoGrupo.Public
         private void SetModoEdicion(bool edicion)
         {
             lblApodo.Visible = !edicion;
-            lblRol.Visible = !edicion;
+            txtRol.Visible = !edicion;
             lblKDA.Visible = !edicion;
             lblWinrate.Visible = !edicion;
             lblNivel.Visible = !edicion;
@@ -145,7 +145,7 @@ namespace hada_ProyectoGrupo.Public
             lblJuego.Visible = !edicion;
 
             txtApodo.Visible = edicion;
-            ddlRol.Visible = edicion;
+            txtRol.Visible = edicion;
             txtKDA.Visible = edicion;
             txtWinrate.Visible = edicion;
             txtNivel.Visible = edicion;
@@ -174,7 +174,7 @@ namespace hada_ProyectoGrupo.Public
                 jugador.Read();
 
                 jugador.Apodo = txtApodo.Text;
-                jugador.Rol_principal = ddlRol.SelectedValue;
+                jugador.Rol_principal = txtRol.Text;
                 jugador.Kda_promedio = float.Parse(txtKDA.Text);
                 jugador.Winrate = float.Parse(txtWinrate.Text);
                 jugador.Nivel = int.Parse(txtNivel.Text);

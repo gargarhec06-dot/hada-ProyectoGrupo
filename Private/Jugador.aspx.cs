@@ -42,7 +42,7 @@ namespace hada_ProyectoGrupo.Private
                     Session["Email"].ToString(),
                     txtApodo.Text
                 );
-                jugador.Rol_principal = ddlRol.SelectedValue;
+                jugador.Rol_principal = txtRol.Text;
                 jugador.Hardware = ddlHardware.SelectedValue;
                 jugador.Buscando_equipo = chkBuscandoEquipo.Checked;
                 jugador.Juego = int.Parse(ddlVideojuego.SelectedValue);

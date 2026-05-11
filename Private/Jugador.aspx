@@ -19,14 +19,8 @@
 
     <div>
         <asp:Label runat="server" Text="Rol principal:"/>
-        <asp:DropDownList ID="ddlRol" runat="server">
-            <asp:ListItem Text="Selecciona un rol" Value=""/>
-            <asp:ListItem Text="Top" Value="Top"/>
-            <asp:ListItem Text="Jungle" Value="Jungle"/>
-            <asp:ListItem Text="Mid" Value="Mid"/>
-            <asp:ListItem Text="ADC" Value="ADC"/>
-            <asp:ListItem Text="Support" Value="Support"/>
-        </asp:DropDownList>
+        <asp:TextBox ID="txtRol" runat="server"/>
+        <asp:RequiredFieldValidator runat="server" ControlToValidate="txtApodo" ErrorMessage="El Rol es obligatorio" Display="Dynamic"/>
     </div>
 
     <div>
