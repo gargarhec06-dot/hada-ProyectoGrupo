@@ -22,5 +22,6 @@ namespace hada_ProyectoGrupo
         protected global::System.Web.UI.WebControls.HyperLink hlLogin;
         protected global::System.Web.UI.WebControls.HyperLink hlRegistro;
 
+
     }
 }

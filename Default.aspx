@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="Inicio" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="hada_ProyectoGrupo.Default" %>
-
+<%@ OutputCache Duration="1" VaryByParam="none" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
         .hero-wrapper {
