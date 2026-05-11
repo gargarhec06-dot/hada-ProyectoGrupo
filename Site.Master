@@ -114,6 +114,82 @@
             position: relative;
             z-index: 1;
         }
+
+        /* ── Tarjetas globales ── */
+        .card {
+            background-color: #1a1a2e;
+            border: 1px solid #00e5ff33;
+            border-radius: 12px;
+            box-shadow: 0 0 40px #00e5ff11;
+            color: #e0e0e0;
+        }
+
+        .card-header {
+            background-color: #0d1f3c !important;
+            border-bottom: 1px solid #00e5ff33 !important;
+            color: #00e5ff !important;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 800;
+            text-shadow: 0 0 10px #00e5ff44;
+        }
+
+        .card-footer {
+            background-color: #1a1a2e !important;
+            border-top: 1px solid #00e5ff33 !important;
+        }
+
+        .card:hover {
+            border-color: #00e5ff66;
+            box-shadow: 0 0 20px #00e5ff22;
+        }
+
+        /* ── Tablas ── */
+        .table {
+            color: #e0e0e0;
+        }
+
+        .table td, .table th {
+            background-color: #1a1a2e !important;
+            color: #e0e0e0 !important;
+            border-color: #00e5ff22 !important;
+        }
+
+        .table th {
+            color: #00e5ff !important;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+        }
+
+        /* ── Listas ── */
+        .list-group-item {
+            background-color: #1a1a2e;
+            border-color: #00e5ff22;
+            color: #e0e0e0;
+            transition: border-color 0.2s;
+        }
+
+        .list-group-item:hover {
+            border-color: #00e5ff66;
+            background-color: #1f1f3a;
+        }
+
+        /* ── Textos ── */
+        .text-muted {
+            color: #8a9bb5 !important;
+        }
+
+        .fw-bold {
+            color: #00e5ff;
+            letter-spacing: 1px;
+        }
+
+        /* ── Títulos de página ── */
+        h2, h4 {
+            color: #00e5ff;
+            text-shadow: 0 0 10px #00e5ff44;
+        }
     </style>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
