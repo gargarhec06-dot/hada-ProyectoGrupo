@@ -8,7 +8,7 @@
         <div>
             <p><strong>Nombre :</strong> <asp:TextBox ID="txtNombre" runat="server" /></p>
             <p><strong>Fecha de Creación :</strong> <asp:TextBox ID="txtFecha" runat="server" /></p>
-            <p><strong>Descripción :</strong> <asp:TextBox ID="txtDescripcion" runat="server" TextMode="MultiLine" /></p>
+            <p><strong style="vertical-align: top; display: inline-block;">Descripción:</strong><asp:TextBox ID="txtDescripcion" runat="server" TextMode="MultiLine" /></p>
             <p><strong>URL Logo :</strong> <asp:TextBox ID="txtLogo" runat="server" /></p>
             <asp:HiddenField ID="hfIdCapitan" runat="server" Value="0" />
             <p><strong>Capitán :</strong> <asp:Label ID="lblCapitanNombre" runat="server" Text="No seleccionado" /></p>
