@@ -93,29 +93,23 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                string sql = "SELECT * FROM Usuario WHERE email = @email";
-                SqlCommand com = new SqlCommand(sql, c);
+                string query = "SELECT * FROM Usuario WHERE email = @email";
+                SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@email", en.Email);
                 SqlDataReader dr = com.ExecuteReader();
-
                 if (dr.Read())
                 {
-                    en.Email = dr["email"].ToString();
-                    en.Password = dr["password"].ToString();
-                    en.Nombre = dr["nombre"]?.ToString() ?? "";
-                    en.Apellidos = dr["apellidos"]?.ToString() ?? "";
-                    en.Fecha_Nacimiento = dr["fecha_nacimiento"] == DBNull.Value ? DateTime.Now : (DateTime)dr["fecha_nacimiento"];
-                    en.Pais = dr["pais"]?.ToString() ?? "";
-                    en.Saldo_cartera = dr["saldo_cartera"] == DBNull.Value ? 0 : Convert.ToSingle(dr["saldo_cartera"]);  // ← ToSingle
-                    en.Verificado = dr["verificado"] != DBNull.Value && (bool)dr["verificado"];
+                    en.Nombre = dr["nombre"].ToString();
+                    en.Apellidos = dr["apellidos"].ToString();
+                    en.Fecha_Nacimiento = (DateTime)dr["fecha_nacimiento"];
+                    en.Pais = dr["pais"].ToString();
+                    en.Saldo_cartera = (float)dr["saldo_cartera"];
+                    en.Verificado = (bool)dr["verificado"];
                     ok = true;
                 }
                 dr.Close();
             }
-            catch (Exception)
-            {
-                ok = false;
-            }
+            catch (Exception) { ok = false; }
             finally { c.Close(); }
             return ok;
         }

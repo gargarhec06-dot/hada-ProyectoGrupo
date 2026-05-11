@@ -134,6 +134,11 @@ namespace hada_ProyectoGrupo.Library.EN
             CADUsuario cad = new CADUsuario();
             return cad.Delete(this);
         }
+        public bool Read()
+        {
+            CADUsuario cad = new CADUsuario();
+            return cad.Read(this);
+        }
     }
 }
 
