@@ -11,7 +11,7 @@ namespace hada_ProyectoGrupo.Private
 {
 
 
-    public partial class AñadirSaldo
+    public partial class AnadirSaldo
     {
 
         /// <summary>
@@ -24,13 +24,13 @@ namespace hada_ProyectoGrupo.Private
         protected global::System.Web.UI.WebControls.TextBox txtFondos;
 
         /// <summary>
-        /// Control rfvNombre.
+        /// Control revFondos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNombre;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revFondos;
 
         /// <summary>
         /// Control btnSumar.
@@ -49,5 +49,14 @@ namespace hada_ProyectoGrupo.Private
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCancelar;
+
+        /// <summary>
+        /// Control lblMensaje.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMensaje;
     }
 }

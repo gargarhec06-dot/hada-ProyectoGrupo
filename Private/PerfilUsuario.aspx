@@ -40,6 +40,10 @@
                                 <asp:Button ID="btnMisJugadores" runat="server" Text="Mis Jugadores" 
                                     OnClick="btnMisJugadores_Click" CssClass="btn btn-info" />
                             </asp:Panel>
+                            <asp:Panel ID="pnlSumarFondos" runat="server">
+                                <asp:Button ID="btnSumarFondos" runat="server" Text="Añadir fondos" 
+                                    OnClick="btnSumarFondos_Click"/>
+                            </asp:Panel>
 
                             <!-- Botones derecha -->
                             <div>
