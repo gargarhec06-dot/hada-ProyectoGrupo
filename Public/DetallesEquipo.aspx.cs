@@ -10,32 +10,30 @@ namespace hada_ProyectoGrupo.Public
     public partial class DetallesEquipo : System.Web.UI.Page
     {
         private ENEquipo equipo;
-        private string accionPendiente //Lo usamos para que no perdamos su valor despues de recargar la pagina
+        private string accionPendiente
         {
-            get { return ViewState["AccionPendiente"] as string; } //El viewState guarda datos entre los postback de la misma pagina
+            get { return ViewState["AccionPendiente"] as string; }
             set { ViewState["AccionPendiente"] = value; }
         }
 
         private int idEquipo
         {
-            get
-            { return ViewState["IdEquipo"] != null ? (int)ViewState["IdEquipo"] : 0;}
-            set
-            {
-                ViewState["IdEquipo"] = value;
-            }
+            get { return ViewState["IdEquipo"] != null ? (int)ViewState["IdEquipo"] : 0; }
+            set { ViewState["IdEquipo"] = value; }
         }
+
         private string emailLogueado;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Email"] == null)
+            if (Session["Email"] != null)
             {
-                Response.Redirect("~/Public/Login.aspx");
-                return;
+                emailLogueado = Session["Email"].ToString();
             }
-
-            emailLogueado = Session["Email"].ToString();
+            else
+            {
+                emailLogueado = null;
+            }
 
             if (!IsPostBack)
             {
@@ -44,16 +42,33 @@ namespace hada_ProyectoGrupo.Public
                     idEquipo = int.Parse(Request.QueryString["id"]);
                     CargarEquipo(idEquipo);
 
-                    // Permite verificar permisos y mostrar botones según quién es el capitán
-                    VerificarPermisos();
+                    if (emailLogueado != null)
+                    {
+                        VerificarPermisos();
+                    }
+                    else
+                    {
+                        pnlAcciones.Visible = false;
+                        pnlSeleccionJugador.Visible = false;
+                        btnModificar.Visible = false;
+                        btnEliminar.Visible = false;
+                        btnUnirse.Visible = false;
+                        btnCrear.Visible = false;
+                        lblMensaje.Text = "Inicia sesión para poder crear equipos, unirte o modificar.";
+                        lblMensaje.ForeColor = System.Drawing.Color.Blue;
+                    }
                 }
                 else
                 {
-                    // Modo creación: mostrar panel de acciones
+                    if (emailLogueado == null)
+                    {
+                        Response.Redirect("~/Public/Login.aspx");
+                        return;
+                    }
+
                     pnlAcciones.Visible = true;
                     pnlSeleccionJugador.Visible = false;
 
-                    // Limpio todos los campos para un nuevo equipo
                     txtNombre.Text = "";
                     txtFecha.Text = DateTime.Now.ToString("dd/MM/yyyy");
                     txtDescripcion.Text = "";
@@ -61,7 +76,6 @@ namespace hada_ProyectoGrupo.Public
                     lblCapitanNombre.Text = "No seleccionado";
                     hfIdCapitan.Value = "0";
 
-                    // Ocultar botones de eliminar, modificar y unirse en modo creación
                     btnModificar.Visible = false;
                     btnEliminar.Visible = false;
                     btnUnirse.Visible = false;
@@ -83,8 +97,14 @@ namespace hada_ProyectoGrupo.Public
                     txtDescripcion.Text = equipo.Descripcion;
                     txtLogo.Text = equipo.Logo_url;
                     hfIdCapitan.Value = equipo.Id_capitan.ToString();
+                    ddlMaxJugadores.SelectedValue = equipo.Max_jugadores.ToString();
+                    ddlMaxJugadores.Enabled = false; // No se puede modificar después de crear
 
-                    // Cargar el nombre del capitán
+                    // También mostrar en la sección de miembros
+                    lblMaxJugadores.Text = $"Límite: {equipo.Max_jugadores} jugadores";
+
+                    CargarMiembrosEquipo(id);
+
                     if (equipo.Id_capitan > 0)
                     {
                         ENJugador capitan = new ENJugador();
@@ -107,6 +127,9 @@ namespace hada_ProyectoGrupo.Public
                     {
                         imgLogo.ImageUrl = "https://e7.pngegg.com/pngimages/779/61/png-clipart-logo-idea-cute-eagle-leaf-logo-thumbnail.png";
                     }
+
+                    // Cargar miembros del equipo
+                    CargarMiembrosEquipo(id);
                 }
                 else
                 {
@@ -123,14 +146,72 @@ namespace hada_ProyectoGrupo.Public
             }
         }
 
+        private void CargarMiembrosEquipo(int idEquipo)
+        {
+            try
+            {
+                List<ENJugador> todosJugadores = new CADJugador().ReadAll();
+                List<dynamic> miembros = new List<dynamic>();
+                int contador = 0;
+
+                foreach (ENJugador j in todosJugadores)
+                {
+                    if (j.Equipo_actual == idEquipo)
+                    {
+                        contador++;
+                        miembros.Add(new
+                        {
+                            j.Apodo,
+                            j.Rol_principal,
+                            j.Nivel,
+                            Kda_promedio = j.Kda_promedio.ToString("0.00"),
+                            Winrate = j.Winrate.ToString("0.0"),
+                            EsCapitan = (j.Codigo == equipo.Id_capitan)
+                        });
+                    }
+                }
+
+                if (contador > 0)
+                {
+                    rptMiembros.DataSource = miembros;
+                    rptMiembros.DataBind();
+                    rptMiembros.Visible = true;
+                    lblNoMiembros.Visible = false;
+                    lblNumMiembros.Text = $"Miembros: {contador} / {equipo.Max_jugadores}";
+                }
+                else
+                {
+                    rptMiembros.Visible = false;
+                    lblNoMiembros.Visible = true;
+                    lblNumMiembros.Text = $"Miembros: 0 / {equipo.Max_jugadores}";
+                }
+
+                // Mostrar advertencia si está completo
+                if (contador >= equipo.Max_jugadores)
+                {
+                    lblMensaje.Text = "Este equipo ya ha alcanzado su límite de jugadores.";
+                    lblMensaje.ForeColor = System.Drawing.Color.Orange;
+                    btnUnirse.Visible = false; // Ocultar botón unirse
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al cargar miembros: {0}", ex.Message);
+            }
+        }
+
         private void VerificarPermisos()
         {
-            // Mostrar panel de acciones
+            if (string.IsNullOrEmpty(emailLogueado))
+            {
+                pnlAcciones.Visible = false;
+                return;
+            }
+
             pnlAcciones.Visible = true;
 
             if (equipo.Id_capitan == 0)
             {
-                // No hay capitán, cualquiera puede serlo (por si acaso)
                 btnModificar.Visible = false;
                 btnEliminar.Visible = false;
                 btnUnirse.Visible = true;
@@ -138,7 +219,6 @@ namespace hada_ProyectoGrupo.Public
                 return;
             }
 
-            // Obtener el email del capitán
             ENJugador capitan = new ENJugador();
             capitan.Codigo = equipo.Id_capitan;
 
@@ -153,12 +233,9 @@ namespace hada_ProyectoGrupo.Public
 
             bool esCapitan = (capitan.Email_usuario == emailLogueado);
 
-            // Si es el capitán -> puede modificar y eliminar
             btnModificar.Visible = esCapitan;
             btnEliminar.Visible = esCapitan;
             btnCrear.Visible = false;
-
-            // Si no -> puede unirse (si tiene jugadores disponibles)
             btnUnirse.Visible = !esCapitan;
         }
 
@@ -169,7 +246,6 @@ namespace hada_ProyectoGrupo.Public
 
         protected void btnCrear_Click(object sender, EventArgs e)
         {
-            // Validar campos obligatorios
             if (string.IsNullOrWhiteSpace(txtNombre.Text))
             {
                 lblMensaje.Text = "El nombre del equipo es obligatorio";
@@ -184,7 +260,6 @@ namespace hada_ProyectoGrupo.Public
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-            // Verificar por si acaso
             if (!VerificarEsCapitan())
             {
                 lblMensaje.Text = "No tienes permiso para modificar este equipo. Solo el capitán puede hacerlo.";
@@ -218,6 +293,8 @@ namespace hada_ProyectoGrupo.Public
                     {
                         imgLogo.ImageUrl = equipoModificar.Logo_url;
                     }
+
+                    CargarMiembrosEquipo(idEquipo);
                 }
                 else
                 {
@@ -234,7 +311,6 @@ namespace hada_ProyectoGrupo.Public
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
-            // Verificar por si acaso
             if (!VerificarEsCapitan())
             {
                 lblMensaje.Text = "No tienes permiso para eliminar este equipo. Solo el capitán puede hacerlo.";
@@ -336,26 +412,20 @@ namespace hada_ProyectoGrupo.Public
         {
             try
             {
-                string emailLogueado = Session["Email"].ToString();
-
-                // Obtener el equipo
                 ENEquipo equipoActual = new ENEquipo();
                 equipoActual.Id_equipo = idEquipo;
                 equipoActual.Read();
 
-                // Obtener el capitán y su juego
                 ENJugador capitan = new ENJugador();
                 capitan.Codigo = equipoActual.Id_capitan;
                 capitan.Read();
                 int juegoCapitan = capitan.Juego;
 
-                // Obtener la edad mínima del juego
                 ENVideojuego videojuego = new ENVideojuego();
                 videojuego.Codigo = juegoCapitan;
                 videojuego.Read();
                 int edadMinima = videojuego.EdadMinima;
 
-                // Obtener todos los jugadores del usuario
                 List<ENJugador> todosJugadores = new CADJugador().ReadAll();
                 List<ENJugador> jugadoresValidos = new List<ENJugador>();
 
@@ -363,13 +433,11 @@ namespace hada_ProyectoGrupo.Public
                 {
                     if (j.Email_usuario == emailLogueado && j.Equipo_actual == 0 && j.Juego == juegoCapitan)
                     {
-                        // Calcular edad del jugador desde la fecha de nacimiento del usuario
                         ENUsuario usuario = new ENUsuario();
                         usuario.Email = j.Email_usuario;
                         usuario.Read();
                         int edadJugador = CalcularEdad(usuario.Fecha_Nacimiento);
 
-                        // Verificar edad mínima
                         if (edadJugador >= edadMinima)
                         {
                             jugadoresValidos.Add(j);
@@ -441,14 +509,10 @@ namespace hada_ProyectoGrupo.Public
                 nuevoEquipo.Logo_url = txtLogo.Text;
                 nuevoEquipo.Descripcion = txtDescripcion.Text;
                 nuevoEquipo.Id_capitan = codigoCapitan;
+                nuevoEquipo.Max_jugadores = int.Parse(ddlMaxJugadores.SelectedValue); // AÑADIR ESTO
 
                 if (nuevoEquipo.Create())
                 {
-                    // Después de crear, leer el equipo para obtener su ID
-                    ENEquipo equipoCreado = new ENEquipo();
-                    equipoCreado.Nombre = txtNombre.Text;
-
-                    // Buscar por nombre (único) para obtener el ID
                     int idEquipoCreado = ObtenerIdEquipoPorNombre(txtNombre.Text);
 
                     if (idEquipoCreado > 0)
@@ -484,7 +548,7 @@ namespace hada_ProyectoGrupo.Public
             List<ENEquipo> equipos = new CADEquipo().ReadAll();
             foreach (ENEquipo eq in equipos)
             {
-                if (eq.Nombre == nombre)
+                if (eq.Nombre.ToLower() == nombre.ToLower())
                 {
                     return eq.Id_equipo;
                 }
@@ -496,9 +560,39 @@ namespace hada_ProyectoGrupo.Public
         {
             try
             {
+                // Verificar límite de jugadores
+                ENEquipo equipoActual = new ENEquipo();
+                equipoActual.Id_equipo = idEquipo;
+                equipoActual.Read();
+
+                // Contar miembros actuales
+                List<ENJugador> todosJugadores = new CADJugador().ReadAll();
+                int miembrosActuales = 0;
+                foreach (ENJugador j in todosJugadores)
+                {
+                    if (j.Equipo_actual == idEquipo)
+                    {
+                        miembrosActuales++;
+                    }
+                }
+
+                if (miembrosActuales >= equipoActual.Max_jugadores)
+                {
+                    lblMensaje.Text = $"No puedes unirte. El equipo ya alcanzó su límite de {equipoActual.Max_jugadores} jugadores.";
+                    lblMensaje.ForeColor = System.Drawing.Color.Red;
+                    return;
+                }
+
                 ENJugador jugador = new ENJugador();
                 jugador.Codigo = codigoJugador;
                 jugador.Read();
+
+                if (jugador.Email_usuario != emailLogueado)
+                {
+                    lblMensaje.Text = "No puedes unir un jugador que no es tuyo";
+                    lblMensaje.ForeColor = System.Drawing.Color.Red;
+                    return;
+                }
 
                 if (jugador.Equipo_actual != 0)
                 {
@@ -531,6 +625,29 @@ namespace hada_ProyectoGrupo.Public
         protected void btnCancelarSeleccion_Click(object sender, EventArgs e)
         {
             pnlSeleccionJugador.Visible = false;
+        }
+        protected void rptMiembros_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                dynamic miembro = e.Item.DataItem;
+                bool esCapitan = miembro.EsCapitan;
+
+                System.Web.UI.HtmlControls.HtmlGenericControl divMiembro =
+                    (System.Web.UI.HtmlControls.HtmlGenericControl)e.Item.FindControl("divMiembro");
+                System.Web.UI.HtmlControls.HtmlGenericControl spanCapitan =
+                    (System.Web.UI.HtmlControls.HtmlGenericControl)e.Item.FindControl("spanCapitan");
+
+                if (esCapitan)
+                {
+                    divMiembro.Attributes["style"] = "border:1px solid #28a745; padding:10px; margin-bottom:10px; border-radius:5px; background-color:#d4edda;";
+                    spanCapitan.Style["display"] = "inline-block";
+                }
+                else
+                {
+                    divMiembro.Attributes["style"] = "border:1px solid #ccc; padding:10px; margin-bottom:10px; border-radius:5px;";
+                }
+            }
         }
     }
 }

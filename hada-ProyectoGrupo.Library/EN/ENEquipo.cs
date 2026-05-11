@@ -16,6 +16,7 @@ namespace hada_ProyectoGrupo.Library.EN
         private string _logo_url;
         private string _descripcion;
         private int _id_capitan;
+        private int _max_jugadores;
 
         // Constructor por defecto
         public ENEquipo()
@@ -26,10 +27,11 @@ namespace hada_ProyectoGrupo.Library.EN
             _logo_url = "";
             _descripcion = "";
             _id_capitan = 0;
+            _max_jugadores = 5;
         }
 
         // Constructor completo
-        public ENEquipo(int id, string nombre, DateTime fecha, string logo, string descripcion, int capitan)
+        public ENEquipo(int id, string nombre, DateTime fecha, string logo, string descripcion, int capitan, int maxJugadores)
         {
             _id_equipo = id;
             _nombre = nombre;
@@ -37,6 +39,7 @@ namespace hada_ProyectoGrupo.Library.EN
             _logo_url = logo;
             _descripcion = descripcion;
             _id_capitan = capitan;
+            _max_jugadores = maxJugadores;
         }
 
         // Constructor para parámetros obligatorios
@@ -83,6 +86,12 @@ namespace hada_ProyectoGrupo.Library.EN
         {
             get { return _id_capitan; }
             set { _id_capitan = value; }
+        }
+
+        public int Max_jugadores
+        {
+            get { return _max_jugadores; }
+            set { _max_jugadores = value; }
         }
 
         // Métodos CRUD llamando al CAD

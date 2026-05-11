@@ -8,8 +8,21 @@
         <div>
             <p><strong>Nombre :</strong> <asp:TextBox ID="txtNombre" runat="server" /></p>
             <p><strong>Fecha de Creación :</strong> <asp:TextBox ID="txtFecha" runat="server" /></p>
-            <p><strong style="vertical-align: top; display: inline-block;">Descripción:</strong><asp:TextBox ID="txtDescripcion" runat="server" TextMode="MultiLine" /></p>
+            <p><strong>Descripción :</strong> <asp:TextBox ID="txtDescripcion" runat="server" TextMode="MultiLine" /></p>
             <p><strong>URL Logo :</strong> <asp:TextBox ID="txtLogo" runat="server" /></p>
+            <p><strong>Máximo de jugadores :</strong> 
+                <asp:DropDownList ID="ddlMaxJugadores" runat="server">
+                    <asp:ListItem Text="3 jugadores" Value="3" />
+                    <asp:ListItem Text="4 jugadores" Value="4" />
+                    <asp:ListItem Text="5 jugadores" Value="5" Selected="True" />
+                    <asp:ListItem Text="6 jugadores" Value="6" />
+                    <asp:ListItem Text="7 jugadores" Value="7" />
+                    <asp:ListItem Text="8 jugadores" Value="8" />
+                    <asp:ListItem Text="9 jugadores" Value="9" />
+                    <asp:ListItem Text="10 jugadores" Value="10" />
+                </asp:DropDownList>
+            </p>
+            <asp:HiddenField ID="HiddenField1" runat="server" Value="0" />
             <asp:HiddenField ID="hfIdCapitan" runat="server" Value="0" />
             <p><strong>Capitán :</strong> <asp:Label ID="lblCapitanNombre" runat="server" Text="No seleccionado" /></p>
         </div>
@@ -38,6 +51,36 @@
             <asp:Button ID="btnCancelarSeleccion" runat="server" Text="Cancelar" OnClick="btnCancelarSeleccion_Click" CssClass="btn btn-secondary" />
         </p>
     </asp:Panel>
+
+    <!-- SECCIÓN DE MIEMBROS DEL EQUIPO -->
+    <h3 style="margin-top: 30px;">Miembros del Equipo</h3>
+    
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+    <asp:Label ID="lblNumMiembros" runat="server" ForeColor="Gray" />
+    <asp:Label ID="lblMaxJugadores" runat="server" ForeColor="Gray" />
+    </div>
+    
+    <asp:Repeater ID="rptMiembros" runat="server" OnItemDataBound="rptMiembros_ItemDataBound">
+        <ItemTemplate>
+            <div id="divMiembro" runat="server" style="border:1px solid #ccc; padding:10px; margin-bottom:10px; border-radius:5px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <strong><%# Eval("Apodo") %></strong>
+                        <span id="spanCapitan" runat="server" style='background-color:#28a745; color:white; padding:2px 8px; border-radius:10px; margin-left:10px; font-size:12px; display:none;'>Capitán</span>
+                        <br />
+                        <small>Rol: <%# Eval("Rol_principal") %></small><br />
+                        <small>Nivel: <%# Eval("Nivel") %> | KDA: <%# Eval("Kda_promedio") %></small>
+                    </div>
+                    <div>
+                        <small>Winrate: <%# Eval("Winrate") %>%</small>
+                    </div>
+                </div>
+            </div>
+        </ItemTemplate>
+    </asp:Repeater>
+    
+    <!-- Mensaje cuando no hay miembros -->
+    <asp:Label ID="lblNoMiembros" runat="server" Text="No hay miembros en este equipo todavía." ForeColor="Gray" Visible="false" />
 
     <asp:Label ID="lblMensaje" runat="server" ForeColor="Red" />
 

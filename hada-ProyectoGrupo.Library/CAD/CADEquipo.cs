@@ -24,14 +24,14 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                string query = @"INSERT INTO Equipo (nombre, fecha_creacion, logo_url, descripcion, id_capitan)
-                                 VALUES (@nom, @fech, @log, @des, @id_c)";
+                string query = "INSERT INTO Equipo (nombre, fecha_creacion, logo_url, descripcion, id_capitan, max_jugadores) VALUES (@nom, @fech, @log, @des, @id_c, @max)";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@nom", en.Nombre);
                 com.Parameters.AddWithValue("@fech", en.Fecha_creacion);
                 com.Parameters.AddWithValue("@log", en.Logo_url);
                 com.Parameters.AddWithValue("@des", en.Descripcion);
                 com.Parameters.AddWithValue("@id_c", en.Id_capitan);
+                com.Parameters.AddWithValue("@max", en.Max_jugadores);
                 if (com.ExecuteNonQuery() > 0) ok = true;
             }
             catch (Exception ex) { throw new Exception("Error al crear equipo: " + ex.Message); }
@@ -58,6 +58,7 @@ namespace hada_ProyectoGrupo.Library.CAD
                     en.Logo_url = dr["logo_url"].ToString();
                     en.Descripcion = dr["descripcion"].ToString();
                     en.Id_capitan = (int)dr["id_capitan"];
+                    en.Max_jugadores = (int)dr["max_jugadores"];
                     ok = true;
                 }
                 dr.Close();
@@ -74,7 +75,7 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                string query = "UPDATE Equipo SET nombre=@nom, fecha_creacion=@fech, logo_url=@log, descripcion=@des, id_capitan=@id_c WHERE id_equipo=@id_e";
+                string query = "UPDATE Equipo SET nombre=@nom, fecha_creacion=@fech, logo_url=@log, descripcion=@des, id_capitan=@id_c, max_jugadores=@max WHERE id_equipo=@id_e";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@id_e", en.Id_equipo);
                 com.Parameters.AddWithValue("@nom", en.Nombre);
@@ -82,6 +83,8 @@ namespace hada_ProyectoGrupo.Library.CAD
                 com.Parameters.AddWithValue("@log", en.Logo_url);
                 com.Parameters.AddWithValue("@des", en.Descripcion);
                 com.Parameters.AddWithValue("@id_c", en.Id_capitan);
+                com.Parameters.AddWithValue("@max", en.Max_jugadores);
+
                 if (com.ExecuteNonQuery() > 0) ok = true;
             }
             catch (Exception) { ok = false; }
@@ -133,6 +136,7 @@ namespace hada_ProyectoGrupo.Library.CAD
                     en.Logo_url = dr["logo_url"].ToString();
                     en.Descripcion = dr["descripcion"].ToString();
                     en.Id_capitan = (int)dr["id_capitan"];
+                    en.Max_jugadores = (int)dr["max_jugadores"];
                     lista.Add(en);
                 }
                 dr.Close();
