@@ -129,5 +129,40 @@ namespace hada_ProyectoGrupo.Library.CAD
 
             return lista;
         }
+
+        public List<ENVideojuego> ReadAllFiltered(ENVideojuego filter, int ed_max)
+        {
+            List<ENVideojuego> lista = new List<ENVideojuego>();
+
+            SqlConnection c = new SqlConnection(constring);
+            try
+            {
+                c.Open();
+                string query = "SELECT * FROM Videojuego WHERE nombre LIKE '%"
+                    + filter.Nombre
+                    + "%' AND tipo LIKE '"
+                    + filter.Tipo
+                    + "' AND "
+                    + filter.EdadMinima
+                    + " <= edadminima AND edadminima <= " + ed_max.ToString();
+                SqlCommand com = new SqlCommand(query, c);
+                SqlDataReader dr = com.ExecuteReader();
+                while (dr.Read())
+                {
+                    ENVideojuego en = new ENVideojuego();
+                    en.Codigo = (int)dr["codigo"];
+                    en.Nombre = dr["nombre"].ToString();
+                    en.Descripcion = dr["descripcion"].ToString();
+                    en.Tipo = dr["tipo"].ToString();
+                    en.EdadMinima = (int)dr["edadminima"];
+                    lista.Add(en);
+                }
+                dr.Close();
+            }
+            catch (Exception) { }
+            finally { c.Close(); }
+
+            return lista;
+        }
     }
 }

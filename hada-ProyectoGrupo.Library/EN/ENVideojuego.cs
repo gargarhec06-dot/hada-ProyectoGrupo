@@ -87,6 +87,11 @@ namespace hada_ProyectoGrupo.Library.EN
             CADVideojuego cad = new CADVideojuego();
             return cad.ReadAll();
         }
+        public List<ENVideojuego> ReadAllFiltered(int ed_max)
+        {
+            CADVideojuego cad = new CADVideojuego();
+            return cad.ReadAllFiltered(this, ed_max);
+        }
 
 
         public enum ENVideojuegoTipo
@@ -133,7 +138,7 @@ namespace hada_ProyectoGrupo.Library.EN
             }
         }
 
-        public static void GetAllVideojuegoTipo()
+        public static Dictionary<ENVideojuegoTipo, string> GetAllVideojuegoTipo()
         {
             Dictionary<ENVideojuegoTipo, string> tipos_videojuegos = new Dictionary<ENVideojuegoTipo, string>();
 
@@ -143,6 +148,8 @@ namespace hada_ProyectoGrupo.Library.EN
 
                 tipos_videojuegos.Add((ENVideojuegoTipo)Enum.Parse(typeof(ENVideojuegoTipo), code), code);
             }
+
+            return tipos_videojuegos;
         }
     }
 }
