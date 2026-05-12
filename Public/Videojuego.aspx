@@ -30,6 +30,14 @@
             <asp:TextBox TextMode="Number" Visible="false" ID="EdadMinimaAdminBox" runat="server"/>
         </div>
         <div>
+            <asp:Label Text="<b>Icono:</b> " runat="server"/>
+            <asp:FileUpload ID="IconUpload" runat="server" />
+        </div>
+        <div>
+            <asp:Label Text="<b>Caratula:</b> " runat="server"/>
+            <asp:FileUpload ID="FileUpload1" runat="server" />
+        </div>
+        <div>
             <asp:Label Text="" ID="DebugLabel" runat="server"/>
         </div>
         <div>
