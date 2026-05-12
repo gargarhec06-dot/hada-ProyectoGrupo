@@ -15,12 +15,12 @@
             <asp:Repeater ID="rptTorneos" runat="server">
                 <ItemTemplate>
                     <div class="col-md-4 mb-4">
-                        <div class="card h-100 shadow-sm">
+                        <div class="card h-100 torneo-card">
                             <div class="card-body">
-                                <h5 class="card-title text-primary">
+                                <h5 class="card-title">
                                     <%# Eval("Nombre") %>
                                 </h5>
-                                <p class="card-text small text-muted">
+                                <p class="card-text small">
                                     Fecha: <%# Eval("Fecha", "{0:dd/MM/yyyy}") %><br />
                                     Nivel: <%# (bool)Eval("Profesional") ? "Profesional" : "Amateur" %><br />
                                     Inscripción: <%# Eval("PrecioInscripcion") %>€<br />
@@ -38,6 +38,4 @@
             </asp:Repeater>
         </div>
     </div>
-
-    
 </asp:Content>

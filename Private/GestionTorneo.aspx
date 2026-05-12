@@ -10,17 +10,17 @@
     <div style="width: 500px;">
 
         <div style="margin-bottom: 10px;">
-            <strong>ID Videojuego:</strong><br />
-            <asp:TextBox ID="txtVideojuego" runat="server" Width="100%" />
-            <asp:RequiredFieldValidator ID="rfvVideojuego" runat="server"
-                ControlToValidate="txtVideojuego" ErrorMessage="*" ForeColor="Red" />
+            <strong>Videojuego: </strong><br />
+            <asp:DropDownList ID="ddlVideojuego" runat="server">
+                <asp:ListItem Text="Selecciona un videojuego" Value="0"/>
+            </asp:DropDownList>
         </div>
 
         <div style="margin-bottom: 10px;">
             <strong>Nombre:</strong><br />
             <asp:TextBox ID="txtNombre" runat="server" Width="100%" />
             <asp:RequiredFieldValidator ID="rfvNombre" runat="server"
-                ControlToValidate="txtNombre" ErrorMessage="*" ForeColor="Red" />
+                ControlToValidate="txtNombre" Text="*" ForeColor="Red" />
         </div>
 
         <div style="margin-bottom: 10px;">
@@ -32,21 +32,21 @@
             <strong>Fecha:</strong><br />
             <asp:TextBox ID="txtFecha" runat="server" Width="100%" TextMode="Date" />
             <asp:RequiredFieldValidator ID="rfvFecha" runat="server"
-                ControlToValidate="txtFecha" ErrorMessage="*" ForeColor="Red" />
+                ControlToValidate="txtFecha" Text="*" ForeColor="Red" />
         </div>
 
         <div style="margin-bottom: 10px;">
             <strong>Precio Inscripción:</strong><br />
             <asp:TextBox ID="txtInscripcion" runat="server" Width="100%" />
             <asp:RequiredFieldValidator ID="rfvInscripcion" runat="server"
-                ControlToValidate="txtInscripcion" ErrorMessage="*" ForeColor="Red" />
+                ControlToValidate="txtInscripcion" Text="*" ForeColor="Red" />
         </div>
 
         <div style="margin-bottom: 10px;">
             <strong>Coste Organización:</strong><br />
             <asp:TextBox ID="txtOrganizacion" runat="server" Width="100%" />
             <asp:RequiredFieldValidator ID="rfvOrganizacion" runat="server"
-                ControlToValidate="txtOrganizacion" ErrorMessage="*" ForeColor="Red" />
+                ControlToValidate="txtOrganizacion" Text="*" ForeColor="Red" />
         </div>
 
         <div style="margin-bottom: 10px;">

@@ -24,22 +24,13 @@ namespace hada_ProyectoGrupo.Private
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tituloPagina;
 
         /// <summary>
-        /// Control txtVideojuego.
+        /// Control ddlVideojuego.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtVideojuego;
-
-        /// <summary>
-        /// Control rfvVideojuego.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvVideojuego;
+        protected global::System.Web.UI.WebControls.DropDownList ddlVideojuego;
 
         /// <summary>
         /// Control txtNombre.
