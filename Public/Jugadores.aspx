@@ -90,13 +90,12 @@
                      data-estado="<%# Eval("EstadoFiltro") %>">
 
                     <div class="jug-header">
-                        <img class="jug-team-logo"
-                             src='<%# !string.IsNullOrEmpty(Eval("LogoEquipo") as string)
-                                       ? ResolveUrl(Eval("LogoEquipo").ToString())
-                                       : ResolveUrl("~/Images/Equipo/default-team.png") %>'
-                             onerror="this.onerror=null;this.src='<%= ResolveUrl("~/Images/Equipo/default-team.png") %>';"
-                             alt='<%# Eval("NombreEquipo") %>'
-                             title='<%# Eval("NombreEquipo") %>' />
+                       <asp:Image ID="imgLogoEquipo" runat="server" 
+                        CssClass="jug-team-logo"
+                        ImageUrl='<%# !string.IsNullOrEmpty(Eval("LogoEquipo") as string) ? ResolveUrl(Eval("LogoEquipo").ToString()) : "" %>'
+                        Visible='<%# !string.IsNullOrEmpty(Eval("LogoEquipo") as string) %>'
+                        AlternateText='<%# Eval("NombreEquipo") %>' 
+                        toolTip='<%# Eval("NombreEquipo") %>' />
                         <h1 class="jug-apodo"><%# Eval("Apodo") %></h1>
                     </div>
 
