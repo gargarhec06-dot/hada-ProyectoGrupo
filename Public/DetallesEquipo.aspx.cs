@@ -28,6 +28,11 @@ namespace hada_ProyectoGrupo.Public
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            if (Session["EsAdmin"] != null)
+            {
+                esAdmin = (bool)Session["EsAdmin"];
+            }
             if (Session["Email"] != null)
             {
                 emailLogueado = Session["Email"].ToString();
@@ -94,6 +99,14 @@ namespace hada_ProyectoGrupo.Public
                 equipo.Id_equipo = id;
                 if (equipo.Read())
                 {
+                    // Un único bloque para resolver la imagen
+                    string logoUrl = !string.IsNullOrWhiteSpace(equipo.Logo_url)
+                        ? equipo.Logo_url
+                        : "~/Images/Equipos/default-team.png"; // carpeta con S, unificada
+
+                    imgLogo.ImageUrl = ResolveUrl(logoUrl);
+                    imgLogo.Visible = true;
+
                     txtNombre.Text = equipo.Nombre;
                     txtFecha.Text = equipo.Fecha_creacion.ToString("dd/MM/yyyy");
                     txtDescripcion.Text = equipo.Descripcion;
@@ -101,45 +114,28 @@ namespace hada_ProyectoGrupo.Public
                     hfIdCapitan.Value = equipo.Id_capitan.ToString();
                     ddlMaxJugadores.SelectedValue = equipo.Max_jugadores.ToString();
                     ddlMaxJugadores.Enabled = false;
-                    ddlMaxJugadores.Text = $"Límite: {equipo.Max_jugadores} jugadores";
 
                     if (equipo.Id_capitan > 0)
                     {
                         ENJugador capitan = new ENJugador();
                         capitan.Codigo = equipo.Id_capitan;
-                        if (capitan.Read())
-                        {
-                            lblCapitanNombre.Text = capitan.Apodo;
-                        }
+                        lblCapitanNombre.Text = capitan.Read() ? capitan.Apodo : "Sin capitán";
                     }
                     else
                     {
                         lblCapitanNombre.Text = "Sin capitán";
                     }
 
-                    if (!string.IsNullOrWhiteSpace(equipo.Logo_url))
-                    {
-                        imgLogo.ImageUrl = equipo.Logo_url;
-                    }
-                    else
-                    {
-                        imgLogo.ImageUrl = ResolveUrl("~/Images/Equipos/default-team.png");
-                    }
-                    imgLogo.Visible = true;
-
                     CargarMiembrosEquipo(id, equipo.Id_capitan, equipo.Max_jugadores);
                 }
                 else
                 {
-                    Console.WriteLine("No se pudo leer el equipo con ID: {0}", id);
-                    Response.Write("<script>alert('Equipo no encontrado');</script>");
                     Response.Redirect("~/Public/Equipos.aspx");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error al cargar equipo: {0}", ex.Message);
-                Response.Write("<script>alert('Error al cargar el equipo');</script>");
+                System.Diagnostics.Debug.WriteLine("Error al cargar equipo: " + ex.Message);
                 Response.Redirect("~/Public/Equipos.aspx");
             }
         }
@@ -691,18 +687,24 @@ namespace hada_ProyectoGrupo.Public
                     }
 
                     string nombreArchivo = "equipo_" + DateTime.Now.Ticks + extension;
+                    // UNIFICAMOS la carpeta: siempre "Equipos" con S
                     string ruta = Server.MapPath("~/Images/Equipos/");
 
                     if (!Directory.Exists(ruta))
-                    {
                         Directory.CreateDirectory(ruta);
-                    }
 
                     fuLogo.SaveAs(ruta + nombreArchivo);
-                    imgLogo.ImageUrl = ResolveUrl("~/Images/Equipos/" + nombreArchivo);
+
+                    // Guardamos la ruta relativa (sin ~/ para que funcione en img src directamente)
+                    string rutaRelativa = "~/Images/Equipos/" + nombreArchivo;
+
+                    // CRÍTICO: actualizamos el TextBox para que btnModificar guarde esto en la BD
+                    txtLogo.Text = rutaRelativa;
+
+                    imgLogo.ImageUrl = ResolveUrl(rutaRelativa);
                     imgLogo.Visible = true;
 
-                    lblSubidaLogo.Text = "Imagen subida correctamente";
+                    lblSubidaLogo.Text = "Imagen subida. Pulsa 'Guardar Cambios' para confirmar.";
                     lblSubidaLogo.ForeColor = System.Drawing.Color.Green;
                 }
                 catch (Exception ex)

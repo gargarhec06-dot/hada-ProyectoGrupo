@@ -14,44 +14,7 @@ namespace hada_ProyectoGrupo.Library.EN
         private string _descripcion;
         private int _id_capitan;
         private int _max_jugadores;
-        private int _miembros_actuales;  // ← NUEVO: para el conteo
-
-        // Constructor por defecto
-        public ENEquipo()
-        {
-            _id_equipo = 0;
-            _nombre = "";
-            _fecha_creacion = DateTime.Now;
-            _logo_url = "";
-            _descripcion = "";
-            _id_capitan = 0;
-            _max_jugadores = 5;
-            _miembros_actuales = 0;
-        }
-
-        // Constructor completo
-        public ENEquipo(int id, string nombre, DateTime fecha, string logo, string descripcion, int capitan, int maxJugadores, int miembrosActuales)
-        {
-            _id_equipo = id;
-            _nombre = nombre;
-            _fecha_creacion = fecha;
-            _logo_url = logo;
-            _descripcion = descripcion;
-            _id_capitan = capitan;
-            _max_jugadores = maxJugadores;
-            _miembros_actuales = miembrosActuales;
-        }
-
-        // Constructor para parámetros obligatorios
-        public ENEquipo(string nombre, DateTime fecha)
-        {
-            _nombre = nombre;
-            _fecha_creacion = fecha;
-            _logo_url = "";
-            _descripcion = "";
-            _max_jugadores = 5;
-            _miembros_actuales = 0;
-        }
+        private int _miembros_actuales;
 
         // Propiedades públicas
         public int Id_equipo
@@ -96,14 +59,40 @@ namespace hada_ProyectoGrupo.Library.EN
             set { _max_jugadores = value; }
         }
 
-        // NUEVA PROPIEDAD
         public int MiembrosActuales
         {
             get { return _miembros_actuales; }
             set { _miembros_actuales = value; }
         }
 
-        // Métodos CRUD
+        // --- CONSTRUCTORES ---
+
+        public ENEquipo()
+        {
+            _id_equipo = 0;
+            _nombre = "";
+            _fecha_creacion = DateTime.Now;
+            _logo_url = "";
+            _descripcion = "";
+            _id_capitan = 0;
+            _max_jugadores = 5;
+            _miembros_actuales = 0;
+        }
+
+        public ENEquipo(int id, string nombre, DateTime fecha, string logo, string descripcion, int capitan, int maxJugadores, int miembrosActuales)
+        {
+            _id_equipo = id;
+            _nombre = nombre;
+            _fecha_creacion = fecha;
+            _logo_url = logo;
+            _descripcion = descripcion;
+            _id_capitan = capitan;
+            _max_jugadores = maxJugadores;
+            _miembros_actuales = miembrosActuales;
+        }
+
+        // --- MÉTODOS CRUD (Llaman al CAD) ---
+
         public bool Create()
         {
             CADEquipo cad = new CADEquipo();

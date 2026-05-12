@@ -38,7 +38,7 @@ namespace hada_ProyectoGrupo.Public
             {
                 List<ENJugador> todosLosJugadores = new ENJugador().ReadAll();
 
-                // Mapa de equipos para lookup O(1)
+                // Mapa de equipos para búsqueda rápida
                 CADEquipo cadEquipo = new CADEquipo();
                 List<ENEquipo> todosEquipos = cadEquipo.ReadAll();
                 Dictionary<int, ENEquipo> mapEquipos = new Dictionary<int, ENEquipo>();
@@ -55,16 +55,11 @@ namespace hada_ProyectoGrupo.Public
 
                 foreach (ENJugador j in todosLosJugadores)
                 {
-                    // ── CAMBIO RESPECTO A LA VERSIÓN ANTERIOR ──
-                    // Antes se filtraba aquí y el jugador solo veía los suyos.
-                    // Ahora se muestran TODOS; el filtro "Mis jugadores" se hace
-                    // en cliente con data-estado="mio".
-
                     bool esMio = esJugador && j.Email_usuario == emailLogueado;
                     bool tieneEquipo = j.Equipo_actual > 0;
 
                     string estadoFiltro;
-                    if (esMio) estadoFiltro = "mio";          // propio (cuenta como con-equipo)
+                    if (esMio) estadoFiltro = "mio";
                     else if (tieneEquipo) estadoFiltro = "con-equipo";
                     else estadoFiltro = "sin-equipo";
 
@@ -77,16 +72,17 @@ namespace hada_ProyectoGrupo.Public
                         EstadoFiltro = estadoFiltro
                     };
 
-                    // Resolver logo del equipo
+                    // RESOLUCIÓN DEL LOGO DEL EQUIPO
                     if (tieneEquipo && mapEquipos.ContainsKey(j.Equipo_actual))
                     {
-                        ENEquipo equipo = mapEquipos[j.Equipo_actual];
-                        vm.NombreEquipo = equipo.Nombre;
+                        ENEquipo equipoObj = mapEquipos[j.Equipo_actual];
+                        vm.NombreEquipo = equipoObj.Nombre;
 
-                        string logo = equipo.Logo_url ?? "";
-                        if (string.IsNullOrEmpty(logo))
+                        string logo = equipoObj.Logo_url ?? "";
+
+                        if (string.IsNullOrWhiteSpace(logo))
                         {
-                            vm.LogoEquipo = "";
+                            vm.LogoEquipo = ""; // Esto hará que el control se oculte en el ASPX
                         }
                         else if (logo.StartsWith("http://") || logo.StartsWith("https://"))
                         {
@@ -94,6 +90,7 @@ namespace hada_ProyectoGrupo.Public
                         }
                         else
                         {
+                            // Aseguramos que la ruta tenga el formato ~/
                             if (!logo.StartsWith("~/"))
                                 logo = "~/" + logo.TrimStart('/');
                             vm.LogoEquipo = logo;
@@ -101,6 +98,7 @@ namespace hada_ProyectoGrupo.Public
                     }
                     else
                     {
+                        // JUGADOR SIN EQUIPO: Asignamos valores vacíos
                         vm.NombreEquipo = "Sin equipo";
                         vm.LogoEquipo = "";
                     }
@@ -119,7 +117,7 @@ namespace hada_ProyectoGrupo.Public
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = "Error: " + ex.Message;
+                lblMensaje.Text = "Error al cargar jugadores: " + ex.Message;
                 lblMensaje.ForeColor = System.Drawing.Color.Red;
             }
         }
