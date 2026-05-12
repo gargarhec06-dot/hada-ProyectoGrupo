@@ -78,6 +78,7 @@
     <Content Include="Default.aspx" />
     <Content Include="Fondo\Fondo.png" />
     <Content Include="Fondo\Fondo2.png" />
+    <Content Include="Global.asax" />
     <Content Include="Images\Equipos\default-team.png" />
     <Content Include="Private\EditarPatrocinador.aspx" />
     <Content Include="Private\EditarPerfil.aspx" />
@@ -109,6 +110,9 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Private\EditarPatrocinador.aspx.cs">
       <DependentUpon>EditarPatrocinador.aspx</DependentUpon>
