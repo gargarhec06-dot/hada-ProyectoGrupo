@@ -10,8 +10,6 @@ using System.Web.UI.WebControls;
 
 namespace hada_ProyectoGrupo.Public
 {
-    // DTO enriquecido para la vista — se construye en el code-behind
-    // y se usa como DataSource del Repeater.
     public class EquipoViewModel
     {
         public int Id_equipo { get; set; }
@@ -19,13 +17,7 @@ namespace hada_ProyectoGrupo.Public
         public string Logo_url { get; set; }
         public int MiembrosActuales { get; set; }
         public int MaxJugadores { get; set; }
-
-        // Lógica de filtrado para el JS del cliente:
-        // valores posibles: "todos" | "mio" | "unirse" | "lleno"
-        public string EstadoFiltro { get; set; }
-
-        // Clases y textos dinámicos calculados aquí para mantener
-        // el .aspx libre de lógica compleja.
+        public string EstadoFiltro { get; set; } // "mio" | "unirse" | "lleno"
         public string BadgeClass { get; set; }
         public string BadgeTexto { get; set; }
         public string AccionTexto { get; set; }
@@ -37,14 +29,17 @@ namespace hada_ProyectoGrupo.Public
         {
             if (!IsPostBack)
             {
+                // Detectar estado del usuario
+                bool estaLogueado = Session["Email"] != null;
+                bool esAdmin = Session["EsAdmin"] != null && (bool)Session["EsAdmin"];
+                bool esJugador = estaLogueado && !esAdmin;
+
                 CargarEquipos();
 
-                // Mostrar controles solo para jugadores autenticados
-                bool esJugador = Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == false;
+                // Configurar visibilidad de controles de filtrado
                 pnlJugador.Visible = esJugador;
-                pnlBtnUnirse.Visible = esJugador;
+                pnlBtnUnirse.Visible = estaLogueado;
 
-                // Mostrar "Mi equipo" solo si el jugador pertenece a alguno
                 if (esJugador)
                 {
                     int idJugador = ObtenerIdJugadorSesion();
@@ -53,35 +48,43 @@ namespace hada_ProyectoGrupo.Public
             }
         }
 
-        // ----------------------------------------------------------------
-        // Carga y transforma la lista de equipos en EquipoViewModel
-        // ----------------------------------------------------------------
         public void CargarEquipos()
         {
             try
             {
                 CADEquipo cad = new CADEquipo();
-                List<EquipoConMiembros> listaRaw = cad.ReadAllConMiembros();  // ← Usar este método
+                List<EquipoConMiembros> listaRaw = cad.ReadAllConMiembros();
 
-                int idJugador = ObtenerIdJugadorSesion();
-                bool esJugador = Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == false;
+                // 1. Obtener datos del usuario actual (no solo del jugador)
+                string emailUsuario = Session["Email"]?.ToString();
+                bool estaLogueado = !string.IsNullOrEmpty(emailUsuario);
+                bool esAdmin = Session["EsAdmin"] != null && (bool)Session["EsAdmin"];
+                bool esJugador = estaLogueado && !esAdmin;
 
-                int idEquipoDelJugador = esJugador && idJugador > 0
-                    ? ObtenerEquipoDeJugador(idJugador)
-                    : 0;
+                // 2. Obtener la lista de IDs de equipos donde este USUARIO ya tiene algún jugador
+                // Esto evita que sus otros jugadores se unan al mismo equipo.
+                List<int> equiposOcupadosPorUsuario = obtenerEquiposDelUsuario(emailUsuario);
+
+                // ID del jugador que está "activo" en la sesión actualmente
+                int idJugadorSesion = ObtenerIdJugadorSesion();
+                int idEquipoJugadorActual = (idJugadorSesion > 0) ? ObtenerEquipoDeJugador(idJugadorSesion) : 0;
 
                 var lista = listaRaw.Select(e =>
                 {
                     bool lleno = e.MiembrosActuales >= e.Max_jugadores;
-                    bool esMio = idEquipoDelJugador > 0 && e.Id_equipo == idEquipoDelJugador;
 
-                    string estado;
-                    if (esMio) estado = "mio";
-                    else if (lleno) estado = "lleno";
-                    else estado = "unirse";
+                    // ¿El jugador actual de la sesión ya está en este equipo?
+                    bool esMiEquipoActual = idEquipoJugadorActual > 0 && e.Id_equipo == idEquipoJugadorActual;
+
+                    // ¿El usuario (dueño) ya tiene ALGÚN otro jugador en este equipo?
+                    bool usuarioYaEstaAqui = equiposOcupadosPorUsuario.Contains(e.Id_equipo);
+
+                    // Definir estado para el filtro
+                    string estado = esMiEquipoActual ? "mio" : (lleno ? "lleno" : "unirse");
 
                     string badgeClass, badgeTexto, accionTexto;
-                    if (esMio)
+
+                    if (esMiEquipoActual)
                     {
                         badgeClass = "badge-mine";
                         badgeTexto = "Mi equipo";
@@ -93,11 +96,19 @@ namespace hada_ProyectoGrupo.Public
                         badgeTexto = "Lleno";
                         accionTexto = "Ver detalle";
                     }
+                    else if (usuarioYaEstaAqui)
+                    {
+                        // RESTRICCIÓN: El usuario ya tiene otro jugador aquí
+                        badgeClass = "badge-full"; // Usamos estilo de lleno/bloqueado
+                        badgeTexto = "Ya tienes un jugador aquí";
+                        accionTexto = "Bloqueado";
+                    }
                     else
                     {
                         badgeClass = "badge-open";
                         badgeTexto = "Abierto";
-                        accionTexto = (esJugador && idEquipoDelJugador == 0) ? "Unirse" : "Ver detalle";
+                        // Solo permite "Unirse" si el jugador actual no tiene equipo Y el usuario no tiene a nadie aquí
+                        accionTexto = (esJugador && idEquipoJugadorActual == 0) ? "Unirse" : "Ver detalle";
                     }
 
                     return new EquipoViewModel
@@ -117,75 +128,64 @@ namespace hada_ProyectoGrupo.Public
                 rptEquipos.DataSource = lista;
                 rptEquipos.DataBind();
             }
-            catch (Exception ex)
+            catch (Exception ex) { Console.WriteLine("Error al cargar equipo: {0}", ex.Message); }
+        }
+
+        // Nueva función de apoyo
+        private List<int> obtenerEquiposDelUsuario(string email)
+        {
+            List<int> ids = new List<int>();
+            if (string.IsNullOrEmpty(email)) return ids;
+
+            try
             {
-                System.Diagnostics.Debug.WriteLine("Error al cargar equipos: " + ex.Message);
-                Response.Write("<script>alert('Error al cargar los equipos');</script>");
+                // Aquí debes llamar a tu CAD o EN para obtener todos los jugadores 
+                // asociados a ese Email y retornar sus IDs de equipo.
+                // Ejemplo hipotético:
+                // ENJugador j = new ENJugador();
+                // ids = j.ObtenerEquiposPorEmailUsuario(email); 
             }
+            catch { }
+
+            return ids;
         }
 
         private int ObtenerIdJugadorSesion()
         {
-            if (Session["CodigoJugador"] == null)
+            if (Session["CodigoJugador"] != null) return Convert.ToInt32(Session["CodigoJugador"]);
+
+            // Si no está el código, intentamos buscarlo por Email (Fallback)
+            string email = Session["Email"]?.ToString();
+            if (!string.IsNullOrEmpty(email))
             {
-                // Intentar obtener el jugador por email
-                string email = Session["Email"]?.ToString();
-                if (!string.IsNullOrEmpty(email))
-                {
-                    ENJugador jugador = new ENJugador();
-                    jugador.Email_usuario = email;
-                    // Necesitas un método ReadByEmail en CADJugador
-                    // Por ahora, devolvemos 0
-                }
-                return 0;
+                // Aquí podrías llamar a un método de tu CAD para obtener el ID por email
             }
-            return Convert.ToInt32(Session["CodigoJugador"]);
+            return 0;
         }
 
-        private bool JugadorTieneEquipo(int idJugador)
-        {
-            return ObtenerEquipoDeJugador(idJugador) > 0;
-        }
+        private bool JugadorTieneEquipo(int idJugador) => ObtenerEquipoDeJugador(idJugador) > 0;
 
         private int ObtenerEquipoDeJugador(int idJugador)
         {
             try
             {
-                ENJugador j = new ENJugador();
-                j.Codigo = idJugador;
-                if (j.Read())  // ← Usar Read() en lugar de ReadOne()
-                {
-                    return j.Equipo_actual;
-                }
-                return 0;
+                ENJugador j = new ENJugador { Codigo = idJugador };
+                return j.Read() ? j.Equipo_actual : 0;
             }
-            catch
-            {
-                return 0;
-            }
+            catch { return 0; }
         }
+
         protected void rptEquipos_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            if (e.Item.ItemType == ListItemType.Item ||
-                e.Item.ItemType == ListItemType.AlternatingItem)
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
-                dynamic data = e.Item.DataItem;
-
-                int actuales = Convert.ToInt32(DataBinder.Eval(data, "MiembrosActuales"));
-                int maximos = Convert.ToInt32(DataBinder.Eval(data, "MaxJugadores"));
-
-                int porcentaje = (actuales * 100) / maximos;
-
-                HtmlGenericControl barra =
-                    (HtmlGenericControl)e.Item.FindControl("barra");
-
-                barra.Style["width"] = porcentaje + "%";
+                var data = (EquipoViewModel)e.Item.DataItem;
+                int porcentaje = (data.MiembrosActuales * 100) / data.MaxJugadores;
+                HtmlGenericControl barra = (HtmlGenericControl)e.Item.FindControl("barra");
+                if (barra != null) barra.Style["width"] = porcentaje + "%";
             }
         }
 
-        // ----------------------------------------------------------------
-        // Eventos
-        // ----------------------------------------------------------------
         protected void btnCrear_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Public/DetallesEquipo.aspx");

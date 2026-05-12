@@ -189,7 +189,6 @@
     </Compile>
     <Compile Include="Public\Jugadores.aspx.cs">
       <DependentUpon>Jugadores.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Public\Jugadores.aspx.designer.cs">
       <DependentUpon>Jugadores.aspx</DependentUpon>
