@@ -6,52 +6,231 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>HADA Esports</title>
-      <style>
-         #Menu1 ul.level1 > li:nth-child(8) ul {
-        background-color: #f8f9fa !important;
-    }
-    
-    /* Letras en azul de Bootstrap */
-    #Menu1 ul.level1 > li:nth-child(8) ul li a {
-        background-color: #f8f9fa !important;
-        color: #0d6efd !important;  /* Azul primary de Bootstrap */
-    }
-    
-    /* Hover: fondo ligeramente más oscuro y texto azul más oscuro */
-    #Menu1 ul.level1 > li:nth-child(8) ul li a:hover {
-        background-color: #e9ecef !important;
-        color: #0a58ca !important;  /* Azul más oscuro para el hover */
-    }
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            min-height: 100%;
+            background-color: #0f0f1a;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* ── Fondo ── */
+        #fondo-global {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: url('Fondo/Fondo.png');
+            background-size: cover;
+            background-position: center;
+            opacity: 1;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Capa oscura encima del fondo */
+        #fondo-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(to bottom, #0f0f1a 0%, transparent 40%, #0f0f1a 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ── Navbar ── */
+        #navbar-hada {
+            position: relative;
+            z-index: 100;
+            background-color: #0f0f1a !important;
+            border-bottom: 1px solid #00e5ff33;
+            box-shadow: 0 2px 20px #00e5ff22;
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+            height: 60px;
+        }
+
+        .navbar-brand-text {
+            color: #00e5ff;
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-right: 30px;
+            text-shadow: 0 0 10px #00e5ff66;
+        }
+
+        /* Menú ASP.NET */
+        #Menu1 { background-color: transparent !important; }
+
+        #Menu1 table { background-color: transparent !important; }
+
+        #Menu1 a {
+            color: #aaaaaa !important;
+            background-color: transparent !important;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 8px 14px !important;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        #Menu1 a:hover {
+            color: #00e5ff !important;
+            background-color: transparent !important;
+        }
+
+        /* Submenú Acceso */
+        #Menu1 ul.level1 > li:nth-child(8) ul {
+            background-color: #1a1a2e !important;
+            border: 1px solid #00e5ff33 !important;
+            border-radius: 6px;
+        }
+
+        #Menu1 ul.level1 > li:nth-child(8) ul li a {
+            background-color: transparent !important;
+            color: #aaaaaa !important;
+        }
+
+        #Menu1 ul.level1 > li:nth-child(8) ul li a:hover {
+            background-color: #00e5ff11 !important;
+            color: #00e5ff !important;
+        }
+
+        /* Línea decorativa bajo el navbar */
+        .navbar-glow-line {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #00e5ff, transparent);
+            box-shadow: 0 0 8px #00e5ff;
+            position: relative;
+            z-index: 99;
+        }
+
+        /* ── Contenido ── */
+        #contenido-principal {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── Tarjetas globales ── */
+        .card {
+            background-color: #1a1a2e;
+            border: 1px solid #00e5ff33;
+            border-radius: 12px;
+            box-shadow: 0 0 40px #00e5ff11;
+            color: #e0e0e0;
+        }
+
+        .card-header {
+            background-color: #0d1f3c !important;
+            border-bottom: 1px solid #00e5ff33 !important;
+            color: #00e5ff !important;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 800;
+            text-shadow: 0 0 10px #00e5ff44;
+        }
+
+        .card-footer {
+            background-color: #1a1a2e !important;
+            border-top: 1px solid #00e5ff33 !important;
+        }
+
+        .card:hover {
+            border-color: #00e5ff66;
+            box-shadow: 0 0 20px #00e5ff22;
+        }
+
+        /* ── Tablas ── */
+        .table {
+            color: #e0e0e0;
+        }
+
+        .table td, .table th {
+            background-color: #1a1a2e !important;
+            color: #e0e0e0 !important;
+            border-color: #00e5ff22 !important;
+        }
+
+        .table th {
+            color: #00e5ff !important;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+        }
+
+        /* ── Listas ── */
+        .list-group-item {
+            background-color: #1a1a2e;
+            border-color: #00e5ff22;
+            color: #e0e0e0;
+            transition: border-color 0.2s;
+        }
+
+        .list-group-item:hover {
+            border-color: #00e5ff66;
+            background-color: #1f1f3a;
+        }
+
+        /* ── Textos ── */
+        .text-muted {
+            color: #8a9bb5 !important;
+        }
+
+        .fw-bold {
+            color: #00e5ff;
+            letter-spacing: 1px;
+        }
+
+        /* ── Títulos de página ── */
+        h2, h4 {
+            color: #00e5ff;
+            text-shadow: 0 0 10px #00e5ff44;
+        }
     </style>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
-
 <body>
     <form id="form1" runat="server">
-        <!-- Debería estar centrado pero .NET se carga el estilado -->
-        <asp:Menu ID="Menu1" runat="server" Orientation="Horizontal" class="navbar navbar-expand-lg navbar-light bg-light navbar-toggler w-100 pt-3 pb-3 justify-content-between">
-            <Items>
-                <asp:MenuItem Text="Inicio" NavigateUrl="~/Default.aspx" Value="Inicio"/>
-                <asp:MenuItem Text="Torneos" NavigateUrl="~/Public/Torneos.aspx" />
-                <asp:MenuItem Text="Equipos" NavigateUrl="~/Public/Equipos.aspx" />
-                 <asp:MenuItem Text="VideoJuegos" NavigateUrl="~/Public/VideoJuegos.aspx" />
-                <asp:MenuItem Text="Noticias" NavigateUrl="~/Public/Noticias.aspx" />
-                <asp:MenuItem Text="Patrocinadores" NavigateUrl="~/Public/Patrocinadores.aspx"/>
-                 <asp:MenuItem Text="Jugadores" NavigateUrl="~/Public/Jugadores.aspx" />
-                 <asp:MenuItem Text="Acceso" Value="Acceso">
-                    <asp:MenuItem Text="Login" NavigateUrl="~/Public/Login.aspx" Value="Login" />
-                    <asp:MenuItem Text="Registro" NavigateUrl="~/Public/Registro.aspx" Value="Registro" />
-                </asp:MenuItem>
-                <asp:MenuItem Text="Mi Perfil" NavigateUrl="~/private/PerfilUsuario.aspx" Value="Perfil"/>
-            </Items>
-        </asp:Menu>
-       
-        <div class="container-fluid">
+
+        <!-- Fondo y overlay -->
+        <div id="fondo-global"></div>
+        <div id="fondo-overlay"></div>
+
+        <!-- Navbar -->
+        <div id="navbar-hada">
+            <span class="navbar-brand-text">HADA Esports</span>
+            <asp:Menu ID="Menu1" runat="server" Orientation="Horizontal">
+                <Items>
+                    <asp:MenuItem Text="Inicio" NavigateUrl="~/Default.aspx" Value="Inicio"/>
+                    <asp:MenuItem Text="Torneos" NavigateUrl="~/Public/Torneos.aspx" />
+                    <asp:MenuItem Text="Equipos" NavigateUrl="~/Public/Equipos.aspx" />
+                    <asp:MenuItem Text="VideoJuegos" NavigateUrl="~/Public/VideoJuegos.aspx" />
+                    <asp:MenuItem Text="Noticias" NavigateUrl="~/Public/Noticias.aspx" />
+                    <asp:MenuItem Text="Patrocinadores" NavigateUrl="~/Public/Patrocinadores.aspx"/>
+                    <asp:MenuItem Text="Jugadores" NavigateUrl="~/Public/Jugadores.aspx" />
+                    <asp:MenuItem Text="Acceso" Value="Acceso">
+                        <asp:MenuItem Text="Login" NavigateUrl="~/Public/Login.aspx" Value="Login" />
+                        <asp:MenuItem Text="Registro" NavigateUrl="~/Public/Registro.aspx" Value="Registro" />
+                    </asp:MenuItem>
+                    <asp:MenuItem Text="Mi Perfil" NavigateUrl="~/private/PerfilUsuario.aspx" Value="Perfil"/>
+                </Items>
+            </asp:Menu>
+        </div>
+
+        <!-- Línea de brillo bajo el navbar -->
+        <div class="navbar-glow-line"></div>
+
+        <!-- Contenido de la página -->
+        <div id="contenido-principal" class="container-fluid p-0">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         </div>
-         <div style="background-image: url('Fondo/Fondo.png'); background-size: cover; background-position: center; min-height: 100vh;"></div>
+
     </form>
 </body>
 </html>

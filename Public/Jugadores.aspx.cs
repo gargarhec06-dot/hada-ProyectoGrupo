@@ -1,22 +1,35 @@
 ﻿using hada_ProyectoGrupo.Library.EN;
+using hada_ProyectoGrupo.Library.CAD;
 using System;
 using System.Collections.Generic;
 using System.Web.UI;
 
 namespace hada_ProyectoGrupo.Public
 {
+    public class JugadorViewModel
+    {
+        public int Codigo { get; set; }
+        public string Apodo { get; set; }
+        public string Rol_principal { get; set; }
+        public string Email_usuario { get; set; }
+        public string NombreEquipo { get; set; }
+        public string LogoEquipo { get; set; }
+
+        // Valor leído por el JS del cliente para los botones de filtro:
+        // "mio" | "con-equipo" | "sin-equipo"
+        public string EstadoFiltro { get; set; }
+    }
+
     public partial class Jugadores : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
-            {
                 CargarJugadores();
-            }
+
+            // Botón crear: solo para jugadores autenticados
             if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == false)
-            {
                 pnlAdmin3.Visible = true;
-            }
         }
 
         private void CargarJugadores()
@@ -25,39 +38,86 @@ namespace hada_ProyectoGrupo.Public
             {
                 List<ENJugador> todosLosJugadores = new ENJugador().ReadAll();
 
-                if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == false)
-                {
-                    // Si está logueado, mostrar SOLO sus jugadores
-                    string emailLogueado = Session["Email"].ToString();
-                    List<ENJugador> misJugadores = new List<ENJugador>();
+                // Mapa de equipos para búsqueda rápida
+                CADEquipo cadEquipo = new CADEquipo();
+                List<ENEquipo> todosEquipos = cadEquipo.ReadAll();
+                Dictionary<int, ENEquipo> mapEquipos = new Dictionary<int, ENEquipo>();
+                foreach (ENEquipo eq in todosEquipos)
+                    mapEquipos[eq.Id_equipo] = eq;
 
-                    foreach (ENJugador j in todosLosJugadores)
+                bool esJugador = Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == false;
+                string emailLogueado = Session["Email"]?.ToString() ?? "";
+
+                // Mostrar botón "Mis jugadores" solo si hay sesión de jugador
+                pnlBtnMisJugadores.Visible = esJugador && !string.IsNullOrEmpty(emailLogueado);
+
+                List<JugadorViewModel> vista = new List<JugadorViewModel>();
+
+                foreach (ENJugador j in todosLosJugadores)
+                {
+                    bool esMio = esJugador && j.Email_usuario == emailLogueado;
+                    bool tieneEquipo = j.Equipo_actual > 0;
+
+                    string estadoFiltro;
+                    if (esMio) estadoFiltro = "mio";
+                    else if (tieneEquipo) estadoFiltro = "con-equipo";
+                    else estadoFiltro = "sin-equipo";
+
+                    JugadorViewModel vm = new JugadorViewModel
                     {
-                        if (j.Email_usuario == emailLogueado)
+                        Codigo = j.Codigo,
+                        Apodo = j.Apodo,
+                        Rol_principal = string.IsNullOrEmpty(j.Rol_principal) ? "Sin rol" : j.Rol_principal,
+                        Email_usuario = j.Email_usuario,
+                        EstadoFiltro = estadoFiltro
+                    };
+
+                    // RESOLUCIÓN DEL LOGO DEL EQUIPO
+                    if (tieneEquipo && mapEquipos.ContainsKey(j.Equipo_actual))
+                    {
+                        ENEquipo equipoObj = mapEquipos[j.Equipo_actual];
+                        vm.NombreEquipo = equipoObj.Nombre;
+
+                        string logo = equipoObj.Logo_url ?? "";
+
+                        if (string.IsNullOrWhiteSpace(logo))
                         {
-                            misJugadores.Add(j);
+                            vm.LogoEquipo = ""; // Esto hará que el control se oculte en el ASPX
+                        }
+                        else if (logo.StartsWith("http://") || logo.StartsWith("https://"))
+                        {
+                            vm.LogoEquipo = logo;
+                        }
+                        else
+                        {
+                            // Aseguramos que la ruta tenga el formato ~/
+                            if (!logo.StartsWith("~/"))
+                                logo = "~/" + logo.TrimStart('/');
+                            vm.LogoEquipo = logo;
                         }
                     }
-
-                    rptJugadores.DataSource = misJugadores;
-                    rptJugadores.DataBind();
-
-                    if (misJugadores.Count == 0)
+                    else
                     {
-                        lblMensaje.Text = "No tienes jugadores creados.";
-                        lblMensaje.ForeColor = System.Drawing.Color.Red;
+                        // JUGADOR SIN EQUIPO: Asignamos valores vacíos
+                        vm.NombreEquipo = "Sin equipo";
+                        vm.LogoEquipo = "";
                     }
+
+                    vista.Add(vm);
                 }
-                else
+
+                rptJugadores.DataSource = vista;
+                rptJugadores.DataBind();
+
+                if (vista.Count == 0)
                 {
-                    // Si NO está logueado, mostrar TODOS los jugadores
-                    rptJugadores.DataSource = todosLosJugadores;
-                    rptJugadores.DataBind();
+                    lblMensaje.Text = "No hay jugadores registrados.";
+                    lblMensaje.ForeColor = System.Drawing.Color.Red;
                 }
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = "Error: " + ex.Message;
+                lblMensaje.Text = "Error al cargar jugadores: " + ex.Message;
                 lblMensaje.ForeColor = System.Drawing.Color.Red;
             }
         }

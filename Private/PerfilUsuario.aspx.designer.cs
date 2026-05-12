@@ -69,6 +69,24 @@ namespace hada_ProyectoGrupo.Private
         protected global::System.Web.UI.WebControls.Button btnMisJugadores;
 
         /// <summary>
+        /// Control pnlSumarFondos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlSumarFondos;
+
+        /// <summary>
+        /// Control btnSumarFondos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSumarFondos;
+
+        /// <summary>
         /// Control btnEditarPerfil.
         /// </summary>
         /// <remarks>

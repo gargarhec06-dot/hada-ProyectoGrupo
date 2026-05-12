@@ -7,48 +7,48 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace hada_ProyectoGrupo.Public
+namespace hada_ProyectoGrupo.Private
 {
 
 
-    public partial class Jugadores
+    public partial class AnadirSaldo
     {
 
         /// <summary>
-        /// Control pnlBtnMisJugadores.
+        /// Control txtFondos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlBtnMisJugadores;
+        protected global::System.Web.UI.WebControls.TextBox txtFondos;
 
         /// <summary>
-        /// Control rptJugadores.
+        /// Control revFondos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptJugadores;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revFondos;
 
         /// <summary>
-        /// Control pnlAdmin3.
+        /// Control btnSumar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlAdmin3;
+        protected global::System.Web.UI.WebControls.Button btnSumar;
 
         /// <summary>
-        /// Control btnCrear.
+        /// Control btnCancelar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCrear;
+        protected global::System.Web.UI.WebControls.Button btnCancelar;
 
         /// <summary>
         /// Control lblMensaje.

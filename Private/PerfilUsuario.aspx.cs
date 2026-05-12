@@ -34,7 +34,7 @@ namespace hada_ProyectoGrupo.Private
             lblEmail.Text = email;
             lblRol.Text = esAdmin ? "Administrador" : "Jugador";
 
-            // Ocultar botón "Mis Jugadores" si es administrador
+            // Ocultar botón "Mis Jugadores" si es administrador 
             pnlMisJugadores.Visible = !esAdmin;
 
             // Cargar datos adicionales desde la BD (fecha registro)
@@ -74,6 +74,11 @@ namespace hada_ProyectoGrupo.Private
         protected void btnMisJugadores_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Public/Jugadores.aspx");
+        }
+
+        protected void btnSumarFondos_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Private/AnadirSaldo.aspx");
         }
 
         protected void btnEliminarCuenta_Click(object sender, EventArgs e)
