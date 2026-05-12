@@ -42,13 +42,13 @@ namespace hada_ProyectoGrupo.Private
         protected global::System.Web.UI.WebControls.Label lblRol;
 
         /// <summary>
-        /// Control lblFechaRegistro.
+        /// Control lblFechaNacimiento.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFechaRegistro;
+        protected global::System.Web.UI.WebControls.Label lblFechaNacimiento;
 
         /// <summary>
         /// Control pnlMisJugadores.

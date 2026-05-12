@@ -99,17 +99,22 @@ namespace hada_ProyectoGrupo.Library.CAD
                 SqlDataReader dr = com.ExecuteReader();
                 if (dr.Read())
                 {
-                    en.Nombre = dr["nombre"].ToString();
-                    en.Apellidos = dr["apellidos"].ToString();
-                    en.Fecha_Nacimiento = (DateTime)dr["fecha_nacimiento"];
-                    en.Pais = dr["pais"].ToString();
-                    en.Saldo_cartera = (float)dr["saldo_cartera"];
-                    en.Verificado = (bool)dr["verificado"];
+                    en.Email = dr["email"].ToString();
+                    en.Password = dr["password"].ToString();
+                    en.Nombre = dr["nombre"]?.ToString() ?? "";
+                    en.Apellidos = dr["apellidos"] == DBNull.Value ? "" : dr["apellidos"].ToString();
+                    en.Fecha_Nacimiento = dr["fecha_nacimiento"] == DBNull.Value ? DateTime.Now : Convert.ToDateTime(dr["fecha_nacimiento"]);
+                    en.Pais = dr["pais"] == DBNull.Value ? "" : dr["pais"].ToString();
+                    en.Saldo_cartera = dr["saldo_cartera"] == DBNull.Value ? 0f : Convert.ToSingle(dr["saldo_cartera"]);
+                    en.Verificado = dr["verificado"] == DBNull.Value ? false : Convert.ToBoolean(dr["verificado"]);
                     ok = true;
                 }
                 dr.Close();
             }
-            catch (Exception) { ok = false; }
+            catch (Exception ex)
+            {
+                throw new Exception("Error en Read: " + ex.Message);
+            }
             finally { c.Close(); }
             return ok;
         }

@@ -25,24 +25,36 @@ namespace hada_ProyectoGrupo.Private
         {
             try
             {
+                string email = Session["Email"]?.ToString();
+
+                // Debug temporal
+                lblMensaje.Text = "Email en sesión: " + (email ?? "NULL");
+
+                if (string.IsNullOrEmpty(email))
+                {
+                    lblMensaje.Text = "No hay sesión activa.";
+                    return;
+                }
+
                 CADUsuario cad = new CADUsuario();
                 ENUsuario u = new ENUsuario();
-                u.Email = Session["Email"].ToString();
+                u.Email = email;
 
                 if (cad.Read(u))
                 {
                     txtNombre.Text = u.Nombre;
                     txtApellidos.Text = u.Apellidos;
                     txtPais.Text = u.Pais;
+                    lblMensaje.Text = ""; // limpiar debug
                 }
                 else
                 {
-                    lblMensaje.Text = "Error al cargar los datos del usuario.";
+                    lblMensaje.Text = "Read devolvió false para email: " + email;
                 }
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = "Error al cargar datos: " + ex.Message;
+                lblMensaje.Text = "Error: " + ex.Message;
             }
         }
 

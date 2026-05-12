@@ -47,8 +47,8 @@
                                     <asp:Label ID="lblRol" runat="server" CssClass="text-muted" />
                                 </div>
                                 <div class="mb-3">
-                                    <label class="fw-bold">Fecha de Registro:</label>
-                                    <asp:Label ID="lblFechaRegistro" runat="server" CssClass="text-muted" />
+                                    <label class="fw-bold">Fecha de Nacimiento:</label>
+                                    <asp:Label ID="lblFechaNacimiento" runat="server" CssClass="text-muted" />
                                 </div>
                             </div>
                         </div>
