@@ -117,13 +117,13 @@ namespace hada_ProyectoGrupo.Public
                         lblCapitanNombre.Text = "Sin capitán";
                     }
 
-                    if (!string.IsNullOrEmpty(equipo.Logo_url))
+                    if (!string.IsNullOrWhiteSpace(equipo.Logo_url))
                     {
                         imgLogo.ImageUrl = equipo.Logo_url;
                     }
                     else
                     {
-                        imgLogo.ImageUrl = "~/Images/Equipos/default-team.png";
+                        imgLogo.ImageUrl = ResolveUrl("~/Images/Equipos/default-team.png");
                     }
                     imgLogo.Visible = true;
 
@@ -699,8 +699,7 @@ namespace hada_ProyectoGrupo.Public
                     }
 
                     fuLogo.SaveAs(ruta + nombreArchivo);
-                    txtLogo.Text = "~/Images/Equipos/" + nombreArchivo;
-                    imgLogo.ImageUrl = txtLogo.Text;
+                    imgLogo.ImageUrl = ResolveUrl("~/Images/Equipos/" + nombreArchivo);
                     imgLogo.Visible = true;
 
                     lblSubidaLogo.Text = "Imagen subida correctamente";
