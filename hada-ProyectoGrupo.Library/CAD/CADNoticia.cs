@@ -23,13 +23,14 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                // SQL con los nombres de la tabla
-                string query = "INSERT INTO Noticia (Titulo, Contenido, FechaPublicacion, IdUsuario) VALUES (@tit, @cont, @fecha, @user)";
+                // Ajustado a los nombres de tu tabla: IdUsuario e ImagenUrl
+                string query = "INSERT INTO Noticia (Titulo, Contenido, FechaPublicacion, IdUsuario, ImagenUrl) VALUES (@tit, @cont, @fecha, @user, @img)";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@tit", en.Titulo);
                 com.Parameters.AddWithValue("@cont", en.Contenido);
                 com.Parameters.AddWithValue("@fecha", en.FechaPublicacion);
                 com.Parameters.AddWithValue("@user", en.EmailUsuario);
+                com.Parameters.AddWithValue("@img", (object)en.ImagenUrl ?? DBNull.Value);
 
                 creado = com.ExecuteNonQuery() > 0;
             }
@@ -55,6 +56,7 @@ namespace hada_ProyectoGrupo.Library.CAD
                     en.Contenido = dr["Contenido"].ToString();
                     en.FechaPublicacion = DateTime.Parse(dr["FechaPublicacion"].ToString());
                     en.EmailUsuario = dr["IdUsuario"].ToString();
+                    en.ImagenUrl = dr["ImagenUrl"].ToString(); // Lectura de la nueva columna
                     leido = true;
                 }
             }
@@ -81,6 +83,7 @@ namespace hada_ProyectoGrupo.Library.CAD
                     n.Contenido = dr["Contenido"].ToString();
                     n.FechaPublicacion = DateTime.Parse(dr["FechaPublicacion"].ToString());
                     n.EmailUsuario = dr["IdUsuario"].ToString();
+                    n.ImagenUrl = dr["ImagenUrl"].ToString(); // Lectura para la galería
                     lista.Add(n);
                 }
             }
@@ -96,13 +99,16 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                string query = "UPDATE Noticia SET Titulo=@tit, Contenido=@cont, FechaPublicacion=@fecha, IdUsuario=@user WHERE IdNoticia=@id";
+                // Actualización incluyendo ImagenUrl y usando IdUsuario
+                string query = "UPDATE Noticia SET Titulo=@tit, Contenido=@cont, FechaPublicacion=@fecha, IdUsuario=@user, ImagenUrl=@img WHERE IdNoticia=@id";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@id", en.IdNoticia);
                 com.Parameters.AddWithValue("@tit", en.Titulo);
                 com.Parameters.AddWithValue("@cont", en.Contenido);
                 com.Parameters.AddWithValue("@fecha", en.FechaPublicacion);
                 com.Parameters.AddWithValue("@user", en.EmailUsuario);
+                com.Parameters.AddWithValue("@img", (object)en.ImagenUrl ?? DBNull.Value);
+
                 modificado = com.ExecuteNonQuery() > 0;
             }
             catch (Exception ex) { throw ex; }
