@@ -127,9 +127,9 @@ namespace hada_ProyectoGrupo.Library.CAD
             {
                 c.Open();
                 string sql = @"UPDATE Usuario 
-                       SET nombre = @nombre, apellidos = @apellidos, pais = @pais";
+                       SET nombre = @nombre, apellidos = @apellidos, pais = @pais, 
+                           saldo_cartera = @saldo";
 
-                // Si hay contraseña nueva, la actualizamos
                 if (!string.IsNullOrEmpty(en.Password))
                 {
                     sql += ", password = @password";
@@ -141,6 +141,7 @@ namespace hada_ProyectoGrupo.Library.CAD
                 com.Parameters.AddWithValue("@nombre", en.Nombre);
                 com.Parameters.AddWithValue("@apellidos", (object)en.Apellidos ?? DBNull.Value);
                 com.Parameters.AddWithValue("@pais", (object)en.Pais ?? DBNull.Value);
+                com.Parameters.AddWithValue("@saldo", en.Saldo_cartera);
                 com.Parameters.AddWithValue("@email", en.Email);
 
                 if (!string.IsNullOrEmpty(en.Password))
