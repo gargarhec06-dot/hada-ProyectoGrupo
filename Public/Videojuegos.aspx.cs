@@ -37,6 +37,7 @@ namespace hada_ProyectoGrupo.Public
         {
             foreach (ENVideojuego en in list)
             {
+                en.IconUrl = ResolveUrl(en.IconUrl);
                 en.Tipo = ENVideojuego.GetVideojuegoTipoToNombreLegible(ENVideojuego.GetVideojuegoTipoFromCode(en.Tipo));
             }
             tableGenerator.DataSource = list;

@@ -26,6 +26,7 @@
         <table class="table w-75">
             <thead>
                 <tr>
+                    <th scope="col"><asp:Label Text="Icon" runat="server"/></th>
                     <th scope="col"><asp:Label Text="Nombre" runat="server"/></th>
                     <th scope="col"><asp:Label Text="Tipo" runat="server"/></th>
                     <th scope="col"><asp:Label Text="Edad mínima" runat="server"/></th>
@@ -35,6 +36,7 @@
                 <asp:Repeater ID="tableGenerator" runat="server">
                     <ItemTemplate>
                     <tr>
+                        <td><img src="<%# Eval("IconUrl")%>" height="50" width="50"></img></td>
                         <td><a href="Videojuego.aspx?codigo=<%# Eval("Codigo")%>"><%# Eval("Nombre") %></a></td>
                         <td><span><%# Eval("Tipo") %></span></td>
                         <td><span><%# Eval("EdadMinima") %></span></td>
