@@ -31,6 +31,7 @@ namespace hada_ProyectoGrupo.Public
                 {
                     MostrarTorneo(en);
                     CargarEquipos(codigo);
+                    CargarPartidas(codigo);
                 }
                 else
                 {
@@ -81,6 +82,23 @@ namespace hada_ProyectoGrupo.Public
             {
                 rptEquipos.Visible = false;
                 lblSinEquipos.Visible = true;
+            }
+        }
+
+        private void CargarPartidas(int codigoTorneo)
+        {
+            CADPartida cad = new CADPartida();
+            List<ENPartida> partidas = cad.ReadByTorneo(codigoTorneo);
+
+            if (partidas.Count > 0)
+            {
+                rptPartidas.DataSource = partidas;
+                rptPartidas.DataBind();
+            }
+            else
+            {
+                rptPartidas.Visible = false;
+                lblSinPartidas.Visible = true;
             }
         }
     }

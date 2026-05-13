@@ -114,6 +114,24 @@ namespace hada_ProyectoGrupo.Public
         protected global::System.Web.UI.WebControls.Label lblSinEquipos;
 
         /// <summary>
+        /// Control rptPartidas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptPartidas;
+
+        /// <summary>
+        /// Control lblSinPartidas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSinPartidas;
+
+        /// <summary>
         /// Control pnlError.
         /// </summary>
         /// <remarks>

@@ -80,6 +80,26 @@
                            CssClass="text-muted" Visible="false"/>
             </div>
         </div>
+        <div class="container mt-4">
+            <h4>Partidas jugadadas</h4>
+            <asp:Repeater ID="rptPartidas" runat="server">
+            <HeaderTemplate>
+                <ul class="list-group">
+            </HeaderTemplate>
+            <ItemTemplate>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <%# Eval("Codigo") %>
+                    <span class="badge bg-success">Jugado</span>
+                </li>
+            </ItemTemplate>
+            <FooterTemplate>
+                </ul>
+            </FooterTemplate>
+            </asp:Repeater>
+
+            <asp:Label ID="lblSinPartidas" runat="server" Text="No hay partidas jugadas aún." 
+                   CssClass="text-muted" Visible="false"/>
+        </div>
     </asp:Panel>
 
     <asp:Panel ID="pnlError" runat="server" Visible="false" CssClass="text-center py-5">
