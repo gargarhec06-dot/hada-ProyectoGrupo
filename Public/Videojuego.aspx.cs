@@ -70,7 +70,7 @@ namespace hada_ProyectoGrupo.Public
                         NombreAdminBox.Text = NombreLabel.Text;
                         CodigoAdminBox.Text = CodigoLabel.Text;
                         DescripcionAdminBox.Text = DescripcionLabel.Text;
-                        TipoAdminBox.Text = TipoLabel.Text;
+                        TipoAdminBox.SelectedValue = videojuego.Tipo;
                         EdadMinimaAdminBox.Text = EdadMinimaLabel.Text;
                     }
                 }
