@@ -15,7 +15,8 @@ namespace hada_ProyectoGrupo.Library.EN
         private string _descripcion;
         private string _tipo;   //El tipo puede ser : SH (Shooter) , SU(Supervivencia), ST(Estrategia) , FG(Fighter), SP(Speedrun), MO (Moba)
         private int _edadMinima;
-
+        private string _iconUrl;
+        private string _caraUrl;
 
         public ENVideojuego()
         {
@@ -26,13 +27,15 @@ namespace hada_ProyectoGrupo.Library.EN
             _edadMinima = 0;
         }
         //Como todos los parametros son obligatorios basta con este constructor para inicializar
-        public ENVideojuego(int codigo, string nombre, string descripcion, string tipo, int edadMinima)
+        public ENVideojuego(int codigo, string nombre, string descripcion, string tipo, int edadMinima, string icon_url, string caratula_url)
         {
             _codigo = codigo;
             _nombre = nombre;
             _descripcion = descripcion;
             _tipo = tipo;
             _edadMinima = edadMinima;
+            _iconUrl = icon_url;
+            _caraUrl = caratula_url;
         }
         public int Codigo
         {
@@ -58,6 +61,16 @@ namespace hada_ProyectoGrupo.Library.EN
         {
             get { return _edadMinima; }
             set { _edadMinima = value;}
+        }
+        public string IconUrl
+        {
+            get { return _iconUrl; }
+            set { _iconUrl = value; }
+        }
+        public string CaratulaUrl
+        {
+            get { return _caraUrl; }
+            set { _caraUrl = value; }
         }
         public bool Create()
         {
