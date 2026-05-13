@@ -80,6 +80,7 @@
     <Content Include="Fondo\Fondo2.png" />
     <Content Include="Global.asax" />
     <Content Include="Images\Equipos\default-team.png" />
+    <Content Include="Private\AnadirSaldo.aspx" />
     <Content Include="Private\EditarPatrocinador.aspx" />
     <Content Include="Private\EditarPerfil.aspx" />
     <Content Include="Private\GestionPatrocinador.aspx" />
@@ -113,6 +114,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Private\AnadirSaldo.aspx.cs">
+      <DependentUpon>AnadirSaldo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Private\AnadirSaldo.aspx.designer.cs">
+      <DependentUpon>AnadirSaldo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Private\EditarPatrocinador.aspx.cs">
       <DependentUpon>EditarPatrocinador.aspx</DependentUpon>

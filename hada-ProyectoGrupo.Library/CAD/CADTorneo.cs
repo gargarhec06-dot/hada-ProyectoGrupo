@@ -23,7 +23,7 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                string query = "INSERT INTO Torneo (id_videojuego, precioInscripcion, nombre, descripcion, profesional, costeOrganizacion, fecha, ubicacion) VALUES (@vid, @pre, @nom, @des, @pro, @cos, @fec, @ubi)";
+                string query = "INSERT INTO Torneo (id_videojuego, precioInscripcion, nombre, descripcion, profesional, costeOrganizacion, fecha, ubicacion, premio, capacidad) VALUES (@vid, @pre, @nom, @des, @pro, @cos, @fec, @ubi, @prem, @cap)";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@vid", en.IdVideojuego);
                 com.Parameters.AddWithValue("@pre", en.PrecioInscripcion);
@@ -33,6 +33,8 @@ namespace hada_ProyectoGrupo.Library.CAD
                 com.Parameters.AddWithValue("@cos", en.CosteOrganizacion);
                 com.Parameters.AddWithValue("@fec", en.Fecha);
                 com.Parameters.AddWithValue("@ubi", en.Ubicacion);
+                com.Parameters.AddWithValue("@prem", en.Premio);
+                com.Parameters.AddWithValue("@cap", en.Capacidad);
                 if (com.ExecuteNonQuery() > 0) ok = true;
             }
             catch (Exception ex) 
@@ -65,6 +67,8 @@ namespace hada_ProyectoGrupo.Library.CAD
                     en.CosteOrganizacion = float.Parse(dr["costeOrganizacion"].ToString());
                     en.Fecha = (DateTime)dr["fecha"];
                     en.Ubicacion = dr["ubicacion"].ToString();
+                    en.Premio = float.Parse(dr["premio"].ToString());
+                    en.Capacidad = (int)dr["capacidad"];
                     ok = true;
                 }
                 dr.Close();
@@ -81,7 +85,7 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                string query = "UPDATE Torneo SET id_videojuego=@vid, precioInscripcion=@pre, nombre=@nom, descripcion=@des, profesional=@pro, costeOrganizacion=@cos, fecha=@fec, ubicacion=@ubi WHERE codigo=@cod";
+                string query = "UPDATE Torneo SET id_videojuego=@vid, precioInscripcion=@pre, nombre=@nom, descripcion=@des, profesional=@pro, costeOrganizacion=@cos, fecha=@fec, ubicacion=@ubi, premio=@prem, capacidad=@cap WHERE codigo=@cod";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@cod", en.Codigo);
                 com.Parameters.AddWithValue("@vid", en.IdVideojuego);
@@ -92,6 +96,8 @@ namespace hada_ProyectoGrupo.Library.CAD
                 com.Parameters.AddWithValue("@cos", en.CosteOrganizacion);
                 com.Parameters.AddWithValue("@fec", en.Fecha);
                 com.Parameters.AddWithValue("@ubi", en.Ubicacion);
+                com.Parameters.AddWithValue("@prem", en.Premio);
+                com.Parameters.AddWithValue("@cap", en.Capacidad);
                 if (com.ExecuteNonQuery() > 0) ok = true;
             }
             catch (Exception) { ok = false; }
