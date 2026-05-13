@@ -47,6 +47,7 @@ namespace hada_ProyectoGrupo.Private
                 if (cadUsuario.Read(usuario))
                 {
                     lblFechaNacimiento.Text = usuario.Fecha_Nacimiento.ToString("dd/MM/yyyy");
+                    lblSaldo.Text = usuario.Saldo_cartera.ToString("F2") + " €";
                 }
                 else
                 {
