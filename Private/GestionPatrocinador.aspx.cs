@@ -71,6 +71,10 @@ namespace hada_ProyectoGrupo.Private
                 }
             }
         }
+        protected void btnCancelar_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Public/Patrocinadores.aspx");
+        }
 
         private void CargarPatrocinador(int id)
         {
@@ -157,9 +161,6 @@ namespace hada_ProyectoGrupo.Private
             }
         }
 
-        protected void btnCancelar_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/Public/Patrocinadores.aspx");
-        }
+        
     }
 }

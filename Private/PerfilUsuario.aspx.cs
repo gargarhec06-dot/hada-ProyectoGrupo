@@ -46,16 +46,16 @@ namespace hada_ProyectoGrupo.Private
 
                 if (cadUsuario.Read(usuario))
                 {
-                    lblFechaRegistro.Text = usuario.Fecha_Nacimiento.ToString("dd/MM/yyyy");
+                    lblFechaNacimiento.Text = usuario.Fecha_Nacimiento.ToString("dd/MM/yyyy");
                 }
                 else
                 {
-                    lblFechaRegistro.Text = "No disponible";
+                    lblFechaNacimiento.Text = "No disponible";
                 }
             }
             catch (Exception)
             {
-                lblFechaRegistro.Text = "No disponible";
+                lblFechaNacimiento.Text = "No disponible";
             }
         }
 

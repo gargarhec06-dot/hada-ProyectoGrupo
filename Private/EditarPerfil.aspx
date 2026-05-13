@@ -1,5 +1,4 @@
-﻿<%@ Page Title="Editar Perfil" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="EditarPerfil.aspx.cs" Inherits="hada_ProyectoGrupo.Private.EditarPerfil" %>
-
+﻿<%@ Page Title="Editar Perfil" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeFile="EditarPerfil.aspx.cs" Inherits="hada_ProyectoGrupo.Private.EditarPerfil" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 
