@@ -1,6 +1,7 @@
 ﻿using hada_ProyectoGrupo.Library.EN;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -26,22 +27,42 @@ namespace hada_ProyectoGrupo.Public
             }
         }
 
-        public void CargarNoticias()
+       
+        public void CargarNoticias(string autor = null, DateTime? fechaDesde = null, DateTime? fechaHasta = null)
         {
             try
             {
                 ENNoticia noticia = new ENNoticia();
                 List<ENNoticia> lista = noticia.ReadAll();
 
-                // --- PROCESAMIENTO DE IMÁGENES 
+                // LÓGICA DE FILTRADO 
+
+                // Filtro por Autor (Email)
+                if (!string.IsNullOrEmpty(autor))
+                {
+                    lista = lista.Where(n => n.EmailUsuario != null &&
+                        n.EmailUsuario.IndexOf(autor, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+                }
+
+                // Filtro por Fecha Desde
+                if (fechaDesde.HasValue)
+                {
+                    lista = lista.Where(n => n.FechaPublicacion.Date >= fechaDesde.Value.Date).ToList();
+                }
+
+                // Filtro por Fecha Hasta
+                if (fechaHasta.HasValue)
+                {
+                    lista = lista.Where(n => n.FechaPublicacion.Date <= fechaHasta.Value.Date).ToList();
+                }
+
+                //  PROCESAMIENTO DE IMÁGENES
                 foreach (ENNoticia n in lista)
                 {
-                    // Si no tiene imagen, ponemos la por defecto
                     string rutaImagen = !string.IsNullOrWhiteSpace(n.ImagenUrl)
                                         ? n.ImagenUrl
                                         : "~/Images/Noticias/default-news.png";
 
-                    // Resolvemos la URL para que el navegador la encuentre siempre
                     n.ImagenUrl = ResolveUrl(rutaImagen);
                 }
 
@@ -50,9 +71,33 @@ namespace hada_ProyectoGrupo.Public
             }
             catch (Exception ex)
             {
-                // Cambiado a System.Diagnostics para verlo en la consola de salida de VS
                 System.Diagnostics.Debug.WriteLine("Error al cargar noticias: " + ex.Message);
             }
+        }
+
+        // Evento del botón Filtrar
+        protected void btnFiltrar_Click(object sender, EventArgs e)
+        {
+            string autor = txtFiltroAutor.Text.Trim();
+            DateTime? fechaDesde = null;
+            DateTime? fechaHasta = null;
+
+            if (DateTime.TryParse(txtFechaDesde.Text, out DateTime fDesde))
+                fechaDesde = fDesde;
+
+            if (DateTime.TryParse(txtFechaHasta.Text, out DateTime fHasta))
+                fechaHasta = fHasta;
+
+            CargarNoticias(autor, fechaDesde, fechaHasta);
+        }
+
+        // Evento del botón Limpiar
+        protected void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            txtFiltroAutor.Text = "";
+            txtFechaDesde.Text = "";
+            txtFechaHasta.Text = "";
+            CargarNoticias();
         }
 
         protected void btnCrear_Click(object sender, EventArgs e)
