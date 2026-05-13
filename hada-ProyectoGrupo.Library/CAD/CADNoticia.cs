@@ -23,7 +23,6 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                // Ajustado a los nombres de tu tabla: IdUsuario e ImagenUrl
                 string query = "INSERT INTO Noticia (Titulo, Contenido, FechaPublicacion, IdUsuario, ImagenUrl) VALUES (@tit, @cont, @fecha, @user, @img)";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@tit", en.Titulo);
@@ -56,7 +55,9 @@ namespace hada_ProyectoGrupo.Library.CAD
                     en.Contenido = dr["Contenido"].ToString();
                     en.FechaPublicacion = DateTime.Parse(dr["FechaPublicacion"].ToString());
                     en.EmailUsuario = dr["IdUsuario"].ToString();
-                    en.ImagenUrl = dr["ImagenUrl"].ToString(); // Lectura de la nueva columna
+                    en.ImagenUrl = dr["ImagenUrl"].ToString();
+                   
+                    en.Visitas = int.Parse(dr["Visitas"].ToString());
                     leido = true;
                 }
             }
@@ -83,7 +84,9 @@ namespace hada_ProyectoGrupo.Library.CAD
                     n.Contenido = dr["Contenido"].ToString();
                     n.FechaPublicacion = DateTime.Parse(dr["FechaPublicacion"].ToString());
                     n.EmailUsuario = dr["IdUsuario"].ToString();
-                    n.ImagenUrl = dr["ImagenUrl"].ToString(); // Lectura para la galería
+                    n.ImagenUrl = dr["ImagenUrl"].ToString();
+                    
+                    n.Visitas = int.Parse(dr["Visitas"].ToString());
                     lista.Add(n);
                 }
             }
@@ -99,7 +102,6 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                // Actualización incluyendo ImagenUrl y usando IdUsuario
                 string query = "UPDATE Noticia SET Titulo=@tit, Contenido=@cont, FechaPublicacion=@fecha, IdUsuario=@user, ImagenUrl=@img WHERE IdNoticia=@id";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@id", en.IdNoticia);
@@ -131,6 +133,22 @@ namespace hada_ProyectoGrupo.Library.CAD
             catch (Exception ex) { throw ex; }
             finally { c.Close(); }
             return borrado;
+        }
+
+        
+        public void IncrementarVisitas(int id)
+        {
+            SqlConnection c = new SqlConnection(constring);
+            try
+            {
+                c.Open();
+                string query = "UPDATE Noticia SET Visitas = Visitas + 1 WHERE IdNoticia = @id";
+                SqlCommand com = new SqlCommand(query, c);
+                com.Parameters.AddWithValue("@id", id);
+                com.ExecuteNonQuery();
+            }
+            catch (Exception ex) { throw ex; }
+            finally { c.Close(); }
         }
     }
 }

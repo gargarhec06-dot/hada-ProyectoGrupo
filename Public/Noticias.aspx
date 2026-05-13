@@ -108,6 +108,10 @@
                         Fecha: <%# Eval("FechaPublicacion", "{0:yyyy-MM-dd}") %>
                     </p>
 
+                    <p style="font-size: 0.85rem; color: #00e5ff; font-weight: bold; margin-bottom: 10px;">
+                        👁️ <%# Eval("Visitas") %> visitas
+                    </p>
+
                     <asp:HyperLink runat="server" 
                         NavigateUrl='<%# "~/Public/DetallesNoticia.aspx?id=" + Eval("IdNoticia") %>'
                         Text="Ver noticia completa" />

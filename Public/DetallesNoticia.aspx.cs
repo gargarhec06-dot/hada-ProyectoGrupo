@@ -1,6 +1,6 @@
 ﻿using hada_ProyectoGrupo.Library.EN;
 using System;
-using System.IO; 
+using System.IO;
 using System.Web.UI;
 
 namespace hada_ProyectoGrupo.Public
@@ -14,6 +14,22 @@ namespace hada_ProyectoGrupo.Public
                 if (Request.QueryString["id"] != null)
                 {
                     int id = int.Parse(Request.QueryString["id"]);
+
+                  
+                    // Creamos una clave única para esta noticia en la sesión del usuario
+                    string sessionKey = "Visto_Noticia_" + id;
+
+                    if (Session[sessionKey] == null)
+                    {
+                        // Si no existe en la sesión, incrementamos en la BD
+                        ENNoticia noticiaAux = new ENNoticia();
+                        noticiaAux.IncrementarVisitas(id);
+
+                        // Marcamos como vista para que no sume más en esta sesión
+                        Session[sessionKey] = true;
+                    }
+                   
+
                     CargarDatos(id);
                 }
                 else
@@ -52,7 +68,7 @@ namespace hada_ProyectoGrupo.Public
                 txtAutor.Text = en.EmailUsuario;
                 txtImagenUrl.Text = en.ImagenUrl; // Cargamos la URL de la BD
 
-                
+
                 string noticiaUrl = !string.IsNullOrWhiteSpace(en.ImagenUrl)
                     ? en.ImagenUrl
                     : "~/Images/Noticias/default-news.png";
@@ -91,7 +107,7 @@ namespace hada_ProyectoGrupo.Public
             txtTitulo.ReadOnly = !editable;
             txtContenido.ReadOnly = !editable;
             txtImagenUrl.ReadOnly = !editable;
-            pnlSubidaImagen.Visible = editable; 
+            pnlSubidaImagen.Visible = editable;
             txtFecha.ReadOnly = true;
             txtAutor.ReadOnly = true;
         }

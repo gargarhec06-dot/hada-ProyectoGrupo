@@ -12,7 +12,8 @@ namespace hada_ProyectoGrupo.Library.EN
         private string _contenido;
         private DateTime _fecha;
         private string _emailUsuario;
-        private string _imagenUrl; 
+        private string _imagenUrl;
+        private int _visitas; 
 
         // Propiedades públicas (Las que usa Eval() en el ASPX)
         public int IdNoticia { get { return _idNoticia; } set { _idNoticia = value; } }
@@ -20,22 +21,25 @@ namespace hada_ProyectoGrupo.Library.EN
         public string Contenido { get { return _contenido; } set { _contenido = value; } }
         public DateTime FechaPublicacion { get { return _fecha; } set { _fecha = value; } }
         public string EmailUsuario { get { return _emailUsuario; } set { _emailUsuario = value; } }
-        public string ImagenUrl { get { return _imagenUrl; } set { _imagenUrl = value; } } // <--- AÑADIDO
+        public string ImagenUrl { get { return _imagenUrl; } set { _imagenUrl = value; } }
+        public int Visitas { get { return _visitas; } set { _visitas = value; } } 
 
         // Constructores
         public ENNoticia()
         {
             _imagenUrl = ""; // Inicializamos para evitar nulos
+            _visitas = 0;    // Inicializamos a 0
         }
 
-        public ENNoticia(int id, string tit, string cont, DateTime fecha, string user, string img)
+        public ENNoticia(int id, string tit, string cont, DateTime fecha, string user, string img, int visitas)
         {
             this.IdNoticia = id;
             this.Titulo = tit;
             this.Contenido = cont;
             this.FechaPublicacion = fecha;
             this.EmailUsuario = user;
-            this.ImagenUrl = img; 
+            this.ImagenUrl = img;
+            this.Visitas = visitas; 
         }
 
         // Métodos de persistencia
@@ -44,5 +48,11 @@ namespace hada_ProyectoGrupo.Library.EN
         public List<ENNoticia> ReadAll() { return new CADNoticia().ReadAll(); }
         public bool Update() { return new CADNoticia().Update(this); }
         public bool Delete() { return new CADNoticia().Delete(this); }
+
+        
+        public void IncrementarVisitas(int id)
+        {
+            new CADNoticia().IncrementarVisitas(id);
+        }
     }
 }
