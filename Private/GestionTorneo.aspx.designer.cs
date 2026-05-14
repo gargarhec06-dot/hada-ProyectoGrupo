@@ -168,6 +168,15 @@ namespace hada_ProyectoGrupo.Private
         protected global::System.Web.UI.WebControls.CheckBox chkProfesional;
 
         /// <summary>
+        /// Control txtUrlLogo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtUrlLogo;
+
+        /// <summary>
         /// Control btnGuardar.
         /// </summary>
         /// <remarks>

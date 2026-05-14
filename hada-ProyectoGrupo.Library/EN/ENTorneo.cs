@@ -20,6 +20,7 @@ namespace hada_ProyectoGrupo.Library.EN
         private string _ubicacion;
         private float _premio;
         private int _capacidad;
+        private string _url_logo;
 
         public ENTorneo()
         {
@@ -34,10 +35,11 @@ namespace hada_ProyectoGrupo.Library.EN
             _ubicacion = string.Empty;
             _premio = 0.0f;
             _capacidad = 32;
+            _url_logo = "";
         }
 
         public ENTorneo(int codigo, int id_videojuego, float precioInscripcion, string nombre,
-            string descripcion, bool profesional, float costeOrganizacion, DateTime fecha, string ubicacion, float premio, int capacidad)
+            string descripcion, bool profesional, float costeOrganizacion, DateTime fecha, string ubicacion, float premio, int capacidad, string url_logo)
         {
             _codigo = codigo;
             _id_videojuego = id_videojuego;
@@ -50,6 +52,7 @@ namespace hada_ProyectoGrupo.Library.EN
             _ubicacion = ubicacion;
             _premio = premio;
             _capacidad = capacidad;
+            _url_logo = url_logo;
         }
 
         // Para los parámetros obligatorios
@@ -140,6 +143,12 @@ namespace hada_ProyectoGrupo.Library.EN
         {
             get { return _capacidad;}
             set { _capacidad = value;}
+        }
+
+        public string Url_logo
+        {
+            get { return _url_logo; }
+            set { _url_logo = value; }
         }
 
         public bool Create()

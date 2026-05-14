@@ -23,13 +23,17 @@ namespace hada_ProyectoGrupo.Public
 
                 int codigo = int.Parse(Request.QueryString["codigo"]);
 
-                ENTorneo enTemp = new ENTorneo();
-                List<ENTorneo> lista = enTemp.ReadAll();
-                ENTorneo en = lista.FirstOrDefault(t => t.Codigo == codigo);
+                ENTorneo en = new ENTorneo();
+                en.Codigo = codigo;
+                CADTorneo cad = new CADTorneo();
+                string nombreVJ; 
 
-                if (en != null)
+                if (cad.ReadWithVideojuego(en, out nombreVJ))
                 {
                     MostrarTorneo(en);
+
+                    lblVideojuego.Text = nombreVJ;
+
                     CargarEquipos(codigo);
                 }
                 else
@@ -42,13 +46,15 @@ namespace hada_ProyectoGrupo.Public
         private void MostrarTorneo(ENTorneo t)
         {
             lblNombre.Text = t.Nombre;
-            lblCodigo.Text = t.Codigo.ToString();
             lblProfesional.Text = t.Profesional ? " Profesional" : " Amateur";
             lblDescripcion.Text = string.IsNullOrEmpty(t.Descripcion)
                                             ? "Sin descripción" : t.Descripcion;
+            lblCapacidad.Text = t.Capacidad.ToString();
+
             lblUbicacion.Text = string.IsNullOrEmpty(t.Ubicacion) ? "Sin ubicacion" : t.Ubicacion;
             lblPrecioInscripcion.Text = $"{t.PrecioInscripcion:F2} €";
             lblCosteOrganizacion.Text = $"{t.CosteOrganizacion:F2} €";
+            lblPremio.Text = $"{t.Premio:F2} €";
 
             pnlDetalle.Visible = true;
             pnlError.Visible = false;

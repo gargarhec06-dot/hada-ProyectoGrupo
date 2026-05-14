@@ -73,12 +73,17 @@
             <asp:CheckBox ID="chkProfesional" runat="server" Checked="false" />
         </div>
 
-        <div style="margin-top: 20px;">
-            <asp:Button ID="btnGuardar" runat="server" Text="Guardar" OnClick="btnGuardar_Click" />
-            <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" />
+        <div style="margin-bottom: 10px;">
+            <strong>URL Logo:</strong><br />
+            <asp:TextBox ID="txtUrlLogo" runat="server" Width="100%" />
         </div>
 
-        <div style="margin-top: 10px;">
+        <div style="margin-bottom: 10px;">
+            <asp:Button ID="btnGuardar" runat="server" Text="Guardar" OnClick="btnGuardar_Click" />
+            <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" CausesValidation="false"/>
+        </div>
+
+        <div style="margin-bottom: 10px;">
             <asp:Label ID="lblMensaje" runat="server" ForeColor="Red" />
         </div>
 

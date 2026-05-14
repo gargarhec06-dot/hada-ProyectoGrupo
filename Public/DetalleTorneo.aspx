@@ -26,8 +26,8 @@
                             <h5 class="text-muted mb-3"> Información general</h5>
                             <table class="table table-borderless table-sm">
                                 <tr>
-                                    <th> Código</th>
-                                    <td><asp:Label ID="lblCodigo" runat="server" /></td>
+                                    <th> Videojuego</th>
+                                    <td><asp:Label ID="lblVideojuego" runat="server" /></td>
                                 </tr>
                                 <tr>
                                     <th> Nivel</th>
@@ -41,6 +41,10 @@
                                     <th>Ubicacion</th>
                                     <td><asp:Label ID="lblUbicacion" runat="server" /></td>
                                 </tr>
+                                <tr>
+                                    <th>Capacidad</th>
+                                    <td><asp:Label ID="lblCapacidad" runat="server" /></td>
+                                </tr>
                             </table>
                         </div>
                         <div class="col-md-6">
@@ -53,6 +57,10 @@
                                 <tr>
                                     <th> Coste organización</th>
                                     <td><asp:Label ID="lblCosteOrganizacion" runat="server" /></td>
+                                </tr>
+                                <tr>
+                                    <th> Premio</th>
+                                    <td><asp:Label ID="lblPremio" runat="server" /></td>
                                 </tr>
                             </table>
                         </div>
