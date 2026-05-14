@@ -126,16 +126,21 @@
                 <ItemTemplate>
                     <div class="col-md-4 mb-4">
                         <div class="card h-100">
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    <%# Eval("Nombre") %>
-                                </h5>
-                                <p class="card-text small">
-                                    Fecha: <%# Eval("Fecha", "{0:dd/MM/yyyy}") %><br />
-                                    Nivel: <%# (bool)Eval("Profesional") ? "Profesional" : "Amateur" %><br />
-                                    Inscripción: <%# Eval("PrecioInscripcion") %>€<br />
-                                    Ubicacion: <%# Eval("Ubicacion") %>
-                                </p>
+                            <div class="card-body d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h5 class="card-title"><%# Eval("Nombre") %></h5>
+                                    <p class="card-text small">
+                                        Fecha: <%# Eval("Fecha", "{0:dd/MM/yyyy}") %><br />
+                                        Nivel: <%# (bool)Eval("Profesional") ? "Profesional" : "Amateur" %><br />
+                                        Inscripción: <%# Eval("PrecioInscripcion") %>€<br />
+                                        Ubicacion: <%# Eval("Ubicacion") %>
+                                    </p>
+                                </div>
+                                <asp:Image runat="server" 
+                                    ImageUrl='<%# Eval("Url_logo") %>'
+                                    Visible='<%# !string.IsNullOrEmpty(Eval("Url_logo").ToString()) %>'
+                                    Width="80px" Height="80px" 
+                                    style="object-fit: contain; margin-left: 10px;" />
                             </div>
                             <div class="card-footer bg-transparent border-top-0">
                                 <asp:HyperLink runat="server" 
