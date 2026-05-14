@@ -141,7 +141,7 @@ namespace hada_ProyectoGrupo.Library.CAD
         {
             bool ok = true;
             SqlConnection c = new SqlConnection(s);
-            //try
+            try
             {
                 c.Open();
 
@@ -201,8 +201,8 @@ namespace hada_ProyectoGrupo.Library.CAD
                     iter++;
                 }
             }
-            //catch (Exception) { ok = false; }
-            //finally { c.Close(); }
+            catch (Exception) { ok = false; }
+            finally { c.Close(); }
 
             return ok;
         }

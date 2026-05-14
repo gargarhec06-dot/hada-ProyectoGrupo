@@ -23,6 +23,11 @@ namespace hada_ProyectoGrupo.Public
                 return;
             }
 
+            if (IsPostBack)
+            {
+                return;
+            }
+
             if (!IsPostBack)
             {
                 foreach (ENEquipo equipo in new CADInscripcion().ReadEquiposByTorneo(int.Parse(torneo)))
@@ -71,6 +76,11 @@ namespace hada_ProyectoGrupo.Public
 
                 JugadoresLabel.Text = "";
                 PerdedoresLabel.Text = "";
+
+                ENEquipo en_equipo = new ENEquipo();
+                en_equipo.Id_equipo = partida.Ganador;
+                en_equipo.Read();
+                EquipoGanadorLabel.Text = en_equipo.Nombre;
 
                 foreach (int jugador in partida.Jugadores)
                 {
@@ -205,9 +215,11 @@ namespace hada_ProyectoGrupo.Public
         {
             List<int> perdedores = new List<int>();
 
-            foreach (string perdedor in PerdedoresLabel.Text.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries))
+            foreach (string perdedor in PerdedoresLabel.Text.Split(','))
             {
-                perdedores.Add(int.Parse(perdedor.Trim()));
+                int posible_perdedor = 0;
+
+                if (int.TryParse(perdedor, out posible_perdedor)) perdedores.Add(posible_perdedor);
             }
 
             return perdedores.ToArray();
