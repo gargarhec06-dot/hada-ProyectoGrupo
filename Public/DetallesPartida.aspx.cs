@@ -71,8 +71,14 @@ namespace hada_ProyectoGrupo.Public
                 torneo_local.Codigo = int.Parse(torneo);
                 torneo_local.Read();
 
-                VideojuegoEnlace.Text = torneo_local.Nombre;
-                VideojuegoEnlace.NavigateUrl = "DetallesTorneo?codigo="+torneo;
+                ENVideojuego videojuego = new ENVideojuego();
+                videojuego.Codigo = partida.Videojuego;
+                videojuego.Read();
+
+                VideojuegoEnlace.Text = videojuego.Nombre;
+                VideojuegoEnlace.NavigateUrl = "Videojuego?codigo="+partida.Videojuego.ToString();
+
+                TorneoLabel.Text = torneo_local.Nombre;
 
                 JugadoresLabel.Text = "";
                 PerdedoresLabel.Text = "";
