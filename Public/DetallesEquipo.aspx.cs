@@ -658,8 +658,8 @@ namespace hada_ProyectoGrupo.Public
                 {
                     // Cambiamos el estilo del contenedor directamente
                     // Fondo amarillo muy claro para que el texto negro resalte
-                    div.Style["background-color"] = "#FFF9C4";
-                    div.Style["border"] = "2px solid #FBC02D"; // Borde dorado
+                    div.Style["background-color"] = "#F9A825";
+                    div.Style["border"] = "2px solid #F57F17"; // Borde dorado
                     span.Style["display"] = "inline-block";    // Mostramos la etiqueta "CAPITÁN"
                 }
             }
