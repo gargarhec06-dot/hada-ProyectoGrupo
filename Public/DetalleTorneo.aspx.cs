@@ -30,30 +30,25 @@ namespace hada_ProyectoGrupo.Public
                 en.Codigo = codigoTorneo;
                 CADTorneo cad = new CADTorneo();
                 string nombreVJ;
+
                 if (cad.ReadWithVideojuego(en, out nombreVJ))
                 {
                     MostrarTorneo(en);
                     lblVideojuego.Text = nombreVJ;
                     CargarEquipos(codigoTorneo);
+                    CargarPartidas(codigoTorneo);
 
                     // Mostrar botones solo si es admin
                     if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == true)
                     {
                         btnModificar.Visible = true;
                         btnEliminar.Visible = true;
+                        btnCreatePartida.Visible = true;
                     }
-                }
-                    CargarEquipos(codigo);
-                    CargarPartidas(codigo);
                 }
                 else
                 {
                     MostrarError();
-                }
-
-                if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"])
-                {
-                    btnCreatePartida.Visible = true;
                 }
             }
         }
@@ -103,10 +98,12 @@ namespace hada_ProyectoGrupo.Public
         {
             CADInscripcion cad = new CADInscripcion();
             List<ENEquipo> equipos = cad.ReadEquiposByTorneo(codigo);
-            if (equipos.Count > 0)
+            if (equipos != null && equipos.Count > 0)
             {
                 rptEquipos.DataSource = equipos;
                 rptEquipos.DataBind();
+                rptEquipos.Visible = true;
+                lblSinEquipos.Visible = false;
             }
             else
             {
@@ -120,10 +117,12 @@ namespace hada_ProyectoGrupo.Public
             CADPartida cad = new CADPartida();
             List<ENPartida> partidas = cad.ReadByTorneo(codigoTorneo);
 
-            if (partidas.Count > 0)
+            if (partidas != null && partidas.Count > 0)
             {
                 rptPartidas.DataSource = partidas;
                 rptPartidas.DataBind();
+                rptPartidas.Visible = true;
+                lblSinPartidas.Visible = false;
             }
             else
             {
@@ -134,9 +133,7 @@ namespace hada_ProyectoGrupo.Public
 
         protected void btnCreatePartida_Click(object sender, EventArgs e)
         {
-            string torneo_code = Request.QueryString["codigo"];
-
-            Response.Redirect("DetallesPartida.aspx?torneo="+torneo_code);
+            Response.Redirect("DetallesPartida.aspx?torneo=" + codigoTorneo);
         }
     }
 }
