@@ -114,6 +114,33 @@ namespace hada_ProyectoGrupo.Public
         protected global::System.Web.UI.WebControls.Label PerdedoresLabel;
 
         /// <summary>
+        /// Control PerdedorSelect.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList PerdedorSelect;
+
+        /// <summary>
+        /// Control PerdedorAdd.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button PerdedorAdd;
+
+        /// <summary>
+        /// Control PerdedorClear.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button PerdedorClear;
+
+        /// <summary>
         /// Control DebugLabel.
         /// </summary>
         /// <remarks>

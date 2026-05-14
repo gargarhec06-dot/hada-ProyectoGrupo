@@ -38,14 +38,17 @@
     <div>
         <asp:Label Text="<b>Perdedores:</b> " runat="server"/>
         <asp:Label Text="" ID="PerdedoresLabel" runat="server"/>
+        <asp:DropDownList Visible="false" ID="PerdedorSelect" runat="server"/>
+        <asp:Button Visible="false" Text="Añadir" ID="PerdedorAdd" runat="server" CssClass="btn btn-info" OnClick="PerdedorAdd_Click"/>
+        <asp:Button Visible="false" Text="Limpiar" ID="PerdedorClear" runat="server" CssClass="btn btn-info" OnClick="PerdedorClear_Click"/>
     </div>
     <div>
         <asp:Label Text="" ID="DebugLabel" runat="server"/>
     </div>
     <div>
-        <asp:Button Text="Actualizar entrada" ID="AdminUpdate" runat="server" Visible="false" CssClass="btn btn-info"/>
+        <asp:Button Text="Actualizar entrada" ID="AdminUpdate" runat="server" Visible="false" CssClass="btn btn-info" OnClick="AdminUpdate_Click"/>
         <asp:Button Text="Añadir entrada" ID="AdminAdd" runat="server" Visible="false" CssClass="btn btn-info" OnClick="AdminAdd_Click"/>
-        <asp:Button Text="Borrar entrada" ID="AdminDelete" runat="server" Visible="false" OnClientClick="return confirm('¿Estás seguro de eliminar este videojuego?')" CssClass="btn btn-danger"/>
+        <asp:Button Text="Borrar entrada" ID="AdminDelete" runat="server" Visible="false" OnClientClick="return confirm('¿Estás seguro de eliminar esta partida?')" CssClass="btn btn-danger" OnClick="AdminDelete_Click"/>
     </div>
     </div>
 </asp:Content>

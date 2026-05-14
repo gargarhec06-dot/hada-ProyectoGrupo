@@ -1,6 +1,8 @@
-﻿using hada_ProyectoGrupo.Library.EN;
+﻿using hada_ProyectoGrupo.Library.CAD;
+using hada_ProyectoGrupo.Library.EN;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -19,6 +21,15 @@ namespace hada_ProyectoGrupo.Public
             {
                 DebugLabel.Text = "No hay parametro de torneo, input invalido";
                 return;
+            }
+
+            if (!IsPostBack)
+            {
+                foreach (ENEquipo equipo in new CADInscripcion().ReadEquiposByTorneo(int.Parse(torneo)))
+                {
+                    EquipoGanadorAdmin.Items.Add(new ListItem(equipo.Nombre, equipo.Id_equipo.ToString()));
+                    PerdedorSelect.Items.Add(new ListItem(equipo.Nombre, equipo.Id_equipo.ToString()));
+                }
             }
 
             if (string.IsNullOrEmpty(code))
@@ -76,7 +87,14 @@ namespace hada_ProyectoGrupo.Public
                     en.Id_equipo = perdedor;
                     en.Read();
 
-                    PerdedoresLabel.Text += en.Nombre + ", ";
+                    if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"])
+                    {
+                        PerdedoresLabel.Text = en.Id_equipo.ToString()+",";
+                    }
+                    else
+                    {
+                        PerdedoresLabel.Text += en.Nombre + ", ";
+                    }
                 }
 
                 if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"])
@@ -90,6 +108,7 @@ namespace hada_ProyectoGrupo.Public
             {
                 DebugLabel.Text = "No se encontró";
             }
+
         }
 
         private void activate_admin()
@@ -97,6 +116,10 @@ namespace hada_ProyectoGrupo.Public
             FechaAdmin.Visible = true;
             EnlaceRepeticionAdmin.Visible = true;
             EquipoGanadorAdmin.Visible = true;
+
+            PerdedorSelect.Visible = true;
+            PerdedorAdd.Visible = true;
+            PerdedorClear.Visible = true;
 
             AdminDelete.Visible = true;
             AdminUpdate.Visible = true;
@@ -115,17 +138,126 @@ namespace hada_ProyectoGrupo.Public
                 equipo_win.Id_equipo = int.Parse(EquipoGanadorAdmin.SelectedValue);
                 equipo_win.Read();
 
-                /*ENPartida partida = new ENPartida(
+                List<int> jugadores_final = new List<int>();
+
+                List<ENJugador> jugadores = new ENJugador().ReadAll();
+                foreach (ENJugador jugador in jugadores)
+                {
+                    if (jugador.Equipo_actual == equipo_win.Id_equipo)
+                    {
+                        jugadores_final.Add(jugador.Codigo);
+                    }
+                }
+
+                ENPartida partida = new ENPartida(
                     0,
                     EnlaceRepeticionAdmin.Text,
                     DateTime.Parse(FechaAdmin.Text),
                     torneo_local.IdVideojuego,
                     int.Parse(EquipoGanadorAdmin.SelectedValue),
-                    new [],
-                    new [],
-                    0
+                    GetLosers(),
+                    jugadores_final.ToArray(),
+                    torneo_local.Codigo
                     );
-                */
+
+                if (partida.Create())
+                {
+                    Response.Redirect("DetalleTorneo.aspx?codigo=" + torneo);
+                }
+                else
+                {
+                    DebugLabel.Text = "Algo fue mal";
+                }
+            }
+        }
+
+        protected void PerdedorAdd_Click(object sender, EventArgs e)
+        {
+            PerdedoresLabel.Text += PerdedorSelect.SelectedValue + ",";
+        }
+
+        protected void PerdedorClear_Click(object sender, EventArgs e)
+        {
+            PerdedoresLabel.Text = "";
+        }
+
+        protected void AdminDelete_Click(object sender, EventArgs e)
+        {
+            if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"])
+            {
+                string code = Request.QueryString["codigo"];
+                string torneo = Request.QueryString["torneo"];
+                ENPartida en = new ENPartida();
+                en.Code = int.Parse (code);
+
+                if (en.Delete())
+                {
+                    Response.Redirect("DetalleTorneo.aspx?codigo=" + torneo);
+                }
+                else
+                {
+                    DebugLabel.Text = "Algo fue mal";
+                }
+            }
+        }
+
+        protected int[] GetLosers()
+        {
+            List<int> perdedores = new List<int>();
+
+            foreach (string perdedor in PerdedoresLabel.Text.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries))
+            {
+                perdedores.Add(int.Parse(perdedor.Trim()));
+            }
+
+            return perdedores.ToArray();
+        }
+
+        protected void AdminUpdate_Click(object sender, EventArgs e)
+        {
+            if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"])
+            {
+                string code = Request.QueryString["codigo"];
+                string torneo = Request.QueryString["torneo"];
+
+                ENTorneo torneo_local = new ENTorneo();
+                torneo_local.Codigo = int.Parse(torneo);
+                torneo_local.Read();
+
+                ENEquipo equipo_win = new ENEquipo();
+                equipo_win.Id_equipo = int.Parse(EquipoGanadorAdmin.SelectedValue);
+                equipo_win.Read();
+
+                List<int> jugadores_final = new List<int>();
+
+                List<ENJugador> jugadores = new ENJugador().ReadAll();
+                foreach (ENJugador jugador in jugadores)
+                {
+                    if (jugador.Equipo_actual == equipo_win.Id_equipo)
+                    {
+                        jugadores_final.Add(jugador.Codigo);
+                    }
+                }
+
+                ENPartida partida = new ENPartida(
+                    int.Parse(code),
+                    EnlaceRepeticionAdmin.Text,
+                    DateTime.Parse(FechaAdmin.Text),
+                    torneo_local.IdVideojuego,
+                    int.Parse(EquipoGanadorAdmin.SelectedValue),
+                    GetLosers(),
+                    jugadores_final.ToArray(),
+                    torneo_local.Codigo
+                    );
+
+                if (partida.Update())
+                {
+                    Response.Redirect("DetallesPartida.aspx?torneo=" + torneo + "&codigo=" + code);
+                }
+                else
+                {
+                    DebugLabel.Text = "Algo fue mal";
+                }
             }
         }
     }
