@@ -9,13 +9,22 @@
 
     <asp:Panel ID="pnlDetalle" runat="server">
         <div class="container py-4">
-            <a href="Torneos.aspx" class="btn btn-outline-secondary btn-sm mb-4">
-                ← Volver a Torneos
-            </a>
-            <asp:Button ID="btnInscribirse" runat="server"
-            Text="Inscribirse"
-            CssClass="btn btn-success btn-sm mb-4 ms-2"
-            OnClick="btnInscribirse_Click" />
+
+            <div class="d-flex gap-2 align-items-center mb-4">
+                <a href="Torneos.aspx" class="btn btn-outline-secondary btn-sm">
+                    ← Volver a Torneos
+                </a>
+                <asp:Button ID="btnInscribirse" runat="server"
+                    Text="Inscribirse"
+                    CssClass="btn btn-success btn-sm"
+                    OnClick="btnInscribirse_Click" />
+                <asp:Button ID="btnModificar" runat="server" Text="Modificar"
+                    OnClick="btnModificar_Click" CssClass="btn btn-warning btn-sm" Visible="false" />
+                <asp:Button ID="btnEliminar" runat="server" Text="Eliminar"
+                    OnClick="btnEliminar_Click" CssClass="btn btn-danger btn-sm" Visible="false" />
+                <asp:Label ID="lblMensaje" runat="server" ForeColor="Red" />
+            </div>
+
             <div class="card shadow">
                 <div class="card-header bg-primary text-white">
                     <h3 class="mb-0"><asp:Label ID="lblNombre" runat="server" /></h3>
@@ -23,18 +32,18 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <h5 class="text-muted mb-3"> Información general</h5>
+                            <h5 class="text-muted mb-3">Información general</h5>
                             <table class="table table-borderless table-sm">
                                 <tr>
-                                    <th> Videojuego</th>
+                                    <th>Videojuego</th>
                                     <td><asp:Label ID="lblVideojuego" runat="server" /></td>
                                 </tr>
                                 <tr>
-                                    <th> Nivel</th>
+                                    <th>Nivel</th>
                                     <td><asp:Label ID="lblProfesional" runat="server" /></td>
                                 </tr>
                                 <tr>
-                                    <th> Descripción</th>
+                                    <th>Descripción</th>
                                     <td><asp:Label ID="lblDescripcion" runat="server" /></td>
                                 </tr>
                                 <tr>
@@ -48,18 +57,18 @@
                             </table>
                         </div>
                         <div class="col-md-6">
-                            <h5 class="text-muted mb-3"> Datos económicos</h5>
+                            <h5 class="text-muted mb-3">Datos económicos</h5>
                             <table class="table table-borderless table-sm">
                                 <tr>
-                                    <th> Precio inscripción</th>
+                                    <th>Precio inscripción</th>
                                     <td><asp:Label ID="lblPrecioInscripcion" runat="server" /></td>
                                 </tr>
                                 <tr>
-                                    <th> Coste organización</th>
+                                    <th>Coste organización</th>
                                     <td><asp:Label ID="lblCosteOrganizacion" runat="server" /></td>
                                 </tr>
                                 <tr>
-                                    <th> Premio</th>
+                                    <th>Premio</th>
                                     <td><asp:Label ID="lblPremio" runat="server" /></td>
                                 </tr>
                             </table>
@@ -67,6 +76,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="container mt-4">
                 <h4>Equipos inscritos</h4>
                 <asp:Repeater ID="rptEquipos" runat="server">
@@ -83,15 +93,15 @@
                         </ul>
                     </FooterTemplate>
                 </asp:Repeater>
-
-                <asp:Label ID="lblSinEquipos" runat="server" Text="No hay equipos inscritos aún." 
-                           CssClass="text-muted" Visible="false"/>
+                <asp:Label ID="lblSinEquipos" runat="server" Text="No hay equipos inscritos aún."
+                    CssClass="text-muted" Visible="false" />
             </div>
+
         </div>
     </asp:Panel>
 
     <asp:Panel ID="pnlError" runat="server" Visible="false" CssClass="text-center py-5">
-        <h3 class="text-danger"> Torneo no encontrado</h3>
+        <h3 class="text-danger">Torneo no encontrado</h3>
         <a href="Torneos.aspx" class="btn btn-primary mt-3">Volver a la lista</a>
     </asp:Panel>
 

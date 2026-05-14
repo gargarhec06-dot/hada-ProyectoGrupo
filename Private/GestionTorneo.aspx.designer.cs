@@ -141,6 +141,15 @@ namespace hada_ProyectoGrupo.Private
         protected global::System.Web.UI.WebControls.RegularExpressionValidator revPremio;
 
         /// <summary>
+        /// Control rfvPremio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvPremio;
+
+        /// <summary>
         /// Control txtCapacidad.
         /// </summary>
         /// <remarks>
@@ -157,6 +166,15 @@ namespace hada_ProyectoGrupo.Private
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RegularExpressionValidator revCapacidad;
+
+        /// <summary>
+        /// Control rfvCapacidad.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCapacidad;
 
         /// <summary>
         /// Control chkProfesional.
