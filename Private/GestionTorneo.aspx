@@ -59,6 +59,8 @@
             <asp:TextBox ID="txtPremio" runat="server" Width="100%" />
             <asp:RegularExpressionValidator ID="revPremio" runat="server" ControlToValidate="txtPremio" 
                 ValidationExpression="^\d+(\.\d+)?$" ErrorMessage="Solo se permiten números" ForeColor="Red" /> 
+            <asp:RequiredFieldValidator ID="rfvPremio" runat="server"
+                ControlToValidate="txtPremio" Text="*" ForeColor="Red" />
         </div>
 
         <div style="margin-bottom: 10px;">
@@ -66,6 +68,8 @@
             <asp:TextBox ID="txtCapacidad" runat="server" Width="100%" />
             <asp:RegularExpressionValidator ID="revCapacidad" runat="server" ControlToValidate="txtCapacidad" 
                 ValidationExpression="^\d+$" ErrorMessage="Solo se permiten números enteros positivos" ForeColor="Red" /> 
+            <asp:RequiredFieldValidator ID="rfvCapacidad" runat="server"
+                ControlToValidate="txtCapacidad" Text="*" ForeColor="Red" />
         </div>
 
         <div style="margin-bottom: 10px;">

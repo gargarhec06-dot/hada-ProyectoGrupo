@@ -2,8 +2,6 @@
 using hada_ProyectoGrupo.Library.EN;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -11,6 +9,12 @@ namespace hada_ProyectoGrupo.Public
 {
     public partial class DetalleTorneo : System.Web.UI.Page
     {
+        private int codigoTorneo
+        {
+            get { return ViewState["codigoTorneo"] != null ? (int)ViewState["codigoTorneo"] : 0; }
+            set { ViewState["codigoTorneo"] = value; }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -21,30 +25,30 @@ namespace hada_ProyectoGrupo.Public
                     return;
                 }
 
-                int codigo = int.Parse(Request.QueryString["codigo"]);
-
+                codigoTorneo = int.Parse(Request.QueryString["codigo"]);
                 ENTorneo en = new ENTorneo();
-                en.Codigo = codigo;
+                en.Codigo = codigoTorneo;
                 CADTorneo cad = new CADTorneo();
-                string nombreVJ; 
+                string nombreVJ;
 
                 if (cad.ReadWithVideojuego(en, out nombreVJ))
                 {
                     MostrarTorneo(en);
-
                     lblVideojuego.Text = nombreVJ;
+                    CargarEquipos(codigoTorneo);
+                    CargarPartidas(codigoTorneo);
 
-                    CargarEquipos(codigo);
-                    CargarPartidas(codigo);
+                    // Mostrar botones solo si es admin
+                    if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == true)
+                    {
+                        btnModificar.Visible = true;
+                        btnEliminar.Visible = true;
+                        btnCreatePartida.Visible = true;
+                    }
                 }
                 else
                 {
                     MostrarError();
-                }
-
-                if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"])
-                {
-                    btnCreatePartida.Visible = true;
                 }
             }
         }
@@ -52,16 +56,13 @@ namespace hada_ProyectoGrupo.Public
         private void MostrarTorneo(ENTorneo t)
         {
             lblNombre.Text = t.Nombre;
-            lblProfesional.Text = t.Profesional ? " Profesional" : " Amateur";
-            lblDescripcion.Text = string.IsNullOrEmpty(t.Descripcion)
-                                            ? "Sin descripción" : t.Descripcion;
+            lblProfesional.Text = t.Profesional ? "Profesional" : "Amateur";
+            lblDescripcion.Text = string.IsNullOrEmpty(t.Descripcion) ? "Sin descripción" : t.Descripcion;
             lblCapacidad.Text = t.Capacidad.ToString();
-
             lblUbicacion.Text = string.IsNullOrEmpty(t.Ubicacion) ? "Sin ubicacion" : t.Ubicacion;
             lblPrecioInscripcion.Text = $"{t.PrecioInscripcion:F2} €";
             lblCosteOrganizacion.Text = $"{t.CosteOrganizacion:F2} €";
             lblPremio.Text = $"{t.Premio:F2} €";
-
             pnlDetalle.Visible = true;
             pnlError.Visible = false;
         }
@@ -72,22 +73,37 @@ namespace hada_ProyectoGrupo.Public
             pnlError.Visible = true;
         }
 
-
         protected void btnInscribirse_Click(object sender, EventArgs e)
         {
-            int codigo = int.Parse(Request.QueryString["codigo"]);
-            Response.Redirect("~/Public/Inscripcion.aspx?codigo=" + codigo);
+            Response.Redirect("~/Public/Inscripcion.aspx?codigo=" + codigoTorneo);
         }
 
-        private void CargarEquipos(int codigoTorneo)
+        protected void btnModificar_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Private/GestionTorneo.aspx?id=" + codigoTorneo);
+        }
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            ENTorneo en = new ENTorneo();
+            en.Codigo = codigoTorneo;
+
+            if (en.Delete())
+                Response.Redirect("~/Public/Torneos.aspx");
+            else
+                lblMensaje.Text = "Error al eliminar el torneo.";
+        }
+
+        private void CargarEquipos(int codigo)
         {
             CADInscripcion cad = new CADInscripcion();
-            List<ENEquipo> equipos = cad.ReadEquiposByTorneo(codigoTorneo);
-
-            if (equipos.Count > 0)
+            List<ENEquipo> equipos = cad.ReadEquiposByTorneo(codigo);
+            if (equipos != null && equipos.Count > 0)
             {
                 rptEquipos.DataSource = equipos;
                 rptEquipos.DataBind();
+                rptEquipos.Visible = true;
+                lblSinEquipos.Visible = false;
             }
             else
             {
@@ -101,10 +117,12 @@ namespace hada_ProyectoGrupo.Public
             CADPartida cad = new CADPartida();
             List<ENPartida> partidas = cad.ReadByTorneo(codigoTorneo);
 
-            if (partidas.Count > 0)
+            if (partidas != null && partidas.Count > 0)
             {
                 rptPartidas.DataSource = partidas;
                 rptPartidas.DataBind();
+                rptPartidas.Visible = true;
+                lblSinPartidas.Visible = false;
             }
             else
             {
@@ -115,9 +133,7 @@ namespace hada_ProyectoGrupo.Public
 
         protected void btnCreatePartida_Click(object sender, EventArgs e)
         {
-            string torneo_code = Request.QueryString["codigo"];
-
-            Response.Redirect("DetallesPartida.aspx?torneo="+torneo_code);
+            Response.Redirect("DetallesPartida.aspx?torneo=" + codigoTorneo);
         }
     }
 }
