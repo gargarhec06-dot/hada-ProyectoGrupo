@@ -173,5 +173,24 @@ namespace hada_ProyectoGrupo.Library.CAD
             finally { c.Close(); }
             return lista;
         }
+
+        public bool DeleteByEquipo(int idEquipo)
+        {
+            bool ok = false;
+            SqlConnection c = new SqlConnection(s);
+            try
+            {
+                c.Open();
+                string query = "DELETE FROM Inscripcion WHERE id_equipo = @id";
+                SqlCommand com = new SqlCommand(query, c);
+                com.Parameters.AddWithValue("@id", idEquipo);
+                com.ExecuteNonQuery();
+                ok = true;
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            finally { c.Close(); }
+            return ok;
+        }
+
     }
 }

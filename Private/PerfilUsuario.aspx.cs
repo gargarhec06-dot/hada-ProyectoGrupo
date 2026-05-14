@@ -47,6 +47,7 @@ namespace hada_ProyectoGrupo.Private
                 if (cadUsuario.Read(usuario))
                 {
                     lblFechaNacimiento.Text = usuario.Fecha_Nacimiento.ToString("dd/MM/yyyy");
+                    lblSaldo.Text = usuario.Saldo_cartera.ToString("F2") + " €";
                 }
                 else
                 {
@@ -89,34 +90,34 @@ namespace hada_ProyectoGrupo.Private
             {
                 CADJugador cadJugador = new CADJugador();
                 CADEquipo cadEquipo = new CADEquipo();
+                CADInscripcion cadInscripcion = new CADInscripcion();
+                CADUsuario cadUsuario = new CADUsuario();
+
                 List<ENJugador> jugadores = cadJugador.ReadAllByEmail(email);
 
-                // Comprobar si algún jugador es capitán de algún equipo
-                List<string> equiposComoCapitan = new List<string>();
                 foreach (ENJugador jugador in jugadores)
                 {
+                    // Si es capitán de un equipo, eliminar inscripciones y equipo
                     ENEquipo equipo = cadEquipo.ReadByCapitan(jugador.Codigo);
                     if (equipo != null)
                     {
-                        equiposComoCapitan.Add(equipo.Nombre);
+                        // 1. Eliminar inscripciones del equipo en torneos
+                        cadInscripcion.DeleteByEquipo(equipo.Id_equipo);
+
+                        // 2. Eliminar el equipo (esto expulsa a los demás jugadores automáticamente)
+                        cadEquipo.Delete(equipo);
                     }
-                }
+                    else if (jugador.Equipo_actual != 0)
+                    {
+                        // Si está en un equipo pero no es capitán, simplemente salir del equipo
+                        cadJugador.QuitarDeEquipo(jugador.Codigo);
+                    }
 
-                if (equiposComoCapitan.Count > 0)
-                {
-                    string nombres = string.Join(", ", equiposComoCapitan);
-                    Response.Write("<script>alert('No puedes eliminar la cuenta porque eres capitán de los siguientes equipos: " + nombres + ". Elimínalos primero.');</script>");
-                    return;
-                }
-
-                // Si no es capitán de ningún equipo, proceder con la eliminación
-                foreach (ENJugador jugador in jugadores)
-                {
-                    cadJugador.QuitarDeEquipo(jugador.Codigo);
+                    // 3. Eliminar el jugador
                     cadJugador.Delete(jugador);
                 }
 
-                CADUsuario cadUsuario = new CADUsuario();
+                // 4. Eliminar el usuario
                 ENUsuario usuario = new ENUsuario();
                 usuario.Email = email;
 

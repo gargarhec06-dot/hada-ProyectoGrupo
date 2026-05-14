@@ -138,8 +138,7 @@
             <p class="eq-slots"><strong><%# Eval("MiembrosActuales") %> / <%# Eval("MaxJugadores") %></strong> jugadores</p>
 
             <div class="eq-bar-wrap">
-                <div class='eq-bar <%# Eval("EstadoFiltro").ToString() == "lleno" ? "bar-full" : "bar-open" %>' 
-                     runat="server" id="barra"></div>
+                <div class="eq-bar" runat="server" id="barra"></div>
             </div>
 
             <div class="eq-actions" style="margin-top:10px;">

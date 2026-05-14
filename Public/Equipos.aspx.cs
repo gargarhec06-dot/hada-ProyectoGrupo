@@ -100,14 +100,15 @@ namespace hada_ProyectoGrupo.Public
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 var data = (EquipoViewModel)e.Item.DataItem;
-                if (data.MaxJugadores > 0)
+                HtmlGenericControl barra = (HtmlGenericControl)e.Item.FindControl("barra");
+                if (barra != null && data.MaxJugadores > 0)
                 {
                     double porcentaje = (double)data.MiembrosActuales * 100 / data.MaxJugadores;
-                    HtmlGenericControl barra = (HtmlGenericControl)e.Item.FindControl("barra");
-                    if (barra != null)
-                    {
-                        barra.Style["width"] = porcentaje.ToString(System.Globalization.CultureInfo.InvariantCulture) + "%";
-                    }
+                    barra.Style["width"] = porcentaje.ToString(System.Globalization.CultureInfo.InvariantCulture) + "%";
+
+                    // ← LÍNEA NUEVA: asignar el color aquí, no en el Eval del .aspx
+                    barra.Attributes["class"] = "eq-bar " +
+                        (data.EstadoFiltro == "lleno" ? "bar-full" : "bar-open");
                 }
             }
         }

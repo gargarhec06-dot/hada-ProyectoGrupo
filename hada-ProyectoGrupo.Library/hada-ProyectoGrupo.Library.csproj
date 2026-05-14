@@ -53,6 +53,7 @@
     <Compile Include="CAD\CADTorneo.cs" />
     <Compile Include="CAD\CADUsuario.cs" />
     <Compile Include="CAD\CADVideojuego.cs" />
+    <Compile Include="CAD\CADEstadisticas.cs" />
     <Compile Include="EN\ENEquipo.cs" />
     <Compile Include="EN\ENInscripcion.cs" />
     <Compile Include="EN\ENJugador.cs" />
