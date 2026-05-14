@@ -92,6 +92,15 @@ namespace hada_ProyectoGrupo.Public
                 return;
             }
 
+            CADInscripcion cad = new CADInscripcion();
+            int inscritos = cad.ContarInscripciones(codigoTorneo);
+
+            if (inscritos >= torneo.Capacidad)
+            {
+                lblMensaje.Text = "El torneo está lleno, no hay plazas disponibles.";
+                return;
+            }
+
             ENInscripcion inscripcion = new ENInscripcion();
             inscripcion.Id_equipo = idEquipo;
             inscripcion.Id_torneo = codigoTorneo;
