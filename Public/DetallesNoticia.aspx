@@ -39,6 +39,20 @@
                 <p><strong>Vista Previa Imagen :</strong></p>
                 <asp:Image ID="imgNoticia" runat="server" Width="250px" style="border-radius:5px; border: 1px solid #ccc;" 
                     ImageUrl="https://via.placeholder.com/250x150?text=Sin+Imagen" />
+
+                <asp:Panel ID="pnlLikes" runat="server" style="margin-top:20px; padding:15px; background-color:#f8f9fa; border-radius:8px;">
+                    <div style="font-size: 1.2rem; margin-bottom:10px;">
+                        <span style="color:#e0245e;">❤</span> 
+                        <asp:Label ID="lblTotalLikes" runat="server" Text="0" Font-Bold="true" /> likes
+                    </div>
+                    
+                    <asp:LinkButton ID="btnLike" runat="server" OnClick="btnLike_Click" CssClass="btn btn-outline-primary">
+                        🤍 Dar Like
+                    </asp:LinkButton>
+
+                    <asp:Label ID="lblLoginLikeInfo" runat="server" Text="Inicia sesión para dar like" 
+                        Visible="false" ForeColor="Gray" Font-Size="Small" style="display:block; margin-top:5px;" />
+                </asp:Panel>
             </div>
         </div>
 

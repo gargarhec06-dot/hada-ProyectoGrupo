@@ -15,25 +15,20 @@ namespace hada_ProyectoGrupo.Public
                 {
                     int id = int.Parse(Request.QueryString["id"]);
 
-                  
-                    // Creamos una clave única para esta noticia en la sesión del usuario
+                    
                     string sessionKey = "Visto_Noticia_" + id;
-
                     if (Session[sessionKey] == null)
                     {
-                        // Si no existe en la sesión, incrementamos en la BD
                         ENNoticia noticiaAux = new ENNoticia();
                         noticiaAux.IncrementarVisitas(id);
-
-                        // Marcamos como vista para que no sume más en esta sesión
                         Session[sessionKey] = true;
                     }
-                   
 
                     CargarDatos(id);
                 }
                 else
                 {
+                    // Lógica para creación de noticias (Admin)
                     if (Session["EsAdmin"] == null || (bool)Session["EsAdmin"] == false)
                     {
                         Response.Redirect("Login.aspx");
@@ -43,14 +38,13 @@ namespace hada_ProyectoGrupo.Public
                         ConfigurarInterfaz(true);
                         txtFecha.Text = DateTime.Now.ToString("yyyy-MM-dd");
                         txtAutor.Text = Session["Email"].ToString();
-
-                        // Imagen por defecto en modo creación
                         imgNoticia.ImageUrl = ResolveUrl("~/Images/Noticias/default-news.png");
-
                         pnlAcciones.Visible = true;
                         btnCrear.Visible = true;
                         btnModificar.Visible = false;
                         btnEliminar.Visible = false;
+                        // Ocultamos panel de likes en modo creación
+                        pnlLikes.Visible = false;
                     }
                 }
             }
@@ -66,8 +60,7 @@ namespace hada_ProyectoGrupo.Public
                 txtContenido.Text = en.Contenido;
                 txtFecha.Text = en.FechaPublicacion.ToString("yyyy-MM-dd");
                 txtAutor.Text = en.EmailUsuario;
-                txtImagenUrl.Text = en.ImagenUrl; // Cargamos la URL de la BD
-
+                txtImagenUrl.Text = en.ImagenUrl;
 
                 string noticiaUrl = !string.IsNullOrWhiteSpace(en.ImagenUrl)
                     ? en.ImagenUrl
@@ -76,7 +69,53 @@ namespace hada_ProyectoGrupo.Public
                 imgNoticia.ImageUrl = ResolveUrl(noticiaUrl);
                 imgNoticia.Visible = true;
 
+                // GESTIÓN VISUAL DE LIKES 
+                lblTotalLikes.Text = en.Likes.ToString();
+
+                if (Session["Email"] != null)
+                {
+                    pnlLikes.Visible = true;
+                    string email = Session["Email"].ToString();
+
+                    // Si el usuario ya dio like, cambiamos el texto o estilo del botón
+                    if (en.UsuarioYaDioLike(email))
+                    {
+                        btnLike.Text = "❤️ Quitar Like";
+                        btnLike.CssClass = "btn btn-danger"; 
+                    }
+                    else
+                    {
+                        btnLike.Text = "🤍 Dar Like";
+                        btnLike.CssClass = "btn btn-outline-primary";
+                    }
+                }
+                else
+                {
+                    // Si no está logueado, puede ver los likes pero no interactuar
+                    btnLike.Visible = false;
+                    lblLoginLikeInfo.Visible = true; // "Logueate para dar like"
+                }
+
                 VerificarPermisos(en.EmailUsuario);
+            }
+        }
+
+        // MÉTODO PARA EL BOTÓN DE LIKE 
+        protected void btnLike_Click(object sender, EventArgs e)
+        {
+            if (Session["Email"] != null && Request.QueryString["id"] != null)
+            {
+                int id = int.Parse(Request.QueryString["id"]);
+                string email = Session["Email"].ToString();
+
+                ENNoticia en = new ENNoticia();
+                en.IdNoticia = id;
+
+                // Ejecutamos el Toggle (Poner/Quitar)
+                en.ToggleLike(email);
+
+                // Recargamos los datos para actualizar el contador y el botón
+                CargarDatos(id);
             }
         }
 
@@ -84,7 +123,6 @@ namespace hada_ProyectoGrupo.Public
         {
             bool esAdmin = Session["EsAdmin"] != null && (bool)Session["EsAdmin"];
             string emailLogueado = Session["Email"]?.ToString();
-
             bool puedeEditar = esAdmin || (emailLogueado != null && emailLogueado == autorNoticia);
 
             if (puedeEditar)
@@ -112,7 +150,6 @@ namespace hada_ProyectoGrupo.Public
             txtAutor.ReadOnly = true;
         }
 
-        // GESTIÓN DE IMAGEN
         protected void btnSubirImagen_Click(object sender, EventArgs e)
         {
             if (fuImagen.HasFile)
@@ -126,44 +163,29 @@ namespace hada_ProyectoGrupo.Public
                         lblSubidaInfo.ForeColor = System.Drawing.Color.Red;
                         return;
                     }
-
                     string nombreArchivo = "noticia_" + DateTime.Now.Ticks + extension;
                     string ruta = Server.MapPath("~/Images/Noticias/");
-
-                    if (!Directory.Exists(ruta))
-                        Directory.CreateDirectory(ruta);
-
+                    if (!Directory.Exists(ruta)) Directory.CreateDirectory(ruta);
                     fuImagen.SaveAs(ruta + nombreArchivo);
-
-                    string rutaRelativa = "~/Images/Noticias/" + nombreArchivo;
-
-                    // Actualizamos el TextBox para que los métodos Create/Update lo guarden
-                    txtImagenUrl.Text = rutaRelativa;
-
-                    imgNoticia.ImageUrl = ResolveUrl(rutaRelativa);
+                    txtImagenUrl.Text = "~/Images/Noticias/" + nombreArchivo;
+                    imgNoticia.ImageUrl = ResolveUrl(txtImagenUrl.Text);
                     imgNoticia.Visible = true;
-
-                    lblSubidaInfo.Text = "Imagen lista. Pulsa Guardar.";
+                    lblSubidaInfo.Text = "Imagen lista.";
                     lblSubidaInfo.ForeColor = System.Drawing.Color.Green;
                 }
-                catch (Exception ex)
-                {
-                    lblSubidaInfo.Text = "Error: " + ex.Message;
-                }
+                catch (Exception ex) { lblSubidaInfo.Text = "Error: " + ex.Message; }
             }
         }
 
         protected void btnCrear_Click(object sender, EventArgs e)
         {
             if (Session["Email"] == null) return;
-
             ENNoticia en = new ENNoticia();
             en.Titulo = txtTitulo.Text;
             en.Contenido = txtContenido.Text;
-            en.ImagenUrl = txtImagenUrl.Text; // Guardamos la ruta generada
+            en.ImagenUrl = txtImagenUrl.Text;
             en.FechaPublicacion = DateTime.Now;
             en.EmailUsuario = Session["Email"].ToString();
-
             if (en.Create()) Response.Redirect("Noticias.aspx");
         }
 
@@ -173,10 +195,9 @@ namespace hada_ProyectoGrupo.Public
             en.IdNoticia = int.Parse(Request.QueryString["id"]);
             en.Titulo = txtTitulo.Text;
             en.Contenido = txtContenido.Text;
-            en.ImagenUrl = txtImagenUrl.Text; // Guardamos la ruta (nueva o antigua)
+            en.ImagenUrl = txtImagenUrl.Text;
             en.FechaPublicacion = DateTime.Parse(txtFecha.Text);
             en.EmailUsuario = txtAutor.Text;
-
             if (en.Update()) Response.Redirect("Noticias.aspx");
         }
 

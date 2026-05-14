@@ -45,7 +45,10 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                string query = "SELECT * FROM Noticia WHERE IdNoticia = @id";
+                string query = @"SELECT n.*, 
+                                (SELECT COUNT(*) FROM LikesNoticias WHERE IdNoticia = n.IdNoticia) as TotalLikes 
+                                FROM Noticia n WHERE n.IdNoticia = @id";
+
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@id", en.IdNoticia);
                 SqlDataReader dr = com.ExecuteReader();
@@ -56,8 +59,8 @@ namespace hada_ProyectoGrupo.Library.CAD
                     en.FechaPublicacion = DateTime.Parse(dr["FechaPublicacion"].ToString());
                     en.EmailUsuario = dr["IdUsuario"].ToString();
                     en.ImagenUrl = dr["ImagenUrl"].ToString();
-                   
                     en.Visitas = int.Parse(dr["Visitas"].ToString());
+                    en.Likes = int.Parse(dr["TotalLikes"].ToString());
                     leido = true;
                 }
             }
@@ -73,7 +76,11 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                string query = "SELECT * FROM Noticia";
+                
+                string query = @"SELECT n.*, 
+                                (SELECT COUNT(*) FROM LikesNoticias WHERE IdNoticia = n.IdNoticia) as TotalLikes 
+                                FROM Noticia n";
+
                 SqlCommand com = new SqlCommand(query, c);
                 SqlDataReader dr = com.ExecuteReader();
                 while (dr.Read())
@@ -85,8 +92,8 @@ namespace hada_ProyectoGrupo.Library.CAD
                     n.FechaPublicacion = DateTime.Parse(dr["FechaPublicacion"].ToString());
                     n.EmailUsuario = dr["IdUsuario"].ToString();
                     n.ImagenUrl = dr["ImagenUrl"].ToString();
-                    
                     n.Visitas = int.Parse(dr["Visitas"].ToString());
+                    n.Likes = int.Parse(dr["TotalLikes"].ToString()); 
                     lista.Add(n);
                 }
             }
@@ -135,7 +142,6 @@ namespace hada_ProyectoGrupo.Library.CAD
             return borrado;
         }
 
-        
         public void IncrementarVisitas(int id)
         {
             SqlConnection c = new SqlConnection(constring);
@@ -149,6 +155,47 @@ namespace hada_ProyectoGrupo.Library.CAD
             }
             catch (Exception ex) { throw ex; }
             finally { c.Close(); }
+        }
+
+        // MÉTODOS DE LIKE
+
+        public void ToggleLike(int idNoticia, string email)
+        {
+            SqlConnection c = new SqlConnection(constring);
+            try
+            {
+                c.Open();
+                // Lógica Toggle: Si existe lo borra, si no existe lo inserta
+                string query = @"IF EXISTS (SELECT * FROM LikesNoticias WHERE IdNoticia = @id AND EmailUsuario = @email)
+                                    DELETE FROM LikesNoticias WHERE IdNoticia = @id AND EmailUsuario = @email
+                                 ELSE
+                                    INSERT INTO LikesNoticias (IdNoticia, EmailUsuario) VALUES (@id, @email)";
+
+                SqlCommand com = new SqlCommand(query, c);
+                com.Parameters.AddWithValue("@id", idNoticia);
+                com.Parameters.AddWithValue("@email", email);
+                com.ExecuteNonQuery();
+            }
+            catch (Exception ex) { throw ex; }
+            finally { c.Close(); }
+        }
+
+        public bool VerificarLike(int idNoticia, string email)
+        {
+            bool existe = false;
+            SqlConnection c = new SqlConnection(constring);
+            try
+            {
+                c.Open();
+                string query = "SELECT COUNT(*) FROM LikesNoticias WHERE IdNoticia = @id AND EmailUsuario = @email";
+                SqlCommand com = new SqlCommand(query, c);
+                com.Parameters.AddWithValue("@id", idNoticia);
+                com.Parameters.AddWithValue("@email", email);
+                existe = (int)com.ExecuteScalar() > 0;
+            }
+            catch (Exception ex) { throw ex; }
+            finally { c.Close(); }
+            return existe;
         }
     }
 }

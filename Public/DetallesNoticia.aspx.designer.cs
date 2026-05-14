@@ -114,6 +114,42 @@ namespace hada_ProyectoGrupo.Public
         protected global::System.Web.UI.WebControls.Image imgNoticia;
 
         /// <summary>
+        /// Control pnlLikes.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlLikes;
+
+        /// <summary>
+        /// Control lblTotalLikes.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalLikes;
+
+        /// <summary>
+        /// Control btnLike.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnLike;
+
+        /// <summary>
+        /// Control lblLoginLikeInfo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblLoginLikeInfo;
+
+        /// <summary>
         /// Control btnVolver.
         /// </summary>
         /// <remarks>
