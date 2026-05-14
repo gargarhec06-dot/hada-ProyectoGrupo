@@ -11,187 +11,142 @@ namespace hada_ProyectoGrupo.Public
 {
 
 
-    public partial class DetalleTorneo
+    public partial class DetallesPartida
     {
 
         /// <summary>
-        /// Control pnlDetalle.
+        /// Control CodigoLabel.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlDetalle;
+        protected global::System.Web.UI.WebControls.Label CodigoLabel;
 
         /// <summary>
-        /// Control btnInscribirse.
+        /// Control TorneoLabel.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnInscribirse;
+        protected global::System.Web.UI.WebControls.HyperLink TorneoLabel;
 
         /// <summary>
-        /// Control btnModificar.
+        /// Control FechaLabel.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnModificar;
+        protected global::System.Web.UI.WebControls.Label FechaLabel;
 
         /// <summary>
-        /// Control btnEliminar.
+        /// Control FechaAdmin.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEliminar;
+        protected global::System.Web.UI.WebControls.TextBox FechaAdmin;
 
         /// <summary>
-        /// Control lblMensaje.
+        /// Control EnlaceRepeticion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMensaje;
+        protected global::System.Web.UI.WebControls.HyperLink EnlaceRepeticion;
 
         /// <summary>
-        /// Control lblNombre.
+        /// Control EnlaceRepeticionAdmin.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNombre;
+        protected global::System.Web.UI.WebControls.TextBox EnlaceRepeticionAdmin;
 
         /// <summary>
-        /// Control lblVideojuego.
+        /// Control VideojuegoEnlace.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblVideojuego;
+        protected global::System.Web.UI.WebControls.HyperLink VideojuegoEnlace;
 
         /// <summary>
-        /// Control lblProfesional.
+        /// Control EquipoGanadorLabel.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblProfesional;
+        protected global::System.Web.UI.WebControls.Label EquipoGanadorLabel;
 
         /// <summary>
-        /// Control lblDescripcion.
+        /// Control EquipoGanadorAdmin.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDescripcion;
+        protected global::System.Web.UI.WebControls.DropDownList EquipoGanadorAdmin;
 
         /// <summary>
-        /// Control lblUbicacion.
+        /// Control JugadoresLabel.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblUbicacion;
+        protected global::System.Web.UI.WebControls.Label JugadoresLabel;
 
         /// <summary>
-        /// Control lblCapacidad.
+        /// Control PerdedoresLabel.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCapacidad;
+        protected global::System.Web.UI.WebControls.Label PerdedoresLabel;
 
         /// <summary>
-        /// Control lblPrecioInscripcion.
+        /// Control DebugLabel.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPrecioInscripcion;
+        protected global::System.Web.UI.WebControls.Label DebugLabel;
 
         /// <summary>
-        /// Control lblCosteOrganizacion.
+        /// Control AdminUpdate.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCosteOrganizacion;
+        protected global::System.Web.UI.WebControls.Button AdminUpdate;
 
         /// <summary>
-        /// Control lblPremio.
+        /// Control AdminAdd.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPremio;
+        protected global::System.Web.UI.WebControls.Button AdminAdd;
 
         /// <summary>
-        /// Control rptEquipos.
+        /// Control AdminDelete.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptEquipos;
-
-        /// <summary>
-        /// Control lblSinEquipos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSinEquipos;
-
-        /// <summary>
-        /// Control rptPartidas.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptPartidas;
-
-        /// <summary>
-        /// Control lblSinPartidas.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSinPartidas;
-
-        /// <summary>
-        /// Control btnCreatePartida.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCreatePartida;
-
-        /// <summary>
-        /// Control pnlError.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlError;
+        protected global::System.Web.UI.WebControls.Button AdminDelete;
     }
 }

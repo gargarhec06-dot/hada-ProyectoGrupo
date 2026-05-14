@@ -45,8 +45,9 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
+               
                 string query = @"SELECT n.*, 
-                                (SELECT COUNT(*) FROM LikesNoticias WHERE IdNoticia = n.IdNoticia) as TotalLikes 
+                                (SELECT COUNT(*) FROM LikesNoticias WHERE noticia = n.IdNoticia) as TotalLikes 
                                 FROM Noticia n WHERE n.IdNoticia = @id";
 
                 SqlCommand com = new SqlCommand(query, c);
@@ -78,7 +79,7 @@ namespace hada_ProyectoGrupo.Library.CAD
                 c.Open();
                 
                 string query = @"SELECT n.*, 
-                                (SELECT COUNT(*) FROM LikesNoticias WHERE IdNoticia = n.IdNoticia) as TotalLikes 
+                                (SELECT COUNT(*) FROM LikesNoticias WHERE noticia = n.IdNoticia) as TotalLikes 
                                 FROM Noticia n";
 
                 SqlCommand com = new SqlCommand(query, c);
@@ -93,7 +94,7 @@ namespace hada_ProyectoGrupo.Library.CAD
                     n.EmailUsuario = dr["IdUsuario"].ToString();
                     n.ImagenUrl = dr["ImagenUrl"].ToString();
                     n.Visitas = int.Parse(dr["Visitas"].ToString());
-                    n.Likes = int.Parse(dr["TotalLikes"].ToString()); 
+                    n.Likes = int.Parse(dr["TotalLikes"].ToString());
                     lista.Add(n);
                 }
             }
@@ -109,6 +110,7 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
+               
                 string query = "UPDATE Noticia SET Titulo=@tit, Contenido=@cont, FechaPublicacion=@fecha, IdUsuario=@user, ImagenUrl=@img WHERE IdNoticia=@id";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@id", en.IdNoticia);
@@ -157,7 +159,7 @@ namespace hada_ProyectoGrupo.Library.CAD
             finally { c.Close(); }
         }
 
-        // MÉTODOS DE LIKE
+        
 
         public void ToggleLike(int idNoticia, string email)
         {
@@ -165,11 +167,11 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                // Lógica Toggle: Si existe lo borra, si no existe lo inserta
-                string query = @"IF EXISTS (SELECT * FROM LikesNoticias WHERE IdNoticia = @id AND EmailUsuario = @email)
-                                    DELETE FROM LikesNoticias WHERE IdNoticia = @id AND EmailUsuario = @email
+                
+                string query = @"IF EXISTS (SELECT * FROM LikesNoticias WHERE noticia = @id AND usuario = @email)
+                                    DELETE FROM LikesNoticias WHERE noticia = @id AND usuario = @email
                                  ELSE
-                                    INSERT INTO LikesNoticias (IdNoticia, EmailUsuario) VALUES (@id, @email)";
+                                    INSERT INTO LikesNoticias (noticia, usuario) VALUES (@id, @email)";
 
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@id", idNoticia);
@@ -187,7 +189,8 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                string query = "SELECT COUNT(*) FROM LikesNoticias WHERE IdNoticia = @id AND EmailUsuario = @email";
+                
+                string query = "SELECT COUNT(*) FROM LikesNoticias WHERE noticia = @id AND usuario = @email";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@id", idNoticia);
                 com.Parameters.AddWithValue("@email", email);

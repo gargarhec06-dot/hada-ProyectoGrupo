@@ -16,6 +16,8 @@ namespace hada_ProyectoGrupo.Library.EN
         private int _ganador;
         private int[] _perdedores;
         private int[] _jugadores;
+        // Si no hay va a 0
+        private int _torneo;
 
 
         public ENPartida()
@@ -26,9 +28,10 @@ namespace hada_ProyectoGrupo.Library.EN
             _videojuego = 0;
             _ganador = 0;
             _perdedores = new int[0];
+            _torneo = 0;
         }
 
-        public ENPartida(int code, string enlace_repeticion, DateTime fecha, int videojuego, int ganador, int[] perdedores, int[] jugadores)
+        public ENPartida(int code, string enlace_repeticion, DateTime fecha, int videojuego, int ganador, int[] perdedores, int[] jugadores, int torneo)
         {
             this._code = code;
             this._enlace_repeticion = enlace_repeticion;
@@ -45,6 +48,7 @@ namespace hada_ProyectoGrupo.Library.EN
             {
                 this._jugadores[i] = jugadores[i];
             }
+            this._torneo = torneo;
         }
 
         public int Code
@@ -97,6 +101,12 @@ namespace hada_ProyectoGrupo.Library.EN
             set { _jugadores = value; }
         }
 
+        public int Torneo
+        {
+            get { return _torneo; }
+            set { _torneo = value; }
+        }
+
         public bool Create()
         {
             CADPartida cad = new CADPartida();
@@ -121,6 +131,7 @@ namespace hada_ProyectoGrupo.Library.EN
             return cad.Delete(this);
         }
 
+        /* No es necesaria
         /// <summary>
         /// Devuelve todas las partidas salvo que ocurra un error
         /// Disponibilidad por si tenemos que filtrarlas por algún criterio
@@ -130,6 +141,10 @@ namespace hada_ProyectoGrupo.Library.EN
         {
             CADPartida cad = new CADPartida();
             return cad.ReadAll();
+        }*/
+        public List<ENPartida> ReadByTorneo(int torneo)
+        {
+            return new CADPartida().ReadByTorneo(torneo);
         }
     }
 }

@@ -43,9 +43,17 @@ namespace hada_ProyectoGrupo.Public
                         btnEliminar.Visible = true;
                     }
                 }
+                    CargarEquipos(codigo);
+                    CargarPartidas(codigo);
+                }
                 else
                 {
                     MostrarError();
+                }
+
+                if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"])
+                {
+                    btnCreatePartida.Visible = true;
                 }
             }
         }
@@ -105,6 +113,30 @@ namespace hada_ProyectoGrupo.Public
                 rptEquipos.Visible = false;
                 lblSinEquipos.Visible = true;
             }
+        }
+
+        private void CargarPartidas(int codigoTorneo)
+        {
+            CADPartida cad = new CADPartida();
+            List<ENPartida> partidas = cad.ReadByTorneo(codigoTorneo);
+
+            if (partidas.Count > 0)
+            {
+                rptPartidas.DataSource = partidas;
+                rptPartidas.DataBind();
+            }
+            else
+            {
+                rptPartidas.Visible = false;
+                lblSinPartidas.Visible = true;
+            }
+        }
+
+        protected void btnCreatePartida_Click(object sender, EventArgs e)
+        {
+            string torneo_code = Request.QueryString["codigo"];
+
+            Response.Redirect("DetallesPartida.aspx?torneo="+torneo_code);
         }
     }
 }
