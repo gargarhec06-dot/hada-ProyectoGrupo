@@ -13,6 +13,18 @@ namespace hada_ProyectoGrupo.Public
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Cargar tipos posibles
+            if (!IsPostBack)
+            {
+                foreach (ENVideojuego.ENVideojuegoTipo tipo_no_undefined in ENVideojuego.GetAllVideojuegoTipo().Keys)
+                {
+                    TipoAdminBox.Items.Add(new ListItem(
+                            ENVideojuego.GetVideojuegoTipoToNombreLegible(tipo_no_undefined),
+                            tipo_no_undefined.ToString()
+                        ));
+                }
+            }
+
             // Se debe de obtener el videojuego en un futuro con esta variable
             string code = Request.QueryString["codigo"];
 
@@ -36,18 +48,6 @@ namespace hada_ProyectoGrupo.Public
 
             ENVideojuego videojuego = new ENVideojuego(int.Parse(code), "", "", "", 0, "~/Images/Equipos/default-team.png", "~/Images/Equipos/default-team.png");
             bool result = videojuego.Read();
-
-            // Cargar tipos posibles
-            if (!IsPostBack)
-            {
-                foreach (ENVideojuego.ENVideojuegoTipo tipo_no_undefined in ENVideojuego.GetAllVideojuegoTipo().Keys)
-                {
-                    TipoAdminBox.Items.Add(new ListItem(
-                            ENVideojuego.GetVideojuegoTipoToNombreLegible(tipo_no_undefined),
-                            tipo_no_undefined.ToString()
-                        ));
-                }
-            }
 
             if (result) {
                 NombreLabel.Text = videojuego.Nombre;
