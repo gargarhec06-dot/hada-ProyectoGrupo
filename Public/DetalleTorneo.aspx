@@ -88,7 +88,7 @@
             </HeaderTemplate>
             <ItemTemplate>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <%# Eval("Codigo") %>
+                    <a href="DetallesPartida.aspx?torneo=<%# Eval("Torneo") %>&codigo=<%# Eval("Codigo") %>"> <%# Eval("Codigo") %></a>
                     <span class="badge bg-success">Jugado</span>
                 </li>
             </ItemTemplate>
@@ -99,6 +99,8 @@
 
             <asp:Label ID="lblSinPartidas" runat="server" Text="No hay partidas jugadas aún." 
                    CssClass="text-muted" Visible="false"/>
+            <br>
+            <asp:Button id="btnCreatePartida" visible="false" class="btn btn-success" Text="+ Crear partida" runat="server" OnClick="btnCreatePartida_Click"/>
         </div>
     </asp:Panel>
 

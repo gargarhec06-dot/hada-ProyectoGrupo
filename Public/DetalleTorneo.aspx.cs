@@ -37,6 +37,11 @@ namespace hada_ProyectoGrupo.Public
                 {
                     MostrarError();
                 }
+
+                if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"])
+                {
+                    btnCreatePartida.Visible = true;
+                }
             }
         }
 
@@ -100,6 +105,13 @@ namespace hada_ProyectoGrupo.Public
                 rptPartidas.Visible = false;
                 lblSinPartidas.Visible = true;
             }
+        }
+
+        protected void btnCreatePartida_Click(object sender, EventArgs e)
+        {
+            string torneo_code = Request.QueryString["codigo"];
+
+            Response.Redirect("DetallesPartida.aspx?torneo="+torneo_code);
         }
     }
 }

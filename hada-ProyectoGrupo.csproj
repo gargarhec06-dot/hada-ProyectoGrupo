@@ -89,6 +89,7 @@
     <Content Include="Public\DetallePatrocinador.aspx" />
     <Content Include="Public\DetallesEquipo.aspx" />
     <Content Include="Public\DetallesJugador.aspx" />
+    <Content Include="Public\DetallesPartida.aspx" />
     <Content Include="Public\Equipos.aspx" />
     <Content Include="Public\Inscripcion.aspx" />
     <Content Include="Public\Jugadores.aspx" />
@@ -177,6 +178,13 @@
     </Compile>
     <Compile Include="Public\DetallesJugador.aspx.designer.cs">
       <DependentUpon>DetallesJugador.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\DetallesPartida.aspx.cs">
+      <DependentUpon>DetallesPartida.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\DetallesPartida.aspx.designer.cs">
+      <DependentUpon>DetallesPartida.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\Equipos.aspx.cs">
       <DependentUpon>Equipos.aspx</DependentUpon>
