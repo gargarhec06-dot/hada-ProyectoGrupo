@@ -34,7 +34,9 @@ namespace hada_ProyectoGrupo
 
         protected void Application_Error(object sender, EventArgs e)
         {
-
+            Exception ex = Server.GetLastError();
+            Server.ClearError();
+            Response.Redirect("~/Public/Error.aspx");
         }
 
         protected void Session_End(object sender, EventArgs e)

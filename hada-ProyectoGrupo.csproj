@@ -92,6 +92,7 @@
     <Content Include="Public\DetallesJugador.aspx" />
     <Content Include="Public\DetallesPartida.aspx" />
     <Content Include="Public\Equipos.aspx" />
+    <Content Include="Public\Error.aspx" />
     <Content Include="Public\Estadisticas.aspx" />
     <Content Include="Public\Inscripcion.aspx" />
     <Content Include="Public\Jugadores.aspx" />
@@ -200,6 +201,13 @@
     </Compile>
     <Compile Include="Public\Equipos.aspx.designer.cs">
       <DependentUpon>Equipos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\Estadisticas.aspx.cs">
       <DependentUpon>Estadisticas.aspx</DependentUpon>

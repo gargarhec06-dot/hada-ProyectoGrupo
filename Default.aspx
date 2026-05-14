@@ -33,6 +33,12 @@
                 <asp:HyperLink ID="hlLogin" runat="server" NavigateUrl="~/Public/Login.aspx" CssClass="btn-hero-primary">Iniciar Sesión</asp:HyperLink>
                 <asp:HyperLink ID="hlRegistro" runat="server" NavigateUrl="~/Public/Registro.aspx" CssClass="btn-hero-secondary">Registrarse</asp:HyperLink>
             </div>
+            <div class="mt-4 p-3 d-inline-block border rounded text-center" style="border-color: #00e5ff33 !important; background-color: #1a1a2e;">
+                <div style="font-size: 0.65rem; color: #00e5ff; text-transform: uppercase; letter-spacing: 3px;">Visitas totales</div>
+                <div class="fw-bold fs-3 text-white">
+                    <asp:Label ID="lblVisitas" runat="server" />
+                </div>
+            </div>
         </asp:Panel>
 
         <asp:Panel ID="pnlLogueado" runat="server" Visible="false">
