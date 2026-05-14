@@ -24,10 +24,10 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                string query = @"INSERT INTO Partida (codigo, torneo, fecha, videojuego, enlace_repetecion, equipo_ganador)
-                                VALUES (@cod, @tor, @fec, @vid, @er, @eg)";
+                string query = @"INSERT INTO Partida (torneo, fecha, videojuego, enlace_repeticion, equipo_ganador)
+                                VALUES (@tor, @fec, @vid, @er, @eg)";
                 SqlCommand com = new SqlCommand(query, c);
-                com.Parameters.AddWithValue("@cod", en.Code);
+                //com.Parameters.AddWithValue("@cod", en.Code);
                 com.Parameters.AddWithValue("@tor", en.Torneo);
                 com.Parameters.AddWithValue("@fec", en.Fecha);
                 com.Parameters.AddWithValue("@vid", en.Videojuego);
@@ -35,6 +35,9 @@ namespace hada_ProyectoGrupo.Library.CAD
                 com.Parameters.AddWithValue("@eg", en.Ganador);
 
                 if (com.ExecuteNonQuery() > 0) ok = true;
+
+                List<ENPartida> list = new ENPartida().ReadByTorneo(en.Torneo);
+                en.Code = list.Last().Code;
 
                 int iter = 2;
                 foreach (int item in en.Perdedores)
@@ -92,7 +95,9 @@ namespace hada_ProyectoGrupo.Library.CAD
                     en.EnlaceDeRepeticion = dr["enlace_repeticion"].ToString();
                     en.Ganador = (int)dr["equipo_ganador"];
 
-                    string subquery_jugadores = @"SELECT id_jugador
+                    dr.Close();
+
+                    string subquery_jugadores = @"SELECT *
                          FROM Partida_Jugadores p
                          WHERE p.id_partida = @cod";
                     SqlCommand com_jugador = new SqlCommand(subquery_jugadores, c);
@@ -106,7 +111,7 @@ namespace hada_ProyectoGrupo.Library.CAD
                     dr_jugador.Close();
                     en.Jugadores = jugador.ToArray();
 
-                    string subquery_perdedores = @"SELECT id_equipo
+                    string subquery_perdedores = @"SELECT *
                          FROM Partida_EquiposPerdedores p
                          WHERE p.id_partida = @cod
                          ORDER BY p.posicion ASC";
@@ -120,10 +125,12 @@ namespace hada_ProyectoGrupo.Library.CAD
                     }
                     dr_perdedores.Close();
                     en.Perdedores = perdedores.ToArray();
+
+                    ok = true;
                 }
                 dr.Close();
             }
-            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            catch (Exception ex) { Console.WriteLine(ex.Message); ok = false; }
 
             finally { c.Close(); }
 
@@ -139,7 +146,7 @@ namespace hada_ProyectoGrupo.Library.CAD
                 c.Open();
 
                 string query = @"UPDATE Partida
-                                SET (torneo=@tor, fecha=@fec, videojuego=@vid, enlace_repetecion=@er, equipo_ganador=@eg)
+                                SET torneo=@tor, fecha=@fec, videojuego=@vid, enlace_repeticion=@er, equipo_ganador=@eg
                                 WHERE codigo=@cod";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@cod", en.Code);

@@ -106,7 +106,7 @@
             </HeaderTemplate>
             <ItemTemplate>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <a href="DetallesPartida.aspx?torneo=<%# Eval("Torneo") %>&codigo=<%# Eval("Codigo") %>"> <%# Eval("Codigo") %></a>
+                    <a href="DetallesPartida.aspx?torneo=<%# Eval("Torneo") %>&codigo=<%# Eval("Code") %>"> <%# Eval("Code") %></a>
                     <span class="badge bg-success">Jugado</span>
                 </li>
             </ItemTemplate>
