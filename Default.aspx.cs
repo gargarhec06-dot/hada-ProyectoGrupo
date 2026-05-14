@@ -54,6 +54,8 @@ namespace hada_ProyectoGrupo
                     pnlLogueado.Visible = false;
                     pnlAdminStats.Visible = false;
                 }
+
+                lblVisitas.Text = Application["contador"].ToString();
             }
         }
     }

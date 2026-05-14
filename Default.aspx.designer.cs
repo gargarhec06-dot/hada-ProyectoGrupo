@@ -42,6 +42,15 @@ namespace hada_ProyectoGrupo
         protected global::System.Web.UI.WebControls.HyperLink hlRegistro;
 
         /// <summary>
+        /// Control lblVisitas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblVisitas;
+
+        /// <summary>
         /// Control pnlLogueado.
         /// </summary>
         /// <remarks>
