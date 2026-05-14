@@ -11,10 +11,9 @@ namespace hada_ProyectoGrupo.Library.CAD
 {
     public class CADUsuario
     {
-
         private string constring;
 
-        public CADUsuario() 
+        public CADUsuario()
         {
             constring = ConfigurationManager.ConnectionStrings["HadaEsports"].ToString();
         }
@@ -34,7 +33,6 @@ namespace hada_ProyectoGrupo.Library.CAD
                 SqlDataReader reader = com.ExecuteReader();
                 if (reader.Read())
                 {
-                    // Rellena el objeto con los datos de la BD
                     en.Nombre = reader["nombre"].ToString();
                     en.Apellidos = reader["apellidos"] == DBNull.Value ? "" : reader["apellidos"].ToString();
                     en.Fecha_Nacimiento = Convert.ToDateTime(reader["fecha_nacimiento"]);
@@ -61,29 +59,24 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-
                 string sql = "INSERT INTO [Usuario] (email, password, nombre, apellidos, fecha_nacimiento, pais) " +
                              "VALUES (@email, @pass, @nom, @ape, @fec, @pais)";
-
                 SqlCommand com = new SqlCommand(sql, c);
                 com.Parameters.AddWithValue("@email", en.Email);
                 com.Parameters.AddWithValue("@pass", en.Password);
                 com.Parameters.AddWithValue("@nom", en.Nombre);
-                com.Parameters.AddWithValue("@ape", (object)en.Apellidos ?? DBNull.Value); 
+                com.Parameters.AddWithValue("@ape", (object)en.Apellidos ?? DBNull.Value);
                 com.Parameters.AddWithValue("@fec", en.Fecha_Nacimiento);
                 com.Parameters.AddWithValue("@pais", (object)en.Pais ?? DBNull.Value);
-
-                com.ExecuteNonQuery(); 
+                com.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
                 ok = false;
-                Console.WriteLine("User operation has failed. Error: {0}",ex.Message);
+                Console.WriteLine("User operation has failed. Error: {0}", ex.Message);
             }
             finally { c.Close(); }
-
             return ok;
-
         }
 
         public bool Read(ENUsuario en)
@@ -99,17 +92,22 @@ namespace hada_ProyectoGrupo.Library.CAD
                 SqlDataReader dr = com.ExecuteReader();
                 if (dr.Read())
                 {
-                    en.Nombre = dr["nombre"].ToString();
-                    en.Apellidos = dr["apellidos"].ToString();
-                    en.Fecha_Nacimiento = (DateTime)dr["fecha_nacimiento"];
-                    en.Pais = dr["pais"].ToString();
-                    en.Saldo_cartera = (float)dr["saldo_cartera"];
-                    en.Verificado = (bool)dr["verificado"];
+                    en.Email = dr["email"].ToString();
+                    en.Password = dr["password"].ToString();
+                    en.Nombre = dr["nombre"]?.ToString() ?? "";
+                    en.Apellidos = dr["apellidos"] == DBNull.Value ? "" : dr["apellidos"].ToString();
+                    en.Fecha_Nacimiento = dr["fecha_nacimiento"] == DBNull.Value ? DateTime.Now : Convert.ToDateTime(dr["fecha_nacimiento"]);
+                    en.Pais = dr["pais"] == DBNull.Value ? "" : dr["pais"].ToString();
+                    en.Saldo_cartera = dr["saldo_cartera"] == DBNull.Value ? 0f : Convert.ToSingle(dr["saldo_cartera"]);
+                    en.Verificado = dr["verificado"] == DBNull.Value ? false : Convert.ToBoolean(dr["verificado"]);
                     ok = true;
                 }
                 dr.Close();
             }
-            catch (Exception) { ok = false; }
+            catch (Exception ex)
+            {
+                throw new Exception("Error en Read: " + ex.Message);
+            }
             finally { c.Close(); }
             return ok;
         }
@@ -122,9 +120,9 @@ namespace hada_ProyectoGrupo.Library.CAD
             {
                 c.Open();
                 string sql = @"UPDATE Usuario 
-                       SET nombre = @nombre, apellidos = @apellidos, pais = @pais";
+                       SET nombre = @nombre, apellidos = @apellidos, pais = @pais, 
+                           saldo_cartera = @saldo";
 
-                // Si hay contraseña nueva, la actualizamos
                 if (!string.IsNullOrEmpty(en.Password))
                 {
                     sql += ", password = @password";
@@ -136,6 +134,7 @@ namespace hada_ProyectoGrupo.Library.CAD
                 com.Parameters.AddWithValue("@nombre", en.Nombre);
                 com.Parameters.AddWithValue("@apellidos", (object)en.Apellidos ?? DBNull.Value);
                 com.Parameters.AddWithValue("@pais", (object)en.Pais ?? DBNull.Value);
+                com.Parameters.AddWithValue("@saldo", en.Saldo_cartera);
                 com.Parameters.AddWithValue("@email", en.Email);
 
                 if (!string.IsNullOrEmpty(en.Password))
@@ -160,15 +159,22 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                string sql = "DELETE FROM Usuario WHERE email = @email";
-                SqlCommand com = new SqlCommand(sql, c);
-                com.Parameters.AddWithValue("@email", en.Email);
-                int filas = com.ExecuteNonQuery();
+
+                string sqlLikes = "DELETE FROM LikesNoticias WHERE usuario = @email";
+                SqlCommand comLikes = new SqlCommand(sqlLikes, c);
+                comLikes.Parameters.AddWithValue("@email", en.Email);
+                comLikes.ExecuteNonQuery();
+
+                // Ahora borramos al usuario
+                string sqlUser = "DELETE FROM Usuario WHERE email = @email";
+                SqlCommand comUser = new SqlCommand(sqlUser, c);
+                comUser.Parameters.AddWithValue("@email", en.Email);
+
+                int filas = comUser.ExecuteNonQuery();
                 ok = filas > 0;
             }
             catch (Exception ex)
             {
-                // Guardar el error para depurar
                 System.Diagnostics.Debug.WriteLine("Error al eliminar: " + ex.Message);
                 ok = false;
             }

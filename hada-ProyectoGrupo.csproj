@@ -80,6 +80,7 @@
     <Content Include="Fondo\Fondo2.png" />
     <Content Include="Global.asax" />
     <Content Include="Images\Equipos\default-team.png" />
+    <Content Include="Private\AnadirSaldo.aspx" />
     <Content Include="Private\EditarPatrocinador.aspx" />
     <Content Include="Private\EditarPerfil.aspx" />
     <Content Include="Private\GestionPatrocinador.aspx" />
@@ -91,6 +92,7 @@
     <Content Include="Public\DetallesJugador.aspx" />
     <Content Include="Public\DetallesPartida.aspx" />
     <Content Include="Public\Equipos.aspx" />
+    <Content Include="Public\Estadisticas.aspx" />
     <Content Include="Public\Inscripcion.aspx" />
     <Content Include="Public\Jugadores.aspx" />
     <Content Include="Public\Login.aspx" />
@@ -114,6 +116,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Private\AnadirSaldo.aspx.cs">
+      <DependentUpon>AnadirSaldo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Private\AnadirSaldo.aspx.designer.cs">
+      <DependentUpon>AnadirSaldo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Private\EditarPatrocinador.aspx.cs">
       <DependentUpon>EditarPatrocinador.aspx</DependentUpon>
@@ -191,6 +200,13 @@
     </Compile>
     <Compile Include="Public\Equipos.aspx.designer.cs">
       <DependentUpon>Equipos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\Estadisticas.aspx.cs">
+      <DependentUpon>Estadisticas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\Estadisticas.aspx.designer.cs">
+      <DependentUpon>Estadisticas.aspx</DependentUpon>
     </Compile>
     <Compile Include="Public\Inscripcion.aspx.cs">
       <DependentUpon>Inscripcion.aspx</DependentUpon>

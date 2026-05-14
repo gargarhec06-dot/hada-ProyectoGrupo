@@ -18,23 +18,41 @@ namespace hada_ProyectoGrupo
 
                     lblNombre.Text = Session["Nombre"]?.ToString() ?? Session["Email"].ToString();
 
-                    // Número de jugadores del usuario
-                    CADJugador cadJugador = new CADJugador();
-                    List<ENJugador> jugadores = cadJugador.ReadAllByEmail(Session["Email"].ToString());
-                    lblNumJugadores.Text = jugadores.Count.ToString();
+                    
+                    bool esAdmin = (Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == true);
+                    pnlAdminStats.Visible = esAdmin;
 
-                    // Número de torneos
-                    CADTorneo cadTorneo = new CADTorneo();
-                    lblNumTorneos.Text = cadTorneo.ReadAll().Count.ToString();
+                   
+                    try
+                    {
+                        // Número de jugadores del usuario
+                        CADJugador cadJugador = new CADJugador();
+                        var jugadores = cadJugador.ReadAllByEmail(Session["Email"].ToString());
+                        lblNumJugadores.Text = jugadores != null ? jugadores.Count.ToString() : "0";
 
-                    // Número de patrocinadores
-                    CADPatrocinador cadPat = new CADPatrocinador();
-                    lblNumPatrocinadores.Text = cadPat.ReadAll().Count.ToString();
+                        // Número de torneos
+                        CADTorneo cadTorneo = new CADTorneo();
+                        var torneos = cadTorneo.ReadAll();
+                        lblNumTorneos.Text = torneos != null ? torneos.Count.ToString() : "0";
+
+                        // Número de patrocinadores
+                        CADPatrocinador cadPat = new CADPatrocinador();
+                        var patrocinadores = cadPat.ReadAll();
+                        lblNumPatrocinadores.Text = patrocinadores != null ? patrocinadores.Count.ToString() : "0";
+                    }
+                    catch (Exception)
+                    {
+                        // Si algo falla en la base de datos, ponemos 0 para que la web siga funcionando
+                        lblNumJugadores.Text = "0";
+                        lblNumTorneos.Text = "0";
+                        lblNumPatrocinadores.Text = "0";
+                    }
                 }
                 else
                 {
                     pnlNoLogueado.Visible = true;
                     pnlLogueado.Visible = false;
+                    pnlAdminStats.Visible = false;
                 }
             }
         }

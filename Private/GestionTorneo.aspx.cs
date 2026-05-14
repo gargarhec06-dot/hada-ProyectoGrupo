@@ -59,6 +59,7 @@ namespace hada_ProyectoGrupo.Private
                 txtInscripcion.Text = en.PrecioInscripcion.ToString();
                 txtOrganizacion.Text = en.CosteOrganizacion.ToString();
                 chkProfesional.Checked = en.Profesional;
+                txtUrlLogo.Text = en.Url_logo;
             }
         }
 
@@ -82,6 +83,9 @@ namespace hada_ProyectoGrupo.Private
             en.CosteOrganizacion = float.Parse(txtOrganizacion.Text);
             en.Profesional = chkProfesional.Checked;
             en.Ubicacion = txtUbicacion.Text;
+            en.Premio = float.Parse(txtPremio.Text);
+            en.Capacidad = int.Parse(txtCapacidad.Text); 
+            en.Url_logo = txtUrlLogo.Text;
 
             bool operacionOk = esNuevo ? en.Create() : en.Update();
 

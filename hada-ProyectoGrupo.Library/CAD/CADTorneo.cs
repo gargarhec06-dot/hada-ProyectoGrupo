@@ -23,7 +23,7 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                string query = "INSERT INTO Torneo (id_videojuego, precioInscripcion, nombre, descripcion, profesional, costeOrganizacion, fecha, ubicacion) VALUES (@vid, @pre, @nom, @des, @pro, @cos, @fec, @ubi)";
+                string query = "INSERT INTO Torneo (id_videojuego, precioInscripcion, nombre, descripcion, profesional, costeOrganizacion, fecha, ubicacion, premio, capacidad, url_logo) VALUES (@vid, @pre, @nom, @des, @pro, @cos, @fec, @ubi, @prem, @cap, @url)";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@vid", en.IdVideojuego);
                 com.Parameters.AddWithValue("@pre", en.PrecioInscripcion);
@@ -33,9 +33,12 @@ namespace hada_ProyectoGrupo.Library.CAD
                 com.Parameters.AddWithValue("@cos", en.CosteOrganizacion);
                 com.Parameters.AddWithValue("@fec", en.Fecha);
                 com.Parameters.AddWithValue("@ubi", en.Ubicacion);
+                com.Parameters.AddWithValue("@prem", en.Premio);
+                com.Parameters.AddWithValue("@cap", en.Capacidad);
+                com.Parameters.AddWithValue("@url", en.Url_logo);
                 if (com.ExecuteNonQuery() > 0) ok = true;
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 ok = false;
                 System.Diagnostics.Debug.WriteLine("ERROR CREATE TORNEO: " + ex.Message);
@@ -65,6 +68,9 @@ namespace hada_ProyectoGrupo.Library.CAD
                     en.CosteOrganizacion = float.Parse(dr["costeOrganizacion"].ToString());
                     en.Fecha = (DateTime)dr["fecha"];
                     en.Ubicacion = dr["ubicacion"].ToString();
+                    en.Premio = float.Parse(dr["premio"].ToString());
+                    en.Capacidad = (int)dr["capacidad"];
+                    en.Url_logo = dr["url_logo"].ToString();
                     ok = true;
                 }
                 dr.Close();
@@ -81,7 +87,7 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                string query = "UPDATE Torneo SET id_videojuego=@vid, precioInscripcion=@pre, nombre=@nom, descripcion=@des, profesional=@pro, costeOrganizacion=@cos, fecha=@fec, ubicacion=@ubi WHERE codigo=@cod";
+                string query = "UPDATE Torneo SET id_videojuego=@vid, precioInscripcion=@pre, nombre=@nom, descripcion=@des, profesional=@pro, costeOrganizacion=@cos, fecha=@fec, ubicacion=@ubi, premio=@prem, capacidad=@cap, url_logo=@url WHERE codigo=@cod";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@cod", en.Codigo);
                 com.Parameters.AddWithValue("@vid", en.IdVideojuego);
@@ -92,6 +98,9 @@ namespace hada_ProyectoGrupo.Library.CAD
                 com.Parameters.AddWithValue("@cos", en.CosteOrganizacion);
                 com.Parameters.AddWithValue("@fec", en.Fecha);
                 com.Parameters.AddWithValue("@ubi", en.Ubicacion);
+                com.Parameters.AddWithValue("@prem", en.Premio);
+                com.Parameters.AddWithValue("@cap", en.Capacidad);
+                com.Parameters.AddWithValue("@url", en.Url_logo);
                 if (com.ExecuteNonQuery() > 0) ok = true;
             }
             catch (Exception) { ok = false; }
@@ -138,6 +147,9 @@ namespace hada_ProyectoGrupo.Library.CAD
                     en.CosteOrganizacion = float.Parse(dr["costeOrganizacion"].ToString());
                     en.Fecha = (DateTime)dr["fecha"];
                     en.Ubicacion = dr["ubicacion"].ToString();
+                    en.Premio = float.Parse(dr["premio"].ToString());
+                    en.Capacidad = (int)dr["capacidad"];
+                    en.Url_logo = dr["url_logo"].ToString();
                     lista.Add(en);
                 }
                 dr.Close();
@@ -145,6 +157,49 @@ namespace hada_ProyectoGrupo.Library.CAD
             catch (Exception) { }
             finally { c.Close(); }
             return lista;
+        }
+    
+
+        public bool ReadWithVideojuego(ENTorneo en, out string nombreJuego)
+        {
+            bool ok = false;
+            nombreJuego = "Desconocido";
+            SqlConnection c = new SqlConnection(s);
+            try
+            {
+                c.Open();
+                string query = "SELECT t.*, v.nombre AS nombreVJ " +
+                               "FROM Torneo t " +
+                               "INNER JOIN VideoJuego v ON t.id_videojuego = v.codigo " +
+                               "WHERE t.codigo = @cod";
+
+                SqlCommand com = new SqlCommand(query, c);
+                com.Parameters.AddWithValue("@cod", en.Codigo);
+                SqlDataReader dr = com.ExecuteReader();
+
+                if (dr.Read())
+                {
+                    en.IdVideojuego = (int)dr["id_videojuego"];
+                    nombreJuego = dr["nombreVJ"].ToString();
+                    en.Nombre = dr["nombre"].ToString();
+                    en.Descripcion = dr["descripcion"].ToString();
+                    en.Profesional = (bool)dr["profesional"];
+                    en.CosteOrganizacion = float.Parse(dr["costeOrganizacion"].ToString());
+                    en.Fecha = (DateTime)dr["fecha"];
+                    en.Ubicacion = dr["ubicacion"].ToString();
+                    en.Premio = float.Parse(dr["premio"].ToString());
+                    en.Capacidad = (int)dr["capacidad"];
+                    en.Url_logo = dr["url_logo"].ToString();
+                    ok = true;
+                }
+                dr.Close();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            finally { c.Close(); }
+            return ok;
         }
     }
 }

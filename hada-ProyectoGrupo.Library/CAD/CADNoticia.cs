@@ -23,13 +23,13 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                // SQL con los nombres de la tabla
-                string query = "INSERT INTO Noticia (Titulo, Contenido, FechaPublicacion, IdUsuario) VALUES (@tit, @cont, @fecha, @user)";
+                string query = "INSERT INTO Noticia (Titulo, Contenido, FechaPublicacion, IdUsuario, ImagenUrl) VALUES (@tit, @cont, @fecha, @user, @img)";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@tit", en.Titulo);
                 com.Parameters.AddWithValue("@cont", en.Contenido);
                 com.Parameters.AddWithValue("@fecha", en.FechaPublicacion);
                 com.Parameters.AddWithValue("@user", en.EmailUsuario);
+                com.Parameters.AddWithValue("@img", (object)en.ImagenUrl ?? DBNull.Value);
 
                 creado = com.ExecuteNonQuery() > 0;
             }
@@ -45,7 +45,11 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                string query = "SELECT * FROM Noticia WHERE IdNoticia = @id";
+               
+                string query = @"SELECT n.*, 
+                                (SELECT COUNT(*) FROM LikesNoticias WHERE noticia = n.IdNoticia) as TotalLikes 
+                                FROM Noticia n WHERE n.IdNoticia = @id";
+
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@id", en.IdNoticia);
                 SqlDataReader dr = com.ExecuteReader();
@@ -55,6 +59,9 @@ namespace hada_ProyectoGrupo.Library.CAD
                     en.Contenido = dr["Contenido"].ToString();
                     en.FechaPublicacion = DateTime.Parse(dr["FechaPublicacion"].ToString());
                     en.EmailUsuario = dr["IdUsuario"].ToString();
+                    en.ImagenUrl = dr["ImagenUrl"].ToString();
+                    en.Visitas = int.Parse(dr["Visitas"].ToString());
+                    en.Likes = int.Parse(dr["TotalLikes"].ToString());
                     leido = true;
                 }
             }
@@ -70,7 +77,11 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                string query = "SELECT * FROM Noticia";
+                
+                string query = @"SELECT n.*, 
+                                (SELECT COUNT(*) FROM LikesNoticias WHERE noticia = n.IdNoticia) as TotalLikes 
+                                FROM Noticia n";
+
                 SqlCommand com = new SqlCommand(query, c);
                 SqlDataReader dr = com.ExecuteReader();
                 while (dr.Read())
@@ -81,6 +92,9 @@ namespace hada_ProyectoGrupo.Library.CAD
                     n.Contenido = dr["Contenido"].ToString();
                     n.FechaPublicacion = DateTime.Parse(dr["FechaPublicacion"].ToString());
                     n.EmailUsuario = dr["IdUsuario"].ToString();
+                    n.ImagenUrl = dr["ImagenUrl"].ToString();
+                    n.Visitas = int.Parse(dr["Visitas"].ToString());
+                    n.Likes = int.Parse(dr["TotalLikes"].ToString());
                     lista.Add(n);
                 }
             }
@@ -96,13 +110,16 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
-                string query = "UPDATE Noticia SET Titulo=@tit, Contenido=@cont, FechaPublicacion=@fecha, IdUsuario=@user WHERE IdNoticia=@id";
+               
+                string query = "UPDATE Noticia SET Titulo=@tit, Contenido=@cont, FechaPublicacion=@fecha, IdUsuario=@user, ImagenUrl=@img WHERE IdNoticia=@id";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@id", en.IdNoticia);
                 com.Parameters.AddWithValue("@tit", en.Titulo);
                 com.Parameters.AddWithValue("@cont", en.Contenido);
                 com.Parameters.AddWithValue("@fecha", en.FechaPublicacion);
                 com.Parameters.AddWithValue("@user", en.EmailUsuario);
+                com.Parameters.AddWithValue("@img", (object)en.ImagenUrl ?? DBNull.Value);
+
                 modificado = com.ExecuteNonQuery() > 0;
             }
             catch (Exception ex) { throw ex; }
@@ -125,6 +142,63 @@ namespace hada_ProyectoGrupo.Library.CAD
             catch (Exception ex) { throw ex; }
             finally { c.Close(); }
             return borrado;
+        }
+
+        public void IncrementarVisitas(int id)
+        {
+            SqlConnection c = new SqlConnection(constring);
+            try
+            {
+                c.Open();
+                string query = "UPDATE Noticia SET Visitas = Visitas + 1 WHERE IdNoticia = @id";
+                SqlCommand com = new SqlCommand(query, c);
+                com.Parameters.AddWithValue("@id", id);
+                com.ExecuteNonQuery();
+            }
+            catch (Exception ex) { throw ex; }
+            finally { c.Close(); }
+        }
+
+        
+
+        public void ToggleLike(int idNoticia, string email)
+        {
+            SqlConnection c = new SqlConnection(constring);
+            try
+            {
+                c.Open();
+                
+                string query = @"IF EXISTS (SELECT * FROM LikesNoticias WHERE noticia = @id AND usuario = @email)
+                                    DELETE FROM LikesNoticias WHERE noticia = @id AND usuario = @email
+                                 ELSE
+                                    INSERT INTO LikesNoticias (noticia, usuario) VALUES (@id, @email)";
+
+                SqlCommand com = new SqlCommand(query, c);
+                com.Parameters.AddWithValue("@id", idNoticia);
+                com.Parameters.AddWithValue("@email", email);
+                com.ExecuteNonQuery();
+            }
+            catch (Exception ex) { throw ex; }
+            finally { c.Close(); }
+        }
+
+        public bool VerificarLike(int idNoticia, string email)
+        {
+            bool existe = false;
+            SqlConnection c = new SqlConnection(constring);
+            try
+            {
+                c.Open();
+                
+                string query = "SELECT COUNT(*) FROM LikesNoticias WHERE noticia = @id AND usuario = @email";
+                SqlCommand com = new SqlCommand(query, c);
+                com.Parameters.AddWithValue("@id", idNoticia);
+                com.Parameters.AddWithValue("@email", email);
+                existe = (int)com.ExecuteScalar() > 0;
+            }
+            catch (Exception ex) { throw ex; }
+            finally { c.Close(); }
+            return existe;
         }
     }
 }
