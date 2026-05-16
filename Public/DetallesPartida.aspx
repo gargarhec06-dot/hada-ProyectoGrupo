@@ -55,6 +55,7 @@
                         <asp:Button Text="Actualizar entrada" ID="AdminUpdate" runat="server" Visible="false" CssClass="btn btn-info" OnClick="AdminUpdate_Click" />
                         <asp:Button Text="Añadir entrada" ID="AdminAdd" runat="server" Visible="false" CssClass="btn btn-info" OnClick="AdminAdd_Click" />
                         <asp:Button Text="Borrar entrada" ID="AdminDelete" runat="server" Visible="false" OnClientClick="return confirm('¿Estás seguro de eliminar esta partida?')" CssClass="btn btn-danger" OnClick="AdminDelete_Click" />
+                        <asp:Button Text="Volver a torneo" ID="VolverBtn" runat="server" Visible="true" CssClass="btn btn-secondary" OnClick="VolverBtn_Click" />
                     </div>
                 </div>
             </div>

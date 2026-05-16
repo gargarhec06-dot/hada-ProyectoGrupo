@@ -51,7 +51,7 @@ namespace hada_ProyectoGrupo.Public
                 }
                 else
                 {
-                    DebugLabel.Text = "No se encontró ningún argumento para el código del juego";
+                    DebugLabel.Text = "No se encontró ningún argumento para el código de la partida";
                     return;
                 }
             }
@@ -282,6 +282,13 @@ namespace hada_ProyectoGrupo.Public
                     DebugLabel.Text = "Algo fue mal";
                 }
             }
+        }
+
+        protected void VolverBtn_Click(object sender, EventArgs e)
+        {
+            string torneo = Request.QueryString["torneo"];
+            if (torneo == null) Response.Redirect("Torneos.aspx");
+            else Response.Redirect("DetalleTorneo.aspx?codigo=" + torneo);
         }
     }
 }
