@@ -63,7 +63,7 @@ namespace hada_ProyectoGrupo.Public
             if (result)
             {
                 CodigoLabel.Text = code;
-                FechaLabel.Text = partida.Fecha.ToString();
+                FechaLabel.Text = partida.Fecha.ToString().Split(' ')[0];
                 EnlaceRepeticion.Text = partida.EnlaceDeRepeticion;
                 EnlaceRepeticion.NavigateUrl = partida.EnlaceDeRepeticion;
 
@@ -116,6 +116,11 @@ namespace hada_ProyectoGrupo.Public
                 if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"])
                 {
                     activate_admin();
+
+                    // Para no tener que poner los valores de nuevo a la hora de editar
+                    FechaAdmin.Text = partida.Fecha.ToString("yyyy-MM-dd");
+                    EquipoGanadorAdmin.SelectedValue = en_equipo.Id_equipo.ToString();
+                    EnlaceRepeticionAdmin.Text = EnlaceRepeticion.Text;
 
                     return;
                 }
