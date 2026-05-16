@@ -192,5 +192,21 @@ namespace hada_ProyectoGrupo.Library.CAD
             return ok;
         }
 
+        public int ContarInscripciones(int idTorneo)
+        {
+            int count = 0;
+            SqlConnection c = new SqlConnection(s);
+            try
+            {
+                c.Open();
+                string query = "SELECT COUNT(*) FROM Inscripcion WHERE id_torneo = @tor";
+                SqlCommand com = new SqlCommand(query, c);
+                com.Parameters.AddWithValue("@tor", idTorneo);
+                count = (int)com.ExecuteScalar();
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            finally { c.Close(); }
+            return count;
+        }
     }
 }
