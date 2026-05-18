@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DetallesEquipo.aspx.cs" Inherits="hada_ProyectoGrupo.Public.DetallesEquipo" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div style="max-width:800px; margin:0 auto; padding:20px;">
     <h2>Detalle del Equipo</h2>
 
     <div style="display:flex; align-items:flex-start; gap:40px;">
@@ -77,4 +78,5 @@
     <asp:Label ID="lblNoMiembros" runat="server" Text="No hay miembros aún." Visible="false" />
     <br />
     <asp:Label ID="lblMensaje" runat="server" Font-Bold="true" />
+        </div>
 </asp:Content>
