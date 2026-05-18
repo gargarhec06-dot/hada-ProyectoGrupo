@@ -195,15 +195,6 @@ namespace hada_ProyectoGrupo.Public
         protected global::System.Web.UI.WebControls.Label lblCaratulaUpload;
 
         /// <summary>
-        /// Control DebugLabel.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label DebugLabel;
-
-        /// <summary>
         /// Control AdminUpdate.
         /// </summary>
         /// <remarks>
@@ -247,5 +238,14 @@ namespace hada_ProyectoGrupo.Public
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblRouteCaratula;
+
+        /// <summary>
+        /// Control DebugLabel.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label DebugLabel;
     }
 }

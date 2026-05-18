@@ -96,13 +96,13 @@
                 </div>
 
                 <div class="filtro-group">
-                    <span class="filtro-label">Precio mín (€)</span>
+                    <span class="filtro-label">Precio mín </span>
                     <asp:TextBox ID="txtPrecioMin" runat="server" CssClass="filtro-input" 
                         placeholder="0" Width="80px" />
                 </div>
 
                 <div class="filtro-group">
-                    <span class="filtro-label">Precio máx (€)</span>
+                    <span class="filtro-label">Precio máx </span>
                     <asp:TextBox ID="txtPrecioMax" runat="server" CssClass="filtro-input" 
                         placeholder="999" Width="80px" />
                 </div>

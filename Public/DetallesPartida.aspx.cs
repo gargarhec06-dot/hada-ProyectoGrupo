@@ -51,7 +51,7 @@ namespace hada_ProyectoGrupo.Public
                 }
                 else
                 {
-                    DebugLabel.Text = "No se encontró ningún argumento para el código del juego";
+                    DebugLabel.Text = "No se encontró ningún argumento para el código de la partida";
                     return;
                 }
             }
@@ -63,7 +63,7 @@ namespace hada_ProyectoGrupo.Public
             if (result)
             {
                 CodigoLabel.Text = code;
-                FechaLabel.Text = partida.Fecha.ToString();
+                FechaLabel.Text = partida.Fecha.ToString().Split(' ')[0];
                 EnlaceRepeticion.Text = partida.EnlaceDeRepeticion;
                 EnlaceRepeticion.NavigateUrl = partida.EnlaceDeRepeticion;
 
@@ -71,8 +71,14 @@ namespace hada_ProyectoGrupo.Public
                 torneo_local.Codigo = int.Parse(torneo);
                 torneo_local.Read();
 
-                VideojuegoEnlace.Text = torneo_local.Nombre;
-                VideojuegoEnlace.NavigateUrl = "DetallesTorneo?codigo="+torneo;
+                ENVideojuego videojuego = new ENVideojuego();
+                videojuego.Codigo = partida.Videojuego;
+                videojuego.Read();
+
+                VideojuegoEnlace.Text = videojuego.Nombre;
+                VideojuegoEnlace.NavigateUrl = "Videojuego?codigo="+partida.Videojuego.ToString();
+
+                TorneoLabel.Text = torneo_local.Nombre;
 
                 JugadoresLabel.Text = "";
                 PerdedoresLabel.Text = "";
@@ -110,6 +116,11 @@ namespace hada_ProyectoGrupo.Public
                 if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"])
                 {
                     activate_admin();
+
+                    // Para no tener que poner los valores de nuevo a la hora de editar
+                    FechaAdmin.Text = partida.Fecha.ToString("yyyy-MM-dd");
+                    EquipoGanadorAdmin.SelectedValue = en_equipo.Id_equipo.ToString();
+                    EnlaceRepeticionAdmin.Text = EnlaceRepeticion.Text;
 
                     return;
                 }
@@ -271,6 +282,13 @@ namespace hada_ProyectoGrupo.Public
                     DebugLabel.Text = "Algo fue mal";
                 }
             }
+        }
+
+        protected void VolverBtn_Click(object sender, EventArgs e)
+        {
+            string torneo = Request.QueryString["torneo"];
+            if (torneo == null) Response.Redirect("Torneos.aspx");
+            else Response.Redirect("DetalleTorneo.aspx?codigo=" + torneo);
         }
     }
 }
