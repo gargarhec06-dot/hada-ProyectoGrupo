@@ -106,8 +106,7 @@
                             NavigateUrl='<%# "~/Public/DetallesJugador.aspx?codigo=" + Eval("Codigo") %>'
                             Text="Ver detalles"
                             CssClass="btn btn-info btn-sm"
-                            Visible='<%# Session["Email"] != null
-                                        && Session["Email"].ToString() == Eval("Email_usuario").ToString() %>' />
+                            Visible='<%# (Session["Email"] != null && Session["Email"].ToString() == Eval("Email_usuario").ToString()) || (Session["EsAdmin"] != null && (bool)Session["EsAdmin"]) %>' />
                     </div>
                 </div>
             </ItemTemplate>

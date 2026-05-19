@@ -32,7 +32,9 @@ namespace hada_ProyectoGrupo.Public
                     CargarJugador(codigoJugador);
 
                     string emailLogueado = Session["Email"] as string;
-                    if (!string.IsNullOrEmpty(emailLogueado) && lblEmail.Text == emailLogueado)
+                    bool esAdmin = Session["EsAdmin"] != null && (bool)Session["EsAdmin"];
+                    if (!string.IsNullOrEmpty(emailLogueado) &&
+                        (lblEmail.Text == emailLogueado || esAdmin))
                     {
                         esPropietario = true;
                         btnModificar.Visible = true;
@@ -149,8 +151,9 @@ namespace hada_ProyectoGrupo.Public
             chkBuscandoEquipo.Visible = edicion;
             ddlJuego.Visible = edicion;
 
-            btnModificar.Visible = !edicion && esPropietario;
-            btnEliminar.Visible = !edicion && esPropietario;
+            bool esAdmin = Session["EsAdmin"] != null && (bool)Session["EsAdmin"];
+            btnModificar.Visible = !edicion && (esPropietario || esAdmin);
+            btnEliminar.Visible = !edicion && (esPropietario || esAdmin);
             btnGuardar.Visible = edicion;
             btnCancelar.Visible = edicion;
         }

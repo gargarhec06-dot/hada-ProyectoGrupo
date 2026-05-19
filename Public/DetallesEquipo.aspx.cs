@@ -208,15 +208,14 @@ namespace hada_ProyectoGrupo.Public
             ENJugador capitan = new ENJugador { Codigo = eq.Id_capitan };
             capitan.Read();
 
-          
             bool soyElCapitan = (capitan.Email_usuario == emailLogueado);
+            bool puedeEditar = soyElCapitan || esAdmin;
 
-           
-            BloquearCampos(!soyElCapitan);
+            BloquearCampos(!puedeEditar);
 
-            btnCrear.Visible = false; 
-            btnModificar.Visible = soyElCapitan; 
-            btnUnirse.Visible = !soyElCapitan;  
+            btnCrear.Visible = false;
+            btnModificar.Visible = puedeEditar;
+            btnUnirse.Visible = !soyElCapitan && !esAdmin;
             btnEliminar.Visible = soyElCapitan || esAdmin;
         }
 
@@ -253,9 +252,9 @@ namespace hada_ProyectoGrupo.Public
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-            if (!VerificarEsCapitan())
+            if (!VerificarEsCapitan() && !esAdmin)
             {
-                lblMensaje.Text = "No tienes permiso para modificar este equipo. Solo el capitán puede hacerlo.";
+                lblMensaje.Text = "No tienes permiso para modificar este equipo.";
                 lblMensaje.ForeColor = System.Drawing.Color.Red;
                 return;
             }
@@ -304,9 +303,9 @@ namespace hada_ProyectoGrupo.Public
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
-            if (!VerificarEsCapitan())
+            if (!VerificarEsCapitan() && !esAdmin)
             {
-                lblMensaje.Text = "No tienes permiso para eliminar este equipo. Solo el capitán puede hacerlo.";
+                lblMensaje.Text = "No tienes permiso para eliminar este equipo.";
                 lblMensaje.ForeColor = System.Drawing.Color.Red;
                 return;
             }

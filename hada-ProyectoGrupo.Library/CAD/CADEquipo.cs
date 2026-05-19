@@ -98,17 +98,26 @@ namespace hada_ProyectoGrupo.Library.CAD
             try
             {
                 c.Open();
+                string queryCapitan = "UPDATE Equipo SET id_capitan = NULL WHERE id_equipo = @id_e";
+                SqlCommand comCapitan = new SqlCommand(queryCapitan, c);
+                comCapitan.Parameters.AddWithValue("@id_e", en.Id_equipo);
+                comCapitan.ExecuteNonQuery();
+
+                //Desvincula los jugadores
                 string queryJugadores = "UPDATE Jugador SET equipo_actual = NULL, buscando_equipo = 1 WHERE equipo_actual = @id_e";
                 SqlCommand comJugadores = new SqlCommand(queryJugadores, c);
                 comJugadores.Parameters.AddWithValue("@id_e", en.Id_equipo);
                 comJugadores.ExecuteNonQuery();
-
                 string query = "DELETE FROM Equipo WHERE id_equipo = @id_e";
                 SqlCommand com = new SqlCommand(query, c);
                 com.Parameters.AddWithValue("@id_e", en.Id_equipo);
                 if (com.ExecuteNonQuery() > 0) ok = true;
             }
-            catch (Exception) { ok = false; }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error al eliminar equipo: " + ex.Message);
+                ok = false;
+            }
             finally { c.Close(); }
             return ok;
         }
