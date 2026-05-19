@@ -99,10 +99,9 @@ namespace hada_ProyectoGrupo.Public
                 equipo.Id_equipo = id;
                 if (equipo.Read())
                 {
-                    // Un único bloque para resolver la imagen
                     string logoUrl = !string.IsNullOrWhiteSpace(equipo.Logo_url)
                         ? equipo.Logo_url
-                        : "~/Images/Equipos/default-team.png"; // carpeta con S, unificada
+                        : "~/Images/Equipos/default-team.png";
 
                     imgLogo.ImageUrl = ResolveUrl(logoUrl);
                     imgLogo.Visible = true;
@@ -195,7 +194,6 @@ namespace hada_ProyectoGrupo.Public
 
         private void VerificarPermisos()
         {
-            // Si no hay sesión, bloqueamos todo
             if (string.IsNullOrEmpty(emailLogueado))
             {
                 BloquearCampos(true);
@@ -210,30 +208,26 @@ namespace hada_ProyectoGrupo.Public
             ENJugador capitan = new ENJugador { Codigo = eq.Id_capitan };
             capitan.Read();
 
-            // Comprobamos si el usuario actual es el dueño (capitán)
+          
             bool soyElCapitan = (capitan.Email_usuario == emailLogueado);
 
-            // BLOQUEO: Si NO soy el capitán, deshabilito los campos de edición
+           
             BloquearCampos(!soyElCapitan);
 
-            // BOTONES:
-            btnCrear.Visible = false; // Solo modo creación (sin ID)
-            btnModificar.Visible = soyElCapitan; // Solo el dueño guarda cambios
-            btnUnirse.Visible = !soyElCapitan;   // El dueño no se une a su propio equipo
-
-            // ADMIN: El botón eliminar aparece si eres el dueño O si eres admin
+            btnCrear.Visible = false; 
+            btnModificar.Visible = soyElCapitan; 
+            btnUnirse.Visible = !soyElCapitan;  
             btnEliminar.Visible = soyElCapitan || esAdmin;
         }
 
         private void BloquearCampos(bool bloquear)
         {
-            // Usamos la propiedad Enabled. Si 'bloquear' es true, 'Enabled' será false.
             txtNombre.Enabled = !bloquear;
             txtDescripcion.Enabled = !bloquear;
             txtLogo.Enabled = !bloquear;
             ddlMaxJugadores.Enabled = !bloquear;
-            pnlSubidaImagen.Visible = !bloquear; // Escondemos el panel de subir archivos
-            txtFecha.ReadOnly = true;            // La fecha nunca se edita
+            pnlSubidaImagen.Visible = !bloquear; 
+            txtFecha.ReadOnly = true;            
         }
 
 
@@ -411,36 +405,25 @@ namespace hada_ProyectoGrupo.Public
         {
             try
             {
-                // 1. Obtener el equipo
                 ENEquipo eq = new ENEquipo { Id_equipo = idEq };
                 eq.Read();
-
-                // 2. Obtener al capitán para saber el ID del juego
                 ENJugador capitan = new ENJugador { Codigo = eq.Id_capitan };
                 capitan.Read();
                 int idJuegoDelEquipo = capitan.Juego;
-
-                // 3. Obtener el NOMBRE del videojuego desde la base de datos
                 ENVideojuego juego = new ENVideojuego { Codigo = idJuegoDelEquipo };
 
                 string nombreJuegoReal = "Desconocido";
                 int edadMinimaJuego = 0;
-
-                // Intentamos leer los datos del videojuego
                 if (juego.Read())
                 {
-                    // ¡OJO! Revisa que estas propiedades existan en tu ENVideojuego
                     nombreJuegoReal = juego.Nombre;
                     edadMinimaJuego = juego.EdadMinima;
                 }
-
-                // 4. Filtrar mis jugadores
                 List<ENJugador> todos = new CADJugador().ReadAll();
                 List<ENJugador> misJugadoresAptos = new List<ENJugador>();
 
                 foreach (ENJugador j in todos)
                 {
-                    // Filtro: Mi email, sin equipo y MISMO JUEGO que el capitán
                     if (j.Email_usuario == emailLogueado && j.Equipo_actual == 0 && j.Juego == idJuegoDelEquipo)
                     {
                         ENUsuario u = new ENUsuario { Email = emailLogueado };
@@ -451,14 +434,10 @@ namespace hada_ProyectoGrupo.Public
                         }
                     }
                 }
-
-                // 5. Asignar al DropDownList
                 ddlJugadores.DataSource = misJugadoresAptos;
                 ddlJugadores.DataTextField = "Apodo";
                 ddlJugadores.DataValueField = "Codigo";
                 ddlJugadores.DataBind();
-
-                // 6. Mensaje final con el NOMBRE REAL del juego
                 if (misJugadoresAptos.Count == 0)
                 {
                     lblMensaje.Text = "No tienes jugadores disponibles. Requisitos: mismo juego (" + nombreJuegoReal + ") y edad mínima " + edadMinimaJuego + " años.";
@@ -647,7 +626,6 @@ namespace hada_ProyectoGrupo.Public
 
         protected void rptMiembros_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            // Verificamos que sea una fila de datos
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 var miembro = (dynamic)e.Item.DataItem;
@@ -656,11 +634,9 @@ namespace hada_ProyectoGrupo.Public
 
                 if (miembro.EsCapitan)
                 {
-                    // Cambiamos el estilo del contenedor directamente
-                    // Fondo amarillo muy claro para que el texto negro resalte
                     div.Style["background-color"] = "#F9A825";
-                    div.Style["border"] = "2px solid #F57F17"; // Borde dorado
-                    span.Style["display"] = "inline-block";    // Mostramos la etiqueta "CAPITÁN"
+                    div.Style["border"] = "2px solid #F57F17";
+                    span.Style["display"] = "inline-block";   
                 }
             }
         }
@@ -687,18 +663,13 @@ namespace hada_ProyectoGrupo.Public
                     }
 
                     string nombreArchivo = "equipo_" + DateTime.Now.Ticks + extension;
-                    // UNIFICAMOS la carpeta: siempre "Equipos" con S
                     string ruta = Server.MapPath("~/Images/Equipos/");
 
                     if (!Directory.Exists(ruta))
                         Directory.CreateDirectory(ruta);
 
                     fuLogo.SaveAs(ruta + nombreArchivo);
-
-                    // Guardamos la ruta relativa (sin ~/ para que funcione en img src directamente)
                     string rutaRelativa = "~/Images/Equipos/" + nombreArchivo;
-
-                    // CRÍTICO: actualizamos el TextBox para que btnModificar guarde esto en la BD
                     txtLogo.Text = rutaRelativa;
 
                     imgLogo.ImageUrl = ResolveUrl(rutaRelativa);

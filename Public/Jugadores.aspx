@@ -62,8 +62,6 @@
         <input type="text" id="jugSearch" class="jug-search"
                placeholder="Buscar por apodo..."
                oninput="filtrarJugadores()" />
-
-        <%-- type="button" evita que el form de ASP.NET haga submit al hacer clic --%>
         <button type="button" class="jug-filter-btn active" data-f="todos"
                 onclick="setFiltro(this,'todos')">Todos</button>
 

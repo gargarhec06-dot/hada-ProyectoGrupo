@@ -14,9 +14,6 @@ namespace hada_ProyectoGrupo.Public
         public string Email_usuario { get; set; }
         public string NombreEquipo { get; set; }
         public string LogoEquipo { get; set; }
-
-        // Valor leído por el JS del cliente para los botones de filtro:
-        // "mio" | "con-equipo" | "sin-equipo"
         public string EstadoFiltro { get; set; }
     }
 
@@ -24,12 +21,8 @@ namespace hada_ProyectoGrupo.Public
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-                CargarJugadores();
-
-            // Botón crear: solo para jugadores autenticados
-            if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == false)
-                pnlAdmin3.Visible = true;
+            if (!IsPostBack) CargarJugadores();
+            if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == false) pnlAdmin3.Visible = true;
         }
 
         private void CargarJugadores()
@@ -37,8 +30,6 @@ namespace hada_ProyectoGrupo.Public
             try
             {
                 List<ENJugador> todosLosJugadores = new ENJugador().ReadAll();
-
-                // Mapa de equipos para búsqueda rápida
                 CADEquipo cadEquipo = new CADEquipo();
                 List<ENEquipo> todosEquipos = cadEquipo.ReadAll();
                 Dictionary<int, ENEquipo> mapEquipos = new Dictionary<int, ENEquipo>();
@@ -48,7 +39,6 @@ namespace hada_ProyectoGrupo.Public
                 bool esJugador = Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == false;
                 string emailLogueado = Session["Email"]?.ToString() ?? "";
 
-                // Mostrar botón "Mis jugadores" solo si hay sesión de jugador
                 pnlBtnMisJugadores.Visible = esJugador && !string.IsNullOrEmpty(emailLogueado);
 
                 List<JugadorViewModel> vista = new List<JugadorViewModel>();
@@ -72,7 +62,6 @@ namespace hada_ProyectoGrupo.Public
                         EstadoFiltro = estadoFiltro
                     };
 
-                    // RESOLUCIÓN DEL LOGO DEL EQUIPO
                     if (tieneEquipo && mapEquipos.ContainsKey(j.Equipo_actual))
                     {
                         ENEquipo equipoObj = mapEquipos[j.Equipo_actual];
@@ -82,7 +71,7 @@ namespace hada_ProyectoGrupo.Public
 
                         if (string.IsNullOrWhiteSpace(logo))
                         {
-                            vm.LogoEquipo = ""; // Esto hará que el control se oculte en el ASPX
+                            vm.LogoEquipo = "";
                         }
                         else if (logo.StartsWith("http://") || logo.StartsWith("https://"))
                         {
@@ -90,7 +79,6 @@ namespace hada_ProyectoGrupo.Public
                         }
                         else
                         {
-                            // Aseguramos que la ruta tenga el formato ~/
                             if (!logo.StartsWith("~/"))
                                 logo = "~/" + logo.TrimStart('/');
                             vm.LogoEquipo = logo;
@@ -98,7 +86,6 @@ namespace hada_ProyectoGrupo.Public
                     }
                     else
                     {
-                        // JUGADOR SIN EQUIPO: Asignamos valores vacíos
                         vm.NombreEquipo = "Sin equipo";
                         vm.LogoEquipo = "";
                     }

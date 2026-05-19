@@ -156,7 +156,7 @@ namespace hada_ProyectoGrupo.Library.CAD
                 throw new Exception("Error en ReadByEmail: " + ex.Message);
             }
             finally { c.Close(); }
-            return en;  // Devuelve null si no encuentra el jugador
+            return en;
         }
 
 

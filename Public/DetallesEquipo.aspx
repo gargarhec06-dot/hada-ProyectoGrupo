@@ -58,7 +58,6 @@
 
     <asp:Repeater ID="rptMiembros" runat="server" OnItemDataBound="rptMiembros_ItemDataBound">
         <ItemTemplate>
-            <!-- El estilo del contenedor se gestiona en el C# (ItemDataBound) -->
             <div id="divMiembro" runat="server" style="padding:15px; margin-bottom:10px; border-radius:8px; border:1px solid #ddd;">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <div>

@@ -6,7 +6,6 @@ namespace hada_ProyectoGrupo.Library.EN
 {
     public class ENEquipo
     {
-        // Atributos privados
         private int _id_equipo;
         private string _nombre;
         private DateTime _fecha_creacion;
@@ -15,8 +14,6 @@ namespace hada_ProyectoGrupo.Library.EN
         private int _id_capitan;
         private int _max_jugadores;
         private int _miembros_actuales;
-
-        // Propiedades públicas
         public int Id_equipo
         {
             get { return _id_equipo; }
@@ -64,9 +61,6 @@ namespace hada_ProyectoGrupo.Library.EN
             get { return _miembros_actuales; }
             set { _miembros_actuales = value; }
         }
-
-        // --- CONSTRUCTORES ---
-
         public ENEquipo()
         {
             _id_equipo = 0;
@@ -90,9 +84,6 @@ namespace hada_ProyectoGrupo.Library.EN
             _max_jugadores = maxJugadores;
             _miembros_actuales = miembrosActuales;
         }
-
-        // --- MÉTODOS CRUD (Llaman al CAD) ---
-
         public bool Create()
         {
             CADEquipo cad = new CADEquipo();

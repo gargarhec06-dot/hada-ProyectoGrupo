@@ -34,8 +34,7 @@ namespace hada_ProyectoGrupo.Public
         {
             try
             {
-                // *** CAMBIO CLAVE: usamos ReadAllConMiembros() en lugar de ReadAll() ***
-                // Así MiembrosActuales viene calculado directamente desde la BD con COUNT
+                
                 List<EquipoConMiembros> listaEquipos = new CADEquipo().ReadAllConMiembros();
 
                 bool esAdmin = Session["EsAdmin"] != null && (bool)Session["EsAdmin"];
@@ -44,7 +43,6 @@ namespace hada_ProyectoGrupo.Public
 
                 pnlJugador.Visible = estaLogueado && !esAdmin;
 
-                // Recogemos todos los códigos de jugadores del usuario logueado
                 List<int> misCodigosJugador = new List<int>();
                 if (emailLogueado != null)
                 {
@@ -78,7 +76,7 @@ namespace hada_ProyectoGrupo.Public
                         Id_equipo = eq.Id_equipo,
                         Nombre = eq.Nombre,
                         Logo_url = ResolveUrl(finalLogoUrl),
-                        MiembrosActuales = eq.MiembrosActuales, // Ahora viene el valor real de la BD
+                        MiembrosActuales = eq.MiembrosActuales,
                         MaxJugadores = eq.Max_jugadores,
                         EstadoFiltro = estado,
                         BadgeClass = soyElCapitan ? "badge-mine" : (estaLleno ? "badge-full" : "badge-open"),
@@ -105,8 +103,6 @@ namespace hada_ProyectoGrupo.Public
                 {
                     double porcentaje = (double)data.MiembrosActuales * 100 / data.MaxJugadores;
                     barra.Style["width"] = porcentaje.ToString(System.Globalization.CultureInfo.InvariantCulture) + "%";
-
-                    // ← LÍNEA NUEVA: asignar el color aquí, no en el Eval del .aspx
                     barra.Attributes["class"] = "eq-bar " +
                         (data.EstadoFiltro == "lleno" ? "bar-full" : "bar-open");
                 }

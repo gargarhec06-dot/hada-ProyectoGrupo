@@ -142,10 +142,6 @@ namespace hada_ProyectoGrupo.Library.CAD
             return lista;
         }
 
-        // ---------------------------------------------------------------
-        // NUEVO: devuelve todos los equipos con el conteo real de miembros
-        // El conteo viene de cuántos Jugadores tienen equipo_actual = id_equipo
-        // ---------------------------------------------------------------
         public List<EquipoConMiembros> ReadAllConMiembros()
         {
             List<EquipoConMiembros> lista = new List<EquipoConMiembros>();
@@ -227,11 +223,6 @@ namespace hada_ProyectoGrupo.Library.CAD
             return en;
         }
     }
-
-    // ---------------------------------------------------------------
-    // DTO ligero: ENEquipo + miembros_actuales
-    // Se usa solo en la vista de Equipos para no contaminar ENEquipo
-    // ---------------------------------------------------------------
     public class EquipoConMiembros
     {
         public int Id_equipo { get; set; }

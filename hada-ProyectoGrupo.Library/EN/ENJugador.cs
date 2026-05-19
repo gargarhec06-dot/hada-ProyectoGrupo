@@ -52,8 +52,6 @@ namespace hada_ProyectoGrupo.Library.EN
             _equipo_actual = equipo;
             _juego = juego;
         }
-
-        // Constructor para los parámetros obligatorios
         public ENJugador(string email, string apodo)
         {
             _codigo = 0;
@@ -122,8 +120,6 @@ namespace hada_ProyectoGrupo.Library.EN
             get { return _equipo_actual; }
             set { _equipo_actual = value; }
         }
-
-        // Validación del CHECK constraint de la tabla: solo 'teclado', 'mando' o vacío
         public string Hardware
         {
             get { return _hardware; }

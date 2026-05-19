@@ -91,11 +91,7 @@ namespace hada_ProyectoGrupo.Public
                     lblBuscandoEquipo.Text = jugador.Buscando_equipo ? "Sí" : "No";
                     chkBuscandoEquipo.Checked = jugador.Buscando_equipo;
                     lblEquipoActual.Text = jugador.Equipo_actual.ToString();
-
-                    // Mostrar nombre del juego
                     CargarNombreJuego(jugador.Juego);
-
-                    // Seleccionar juego en el DropDownList
                     if (ddlJuego.Items.FindByValue(jugador.Juego.ToString()) != null)
                     {
                         ddlJuego.SelectedValue = jugador.Juego.ToString();
