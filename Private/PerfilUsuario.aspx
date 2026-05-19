@@ -100,8 +100,17 @@
             gap: 12px;
         }
 
-        .botones-izq { display: flex; gap: 10px; flex-wrap: wrap; }
-        .botones-der { display: flex; gap: 10px; flex-wrap: wrap; }
+        .botones-izq {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .botones-der {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
 
         .btn-jugadores {
             background-color: transparent;
@@ -224,17 +233,19 @@
                 <div class="info-label">Fecha de Nacimiento</div>
                 <div class="info-value"><asp:Label ID="lblFechaNacimiento" runat="server" /></div>
             </div>
-            <div class="info-row">
-                <div class="info-label">Saldo</div>
-                <div class="info-value">
-                    <span class="saldo-value"><asp:Label ID="lblSaldo" runat="server" /></span>
+            <asp:Panel ID="pnlSaldoRow" runat="server">
+                <div class="info-row">
+                    <div class="info-label">Saldo</div>
+                    <div class="info-value">
+                        <span class="saldo-value"><asp:Label ID="lblSaldo" runat="server" /></span>
+                    </div>
                 </div>
-            </div>
+            </asp:Panel>
         </div>
 
         <div class="botones-card">
             <div class="botones-izq">
-                <asp:Panel ID="pnlMisJugadores" runat="server" Visible="false">
+                <asp:Panel ID="pnlMisJugadores" runat="server">
                     <asp:Button ID="btnMisJugadores" runat="server" Text="Mis Jugadores"
                         OnClick="btnMisJugadores_Click" CssClass="btn-jugadores" />
                 </asp:Panel>

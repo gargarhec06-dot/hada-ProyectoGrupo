@@ -1,10 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" 
-    CodeFile="GestionPatrocinador.aspx.cs" Inherits="hada_ProyectoGrupo.Private.GestionPatrocinador" %>
+﻿<%@ Page Title="Mi Perfil" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeFile="PerfilUsuario.aspx.cs" Inherits="hada_ProyectoGrupo.Private.PerfilUsuario" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
-        .gestion-wrapper {
-            max-width: 800px;
+        .perfil-wrapper {
+            max-width: 700px;
             margin: 40px auto;
             padding: 0 20px;
         }
@@ -23,18 +22,18 @@
             filter: drop-shadow(0 0 8px #7b2fff44);
         }
 
-        .form-card {
+        .info-card {
             background: linear-gradient(135deg, #1a1a2e 60%, #1a0f2e 100%);
             border: 1px solid #7b2fff44;
             border-radius: 12px;
             padding: 30px 35px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             box-shadow: 0 0 30px #7b2fff11;
             position: relative;
             overflow: hidden;
         }
 
-        .form-card::before {
+        .info-card::before {
             content: '';
             position: absolute;
             top: 0; left: 0;
@@ -45,7 +44,7 @@
             box-shadow: -2px -2px 10px #00e5ff33;
         }
 
-        .form-card::after {
+        .info-card::after {
             content: '';
             position: absolute;
             bottom: 0; right: 0;
@@ -56,255 +55,197 @@
             box-shadow: 2px 2px 10px #7b2fff33;
         }
 
-        .form-field {
-            margin-bottom: 20px;
+        .info-row {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #7b2fff11;
         }
 
-        .form-field label {
-            display: block;
+        .info-row:last-child { border-bottom: none; }
+
+        .info-label {
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 6px;
+            width: 180px;
+            min-width: 180px;
             background: linear-gradient(to right, #00e5ff, #7b2fff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .form-field input[type=text],
-        .form-field input[type=email],
-        .form-field input[type=date] {
-            width: 100%;
-            background-color: #0f0f1a;
-            border: 1px solid #7b2fff44;
+        .info-value {
             color: #e0e0e0;
-            border-radius: 6px;
-            padding: 10px 14px;
             font-size: 0.95rem;
-            transition: border-color 0.2s, box-shadow 0.2s;
         }
 
-        .form-field input:focus {
-            outline: none;
-            border-color: #00e5ff;
-            box-shadow: 0 0 10px #00e5ff33;
-        }
-
-        .field-error {
-            font-size: 0.75rem;
-            color: #ff4444;
-            margin-top: 4px;
-            display: block;
-        }
-
-        .section-title {
-            font-size: 1rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
+        .saldo-value {
+            font-size: 1.2rem;
+            font-weight: 800;
             background: linear-gradient(to right, #00e5ff, #7b2fff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .torneos-table {
-            width: 100%;
-            border-collapse: collapse;
+        .botones-card {
             background: linear-gradient(135deg, #1a1a2e 60%, #1a0f2e 100%);
             border: 1px solid #7b2fff44;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 30px;
-            box-shadow: 0 0 20px #7b2fff11;
-        }
-
-        .torneos-table th {
-            background: linear-gradient(to right, #0f0f1a, #1a0f2e);
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            padding: 14px 16px;
-            text-align: left;
-            border-bottom: 1px solid #7b2fff44;
-            color: #00e5ff;
-        }
-
-        .torneos-table th:last-child { color: #7b2fff; }
-
-        .torneos-table td {
-            padding: 12px 16px;
-            color: #e0e0e0;
-            border-bottom: 1px solid #7b2fff11;
-            font-size: 0.9rem;
-        }
-
-        .torneos-table tr:last-child td { border-bottom: none; }
-
-        .torneos-table tr:hover td {
-            background: linear-gradient(to right, #00e5ff08, #7b2fff08);
-        }
-
-        .torneos-table input[type=text] {
-            background-color: #0f0f1a;
-            border: 1px solid #7b2fff44;
-            color: #e0e0e0;
-            border-radius: 6px;
-            padding: 6px 10px;
-            width: 80px;
-            text-align: center;
-        }
-
-        .torneos-table input[type=text]:focus {
-            outline: none;
-            border-color: #00e5ff;
-            box-shadow: 0 0 8px #00e5ff33;
-        }
-
-        .torneos-table input[type=checkbox] {
-            width: 16px;
-            height: 16px;
-            accent-color: #00e5ff;
-            cursor: pointer;
-        }
-
-        .botones-row {
+            border-radius: 12px;
+            padding: 20px 25px;
             display: flex;
-            gap: 12px;
             align-items: center;
             flex-wrap: wrap;
-            margin-top: 10px;
+            gap: 10px;
         }
 
-        .btn-guardar {
-            background: linear-gradient(to right, #00e5ff, #7b2fff);
-            color: #ffffff;
-            border: none;
-            padding: 10px 25px;
+        .btn-jugadores {
+            background-color: transparent;
+            color: #00e5ff;
+            border: 2px solid #00e5ff;
+            padding: 9px 20px;
             border-radius: 6px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-jugadores:hover {
+            background-color: #00e5ff;
+            color: #0f0f1a;
+        }
+
+        .btn-saldo {
+            background: linear-gradient(to right, #00e5ff, #7b2fff);
+            color: #ffffff;
+            border: none;
+            padding: 9px 20px;
+            border-radius: 6px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.8rem;
             cursor: pointer;
             transition: all 0.2s;
             box-shadow: 0 0 15px #7b2fff33;
         }
 
-        .btn-guardar:hover {
+        .btn-saldo:hover {
             box-shadow: 0 0 25px #7b2fff66;
             transform: translateY(-1px);
         }
 
-        .btn-cancelar {
+        .btn-editar {
             background-color: transparent;
-            color: #888;
-            border: 1px solid #444;
-            padding: 10px 25px;
+            color: #00e5ff;
+            border: 2px solid #00e5ff;
+            padding: 9px 20px;
             border-radius: 6px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
             transition: all 0.2s;
         }
 
-        .btn-cancelar:hover {
+        .btn-editar:hover {
+            background: linear-gradient(to right, #00e5ff, #7b2fff);
+            border-color: transparent;
+            color: #ffffff;
+        }
+
+        .btn-cerrar {
+            background-color: transparent;
+            color: #888;
+            border: 1px solid #444;
+            padding: 9px 20px;
+            border-radius: 6px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-cerrar:hover {
             border-color: #888;
             color: #e0e0e0;
         }
 
-        .lbl-mensaje {
-            display: block;
+        .btn-eliminar {
+            background-color: transparent;
             color: #ff4444;
-            font-size: 0.85rem;
-            margin-top: 10px;
+            border: 2px solid #ff4444;
+            padding: 9px 20px;
+            border-radius: 6px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-eliminar:hover {
+            background-color: #ff4444;
+            color: #ffffff;
+            box-shadow: 0 0 20px #ff444444;
         }
     </style>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="gestion-wrapper">
+    <div class="perfil-wrapper">
+        <div class="page-title">Mi Perfil</div>
 
-        <h2 id="tituloPagina" runat="server" class="page-title">Nuevo Patrocinador</h2>
-
-        <div class="form-card">
-            <div class="form-field">
-                <asp:Label runat="server" Text="Nombre" />
-                <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" />
-                <asp:RequiredFieldValidator ID="rfvNombre" runat="server" ControlToValidate="txtNombre"
-                    ErrorMessage="El nombre es obligatorio" Display="Dynamic" CssClass="field-error" />
+        <div class="info-card">
+            <div class="info-row">
+                <div class="info-label">Nombre</div>
+                <div class="info-value"><asp:Label ID="lblNombre" runat="server" /></div>
             </div>
-            <div class="form-field">
-                <asp:Label runat="server" Text="Teléfono" />
-                <asp:TextBox ID="txtTelefono" runat="server" CssClass="form-control" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="txtTelefono"
-                    ErrorMessage="El teléfono es obligatorio" Display="Dynamic" CssClass="field-error" />
+            <div class="info-row">
+                <div class="info-label">Email</div>
+                <div class="info-value"><asp:Label ID="lblEmail" runat="server" /></div>
             </div>
-            <div class="form-field">
-                <asp:Label runat="server" Text="Email" />
-                <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" />
-                <asp:RequiredFieldValidator ID="rfvEmail" runat="server" ControlToValidate="txtEmail"
-                    ErrorMessage="El email es obligatorio" Display="Dynamic" CssClass="field-error" />
-                <asp:RegularExpressionValidator ID="revEmail" runat="server" ControlToValidate="txtEmail"
-                    ValidationExpression="^[\w\.-]+@[\w\.-]+\.\w+$"
-                    ErrorMessage="Email no válido" Display="Dynamic" CssClass="field-error" />
+            <div class="info-row">
+                <div class="info-label">Rol</div>
+                <div class="info-value"><asp:Label ID="lblRol" runat="server" /></div>
             </div>
-            <div class="form-field">
-                <asp:Label runat="server" Text="Página Web" />
-                <asp:TextBox ID="txtWeb" runat="server" CssClass="form-control" />
+            <div class="info-row">
+                <div class="info-label">Fecha de Nacimiento</div>
+                <div class="info-value"><asp:Label ID="lblFechaNacimiento" runat="server" /></div>
             </div>
-            <div class="form-field">
-                <asp:Label runat="server" Text="Inicio Contrato" />
-                <asp:TextBox ID="txtInicioContrato" runat="server" TextMode="Date" CssClass="form-control" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="txtInicioContrato"
-                    ErrorMessage="La fecha de inicio es obligatoria" Display="Dynamic" CssClass="field-error" />
-            </div>
-            <div class="form-field">
-                <asp:Label runat="server" Text="Fin Contrato" />
-                <asp:TextBox ID="txtFinContrato" runat="server" TextMode="Date" CssClass="form-control" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="txtFinContrato"
-                    ErrorMessage="La fecha de fin es obligatoria" Display="Dynamic" CssClass="field-error" />
-            </div>
+            <asp:Panel ID="pnlSaldoRow" runat="server">
+                <div class="info-row">
+                    <div class="info-label">Saldo</div>
+                    <div class="info-value">
+                        <span class="saldo-value"><asp:Label ID="lblSaldo" runat="server" /></span>
+                    </div>
+                </div>
+            </asp:Panel>
         </div>
 
-        <div class="section-title">Torneos a patrocinar</div>
-
-        <asp:Repeater ID="rptTorneos" runat="server">
-            <HeaderTemplate>
-                <table class="torneos-table">
-                    <tr>
-                        <th>Seleccionar</th>
-                        <th>Torneo</th>
-                        <th>Cantidad (€)</th>
-                    </tr>
-            </HeaderTemplate>
-            <ItemTemplate>
-                <tr>
-                    <td style="text-align: center;">
-                        <asp:CheckBox runat="server" ID="chkTorneo" />
-                        <asp:HiddenField runat="server" ID="hfCodigoTorneo" Value='<%# Eval("Codigo") %>' />
-                    </td>
-                    <td><%# Eval("Nombre") %></td>
-                    <td>
-                        <asp:TextBox runat="server" ID="txtCantidad" Width="80px" Text="0" />
-                    </td>
-                </tr>
-            </ItemTemplate>
-            <FooterTemplate>
-                </table>
-            </FooterTemplate>
-        </asp:Repeater>
-
-        <div class="botones-row">
-            <asp:Button ID="btnGuardar" runat="server" Text="Guardar"
-                OnClick="btnGuardar_Click" CssClass="btn-guardar" />
-            <asp:Button ID="btnCancelar" runat="server" Text="Cancelar"
-                OnClick="btnCancelar_Click" CssClass="btn-cancelar" CausesValidation="false" />
+        <div class="botones-card">
+            <asp:Panel ID="pnlMisJugadores" runat="server" Visible="false" style="display:contents;">
+                <asp:Button ID="btnMisJugadores" runat="server" Text="Mis Jugadores"
+                    OnClick="btnMisJugadores_Click" CssClass="btn-jugadores" />
+            </asp:Panel>
+            <asp:Panel ID="pnlSumarFondos" runat="server" style="display:contents;">
+                <asp:Button ID="btnSumarFondos" runat="server" Text="Añadir Saldo"
+                    OnClick="btnSumarFondos_Click" CssClass="btn-saldo" />
+            </asp:Panel>
+            <asp:Button ID="btnEditarPerfil" runat="server" Text="Editar Perfil"
+                OnClick="btnEditarPerfil_Click" CssClass="btn-editar" />
+            <asp:Button ID="btnCerrarSesion" runat="server" Text="Cerrar Sesión"
+                OnClick="btnCerrarSesion_Click" CssClass="btn-cerrar" />
+            <asp:Button ID="btnEliminarCuenta" runat="server" Text="Eliminar Cuenta"
+                OnClick="btnEliminarCuenta_Click" CssClass="btn-eliminar"
+                OnClientClick="return confirm('¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.');" />
         </div>
-
-        <asp:Label ID="lblMensaje" runat="server" CssClass="lbl-mensaje" />
-
     </div>
 </asp:Content>

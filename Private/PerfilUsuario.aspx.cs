@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Web.UI;
+using System.Collections.Generic;
 using hada_ProyectoGrupo.Library.CAD;
 using hada_ProyectoGrupo.Library.EN;
-using System.Collections.Generic;
 
 namespace hada_ProyectoGrupo.Private
 {
@@ -10,7 +10,6 @@ namespace hada_ProyectoGrupo.Private
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Verificar sesión
             if (Session["Email"] == null)
             {
                 Response.Redirect("~/Public/Login.aspx");
@@ -28,16 +27,16 @@ namespace hada_ProyectoGrupo.Private
             string email = Session["Email"].ToString();
             bool esAdmin = Session["EsAdmin"] != null && (bool)Session["EsAdmin"];
 
-            // Datos desde la sesión
             string nombre = Session["Nombre"]?.ToString();
             lblNombre.Text = string.IsNullOrEmpty(nombre) ? "Usuario" : nombre;
             lblEmail.Text = email;
             lblRol.Text = esAdmin ? "Administrador" : "Jugador";
 
-            // Ocultar botón "Mis Jugadores" si es administrador 
-            pnlMisJugadores.Visible = !esAdmin;
+            bool esUsuarioNormal = !esAdmin;
+            pnlMisJugadores.Visible = esUsuarioNormal;
+            pnlSumarFondos.Visible = esUsuarioNormal;
+            pnlSaldoRow.Visible = esUsuarioNormal;
 
-            // Cargar datos adicionales desde la BD (fecha registro)
             try
             {
                 CADUsuario cadUsuario = new CADUsuario();
@@ -47,16 +46,21 @@ namespace hada_ProyectoGrupo.Private
                 if (cadUsuario.Read(usuario))
                 {
                     lblFechaNacimiento.Text = usuario.Fecha_Nacimiento.ToString("dd/MM/yyyy");
-                    lblSaldo.Text = usuario.Saldo_cartera.ToString("F2") + " €";
+                    if (esUsuarioNormal)
+                        lblSaldo.Text = usuario.Saldo_cartera.ToString("F2") + " €";
                 }
                 else
                 {
                     lblFechaNacimiento.Text = "No disponible";
+                    if (esUsuarioNormal)
+                        lblSaldo.Text = "0,00 €";
                 }
             }
             catch (Exception)
             {
                 lblFechaNacimiento.Text = "No disponible";
+                if (!esAdmin)
+                    lblSaldo.Text = "0,00 €";
             }
         }
 
@@ -97,27 +101,19 @@ namespace hada_ProyectoGrupo.Private
 
                 foreach (ENJugador jugador in jugadores)
                 {
-                    // Si es capitán de un equipo, eliminar inscripciones y equipo
                     ENEquipo equipo = cadEquipo.ReadByCapitan(jugador.Codigo);
                     if (equipo != null)
                     {
-                        // 1. Eliminar inscripciones del equipo en torneos
                         cadInscripcion.DeleteByEquipo(equipo.Id_equipo);
-
-                        // 2. Eliminar el equipo (esto expulsa a los demás jugadores automáticamente)
                         cadEquipo.Delete(equipo);
                     }
                     else if (jugador.Equipo_actual != 0)
                     {
-                        // Si está en un equipo pero no es capitán, simplemente salir del equipo
                         cadJugador.QuitarDeEquipo(jugador.Codigo);
                     }
-
-                    // 3. Eliminar el jugador
                     cadJugador.Delete(jugador);
                 }
 
-                // 4. Eliminar el usuario
                 ENUsuario usuario = new ENUsuario();
                 usuario.Email = email;
 
