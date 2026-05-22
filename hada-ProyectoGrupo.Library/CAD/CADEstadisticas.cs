@@ -73,24 +73,9 @@ namespace hada_ProyectoGrupo.Library.CAD
             return stats;
         }
 
-        // 4. Top 3 Noticias con más likes
-        public DataTable Top3NoticiasLikes()
-        {
-            DataTable dt = new DataTable();
-            using (SqlConnection c = new SqlConnection(constring))
-            {
-                string query = @"SELECT TOP 3 n.titulo, COUNT(l.IdNoticia) as Likes
-                                 FROM Noticia n
-                                 LEFT JOIN LikesNoticias l ON n.IdNoticia = l.IdNoticia
-                                 GROUP BY n.IdNoticia, n.titulo
-                                 ORDER BY Likes DESC";
-                SqlDataAdapter da = new SqlDataAdapter(query, c);
-                da.Fill(dt);
-            }
-            return dt;
-        }
+        
 
-        // 5. Patrocinadores más activos 
+        // 4. Patrocinadores más activos 
         public Dictionary<string, int> PatrocinadoresMasActivos()
         {
             Dictionary<string, int> stats = new Dictionary<string, int>();
