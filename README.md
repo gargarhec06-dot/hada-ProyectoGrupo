@@ -194,6 +194,14 @@ Tareas hechas por cada miembro :
 	- AnadirSaldo.aspx y AnadirSaldo.aspx.cs, GestionTorneo.aspx y GestionTorneo.aspx.cs, DetalleTorneo.aspx y DetalleTorneo.aspx.cs,
 	- Torneos.aspx y Torneos.aspx.cs, Error.aspx y Error.aspx.cs y Global.asax.
 
+Presentación : 
+
+NOMBRE DE FICHERO Y UBICACIÓN
+
+FICHERO : Portal de torneos de ESPORTS.pdf
+
+UBICACIÓN : /Portal de torneos de ESPORTS.pdf
+
 
 
 
