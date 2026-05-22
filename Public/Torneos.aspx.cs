@@ -1,8 +1,7 @@
 ﻿using hada_ProyectoGrupo.Library.EN;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -25,32 +24,45 @@ namespace hada_ProyectoGrupo.Public
         private void CargarTorneos(string nivel = null, float? precioMin = null, float? precioMax = null, string ubicacion = null)
         {
             ENTorneo en = new ENTorneo();
-            List<ENTorneo> lista = en.ReadAll();
+            DataSet ds = en.LeerAccesoDesconectado();
+            DataTable dt = ds.Tables[0];
+            DataView dv = new DataView(dt);
+            List<string> filtros = new List<string>();
 
             if (!string.IsNullOrEmpty(nivel))
             {
-                bool esProfesional = nivel == "true";
-                lista = lista.Where(t => t.Profesional == esProfesional).ToList();
+                filtros.Add("profesional = " + nivel);
             }
 
             if (precioMin.HasValue)
-                lista = lista.Where(t => t.PrecioInscripcion >= precioMin.Value).ToList();
+            {
+                filtros.Add("precioInscripcion >= " + precioMin.Value.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            }
 
             if (precioMax.HasValue)
-                lista = lista.Where(t => t.PrecioInscripcion <= precioMax.Value).ToList();
+            {
+                filtros.Add("precioInscripcion <= " + precioMax.Value.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            }
 
             if (!string.IsNullOrEmpty(ubicacion))
-                lista = lista.Where(t => t.Ubicacion != null &&
-                    t.Ubicacion.IndexOf(ubicacion, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+            {
+                filtros.Add("ubicacion LIKE '%" + ubicacion.Replace("'", "''") + "%'");
+            }
 
-            rptTorneos.DataSource = lista;
+            if (filtros.Count > 0)
+            {
+                dv.RowFilter = string.Join(" AND ", filtros);
+            }
+
+            rptTorneos.DataSource = dv;
             rptTorneos.DataBind();
         }
 
         protected void btnFiltrar_Click(object sender, EventArgs e)
         {
-            string nivel = ddlNivel.SelectedValue;
+            System.Threading.Thread.Sleep(1000);
 
+            string nivel = ddlNivel.SelectedValue;
             float? precioMin = null;
             float? precioMax = null;
 
@@ -70,10 +82,13 @@ namespace hada_ProyectoGrupo.Public
 
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
+            System.Threading.Thread.Sleep(1000);
+
             ddlNivel.SelectedIndex = 0;
             txtPrecioMin.Text = "";
             txtPrecioMax.Text = "";
             txtUbicacion.Text = "";
+
             CargarTorneos();
 
             if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == true)
