@@ -121,6 +121,11 @@ CAMBIOS HECHOS :
 -	CAD Patrocinador : añadir métodos auxiliares :  ReadTorneos , ReadFiltrado , ReadPatrocinios.
 -	CAD de Torneo : añadido método ReadWithVideoJuego para mostrar nombre de videojuego en DetallesToreno.aspx e implementado atributo de capacidad de equipos .
 -	Control de Inscripción para que un Equipo no se puedo Inscribir al mismo Torneo.
+-   De ajax se ha añadido en Torneos.aspx un scriptManager, un UpdatePanel pare solo refresque la lista de torneos en vez de toda la página,
+	un updateProgress para que te salga un texto de "cargando torneos" cuando le das a filtrar y triggers para que pase lo de updateProgress
+	al darle a filtrar o limpiar.
+-  De acceso desconectado se ha añadido en Torneos.aspx.cs ENTorneo y CADTorneo: dataSet, dataAdapter, dataTable y dataView.
+
 
 DIFICULTADES :
 
