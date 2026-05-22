@@ -148,7 +148,7 @@ APRENDIZAJES :
 -	Estructuras HTML
 	
 INSTRUCCIONES
-
+1. En la carpeta EntregaProyecto , hay un fichero de texto llamado entregaFinal , donde está el link al proyecto comprimido en drive
 1. Una vez clonado el proyecto se deberá establecer como proecto de inicio "hada-ProyectoGrupo"
 2. Respecto la BD , esta se deberá extraer del script de la propia entrega y llamarla HadaEsports
 3. Además ofrecemos una serie de datos incluyendo 4 usuarios , usuario1@gmail.com , usuario2@gmail.com ,  usuario3@gmail.com , usuario4@gmail.com y 
