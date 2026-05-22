@@ -1,6 +1,7 @@
 ﻿using hada_ProyectoGrupo.Library.CAD;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,54 +38,6 @@ namespace hada_ProyectoGrupo.Library.EN
             _capacidad = 32;
             _url_logo = "";
         }
-
-        public ENTorneo(int codigo, int id_videojuego, float precioInscripcion, string nombre,
-            string descripcion, bool profesional, float costeOrganizacion, DateTime fecha, string ubicacion, float premio, int capacidad, string url_logo)
-        {
-            _codigo = codigo;
-            _id_videojuego = id_videojuego;
-            _precioInscripcion = precioInscripcion;
-            _nombre = nombre;
-            _descripcion = descripcion;
-            _profesional = profesional;
-            _costeOrganizacion = costeOrganizacion;
-            _fecha = fecha;
-            _ubicacion = ubicacion;
-            _premio = premio;
-            _capacidad = capacidad;
-            _url_logo = url_logo;
-        }
-
-        // Para los parámetros obligatorios
-        public ENTorneo(int codigo, int id_videojuego, float precioInscripcion,
-            string nombre, bool profesional, float costeOrganizacion,string  ubicacion)
-        {
-            _codigo = codigo;
-            _id_videojuego = id_videojuego;
-            _precioInscripcion = precioInscripcion;
-            _nombre = nombre;
-            _descripcion = "";
-            _profesional = profesional;
-            _costeOrganizacion = costeOrganizacion;
-            _fecha = DateTime.MinValue;
-            _ubicacion = ubicacion;
-        }
-
-        // Para solo lo obligatorio
-        public ENTorneo(int codigo, float precioInscripcion, string nombre,
-            bool profesional, float costeOrganizacion, string ubicacion)
-        {
-            _codigo = codigo;
-            _precioInscripcion = precioInscripcion;
-            _nombre = nombre;
-            _descripcion = string.Empty;
-            _profesional = profesional;
-            _costeOrganizacion = costeOrganizacion;
-            _fecha = DateTime.MinValue;
-            _ubicacion = ubicacion;
-        }
-
-        // ── Propiedades ──────────────────────────────────────────
 
         public int Codigo
         {
@@ -171,11 +124,17 @@ namespace hada_ProyectoGrupo.Library.EN
             CADTorneo cad = new CADTorneo();
             return cad.Delete(this);
         }
+
         public List<ENTorneo> ReadAll()
         {
             CADTorneo cad = new CADTorneo();
             return cad.ReadAll();
         }
 
+        public DataSet LeerAccesoDesconectado()
+        {
+            CADTorneo cad = new CADTorneo();
+            return cad.LeerAccesoDesconectado();
+        }
     }
 }

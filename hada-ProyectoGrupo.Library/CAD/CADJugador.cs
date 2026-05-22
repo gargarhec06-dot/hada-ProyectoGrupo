@@ -122,43 +122,6 @@ namespace hada_ProyectoGrupo.Library.CAD
             return ok;
         }
 
-        public ENJugador ReadByEmail(string email)
-        {
-            ENJugador en = null;
-            SqlConnection c = new SqlConnection(s);
-            try
-            {
-                c.Open();
-                string query = "SELECT * FROM Jugador WHERE email_usuario = @email";
-                SqlCommand com = new SqlCommand(query, c);
-                com.Parameters.AddWithValue("@email", email);
-                SqlDataReader dr = com.ExecuteReader();
-
-                if (dr.Read())
-                {
-                    en = new ENJugador();
-                    en.Codigo = (int)dr["codigo"];
-                    en.Email_usuario = dr["email_usuario"].ToString();
-                    en.Apodo = dr["apodo"].ToString();
-                    en.Winrate = dr["winrate"] == DBNull.Value ? 0f : Convert.ToSingle(dr["winrate"]);
-                    en.Nivel = dr["nivel"] == DBNull.Value ? 1 : (int)dr["nivel"];
-                    en.Hardware = dr["hardware"] == DBNull.Value ? "" : dr["hardware"].ToString();
-                    en.Buscando_equipo = dr["buscando_equipo"] == DBNull.Value ? false : (bool)dr["buscando_equipo"];
-                    en.Equipo_actual = dr["equipo_actual"] == DBNull.Value ? 0 : (int)dr["equipo_actual"];
-                    en.Juego = dr["juego"] == DBNull.Value ? 0 : (int)dr["juego"];
-                    en.Rol_principal = dr["rol"] == DBNull.Value ? "" : dr["rol"].ToString();
-                    en.Kda_promedio = dr["KDA"] == DBNull.Value ? 0f : Convert.ToSingle(dr["KDA"]);
-                }
-                dr.Close();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error en ReadByEmail: " + ex.Message);
-            }
-            finally { c.Close(); }
-            return en;
-        }
-
 
         public List<ENJugador> ReadAllByEmail(string email)
         {
@@ -184,24 +147,6 @@ namespace hada_ProyectoGrupo.Library.CAD
             catch (Exception ex) { throw new Exception("Error en ReadAllByEmail: " + ex.Message); }
             finally { c.Close(); }
             return lista;
-        }
-
-        public bool QuitarCapitania(int codigoJugador)
-        {
-            bool ok = false;
-            SqlConnection c = new SqlConnection(s);
-            try
-            {
-                c.Open();
-                string sql = "UPDATE Equipo SET id_capitan = NULL WHERE id_capitan = @cod";
-                SqlCommand com = new SqlCommand(sql, c);
-                com.Parameters.AddWithValue("@cod", codigoJugador);
-                com.ExecuteNonQuery();
-                ok = true;
-            }
-            catch (Exception ex) { System.Diagnostics.Debug.WriteLine("Error QuitarCapitania: " + ex.Message); }
-            finally { c.Close(); }
-            return ok;
         }
 
         public bool QuitarDeEquipo(int codigoJugador)
