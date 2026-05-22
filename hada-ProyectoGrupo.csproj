@@ -77,6 +77,11 @@
     </Content>
     <Content Include="Default.aspx" />
     <Content Include="Fondo\Fondo.png" />
+    <Content Include="Fondo\Fondo2.png" />
+    <Content Include="Global.asax" />
+    <Content Include="Images\Equipos\default-team.png" />
+    <Content Include="Private\AnadirSaldo.aspx" />
+    <Content Include="Private\EditarPatrocinador.aspx" />
     <Content Include="Private\EditarPerfil.aspx" />
     <Content Include="Private\GestionPatrocinador.aspx" />
     <Content Include="Private\GestionTorneo.aspx" />
@@ -84,7 +89,12 @@
     <Content Include="Private\PerfilUsuario.aspx" />
     <Content Include="Public\DetallePatrocinador.aspx" />
     <Content Include="Public\DetallesEquipo.aspx" />
+    <Content Include="Public\DetallesJugador.aspx" />
+    <Content Include="Public\DetallesPartida.aspx" />
     <Content Include="Public\Equipos.aspx" />
+    <Content Include="Public\Error.aspx" />
+    <Content Include="Public\Estadisticas.aspx" />
+    <Content Include="Public\Inscripcion.aspx" />
     <Content Include="Public\Jugadores.aspx" />
     <Content Include="Public\Login.aspx" />
     <Content Include="Public\Patrocinadores.aspx" />
@@ -104,6 +114,23 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Private\AnadirSaldo.aspx.cs">
+      <DependentUpon>AnadirSaldo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Private\AnadirSaldo.aspx.designer.cs">
+      <DependentUpon>AnadirSaldo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Private\EditarPatrocinador.aspx.cs">
+      <DependentUpon>EditarPatrocinador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Private\EditarPatrocinador.aspx.designer.cs">
+      <DependentUpon>EditarPatrocinador.aspx</DependentUpon>
     </Compile>
     <Compile Include="Private\EditarPerfil.aspx.cs">
       <DependentUpon>EditarPerfil.aspx</DependentUpon>
@@ -143,6 +170,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Public\DetallePatrocinador.aspx.cs">
       <DependentUpon>DetallePatrocinador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Public\DetallePatrocinador.aspx.designer.cs">
       <DependentUpon>DetallePatrocinador.aspx</DependentUpon>
@@ -154,16 +182,49 @@
     <Compile Include="Public\DetallesEquipo.aspx.designer.cs">
       <DependentUpon>DetallesEquipo.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Public\DetallesJugador.aspx.cs">
+      <DependentUpon>DetallesJugador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\DetallesJugador.aspx.designer.cs">
+      <DependentUpon>DetallesJugador.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\DetallesPartida.aspx.cs">
+      <DependentUpon>DetallesPartida.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\DetallesPartida.aspx.designer.cs">
+      <DependentUpon>DetallesPartida.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Public\Equipos.aspx.cs">
       <DependentUpon>Equipos.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Public\Equipos.aspx.designer.cs">
       <DependentUpon>Equipos.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Public\Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\Estadisticas.aspx.cs">
+      <DependentUpon>Estadisticas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\Estadisticas.aspx.designer.cs">
+      <DependentUpon>Estadisticas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Public\Inscripcion.aspx.cs">
+      <DependentUpon>Inscripcion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Public\Inscripcion.aspx.designer.cs">
+      <DependentUpon>Inscripcion.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Public\Jugadores.aspx.cs">
       <DependentUpon>Jugadores.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Public\Jugadores.aspx.designer.cs">
       <DependentUpon>Jugadores.aspx</DependentUpon>

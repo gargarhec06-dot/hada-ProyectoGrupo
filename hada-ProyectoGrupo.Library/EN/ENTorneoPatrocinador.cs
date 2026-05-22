@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace hada_ProyectoGrupo.Library.EN
+{
+    public class ENTorneoPatrocinador
+    {
+        public string NombreTorneo { get; set; }
+        public decimal Cantidad { get; set; }
+
+        public int CodigoTorneo { get; set; }
+    }
+}

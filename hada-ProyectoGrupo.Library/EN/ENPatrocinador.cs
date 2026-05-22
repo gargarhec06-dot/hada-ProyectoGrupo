@@ -16,6 +16,7 @@ namespace hada_ProyectoGrupo.Library.EN
         private DateTime _inicioContrato;
         private DateTime _finContrato;
         private bool _activo;
+        private string _telefono;
 
         public ENPatrocinador()
         {
@@ -26,9 +27,10 @@ namespace hada_ProyectoGrupo.Library.EN
             _inicioContrato = DateTime.Now;
             _finContrato = DateTime.Now;
             _activo = true;
+            _telefono = "";
         }
 
-        public ENPatrocinador(int idPatrocinador, string nombre, string email, string paginaWeb, DateTime inicioContrato, DateTime finContrato, bool activo)
+        public ENPatrocinador(int idPatrocinador, string nombre, string email, string paginaWeb, DateTime inicioContrato, DateTime finContrato, bool activo,string telefono)
         {
             _idPatrocinador = idPatrocinador;
             _nombre = nombre;
@@ -37,10 +39,11 @@ namespace hada_ProyectoGrupo.Library.EN
             _inicioContrato = inicioContrato;
             _finContrato = finContrato;
             _activo = activo;
+            _telefono = telefono;
         }
 
         // Constructor para los parámetros obligatorios
-        public ENPatrocinador(string nombre, string email, DateTime inicioContrato, DateTime finContrato)
+        public ENPatrocinador(string nombre, string email, DateTime inicioContrato, DateTime finContrato, string telefono)
         {
             _nombre = nombre;
             _email = email;
@@ -48,6 +51,7 @@ namespace hada_ProyectoGrupo.Library.EN
             _finContrato = finContrato;
             _activo = true;
             _paginaWeb = "";
+            _telefono = telefono;
         }
 
         public int IdPatrocinador
@@ -66,6 +70,12 @@ namespace hada_ProyectoGrupo.Library.EN
         {
             get { return _email; }
             set { _email = value; }
+        }
+
+        public string Telefono
+        {
+            get { return _telefono; }
+            set { _telefono = value; }
         }
 
         public string PaginaWeb
@@ -92,7 +102,7 @@ namespace hada_ProyectoGrupo.Library.EN
             set { _activo = value; }
         }
 
-        public bool Create()
+        public int Create()
         {
             CADPatrocinador cad = new CADPatrocinador();
             return cad.Create(this);

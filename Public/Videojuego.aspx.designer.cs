@@ -15,6 +15,24 @@ namespace hada_ProyectoGrupo.Public
     {
 
         /// <summary>
+        /// Control imgIcon.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgIcon;
+
+        /// <summary>
+        /// Control lblRouteIcon.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRouteIcon;
+
+        /// <summary>
         /// Control NombreLabel.
         /// </summary>
         /// <remarks>
@@ -66,7 +84,7 @@ namespace hada_ProyectoGrupo.Public
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TipoAdminBox;
+        protected global::System.Web.UI.WebControls.DropDownList TipoAdminBox;
 
         /// <summary>
         /// Control DescripcionLabel.
@@ -105,13 +123,76 @@ namespace hada_ProyectoGrupo.Public
         protected global::System.Web.UI.WebControls.TextBox EdadMinimaAdminBox;
 
         /// <summary>
-        /// Control DebugLabel.
+        /// Control lblIconUploadStatic.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label DebugLabel;
+        protected global::System.Web.UI.WebControls.Label lblIconUploadStatic;
+
+        /// <summary>
+        /// Control IconUpload.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload IconUpload;
+
+        /// <summary>
+        /// Control btnIconUpload.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnIconUpload;
+
+        /// <summary>
+        /// Control lblIconUpload.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblIconUpload;
+
+        /// <summary>
+        /// Control lblCaratulaUploadStatic.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCaratulaUploadStatic;
+
+        /// <summary>
+        /// Control CaratulaUpload.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload CaratulaUpload;
+
+        /// <summary>
+        /// Control btnCaratulaUpload.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCaratulaUpload;
+
+        /// <summary>
+        /// Control lblCaratulaUpload.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCaratulaUpload;
 
         /// <summary>
         /// Control AdminUpdate.
@@ -123,6 +204,15 @@ namespace hada_ProyectoGrupo.Public
         protected global::System.Web.UI.WebControls.Button AdminUpdate;
 
         /// <summary>
+        /// Control AdminAdd.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button AdminAdd;
+
+        /// <summary>
         /// Control AdminDelete.
         /// </summary>
         /// <remarks>
@@ -132,12 +222,30 @@ namespace hada_ProyectoGrupo.Public
         protected global::System.Web.UI.WebControls.Button AdminDelete;
 
         /// <summary>
-        /// Control AdminAdd.
+        /// Control imgCaratula.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button AdminAdd;
+        protected global::System.Web.UI.WebControls.Image imgCaratula;
+
+        /// <summary>
+        /// Control lblRouteCaratula.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRouteCaratula;
+
+        /// <summary>
+        /// Control DebugLabel.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label DebugLabel;
     }
 }

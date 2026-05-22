@@ -53,6 +53,7 @@
     <Compile Include="CAD\CADTorneo.cs" />
     <Compile Include="CAD\CADUsuario.cs" />
     <Compile Include="CAD\CADVideojuego.cs" />
+    <Compile Include="CAD\CADEstadisticas.cs" />
     <Compile Include="EN\ENEquipo.cs" />
     <Compile Include="EN\ENInscripcion.cs" />
     <Compile Include="EN\ENJugador.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="EN\ENPatrocinador.cs" />
     <Compile Include="EN\ENPremio.cs" />
     <Compile Include="EN\ENTorneo.cs" />
+    <Compile Include="EN\ENTorneoPatrocinador.cs" />
     <Compile Include="EN\ENUsuario.cs" />
     <Compile Include="EN\ENVideojuego.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
+using System.Collections.Generic;
+using hada_ProyectoGrupo.Library.CAD;
+using hada_ProyectoGrupo.Library.EN;
 
 namespace hada_ProyectoGrupo.Private
 {
@@ -11,25 +10,62 @@ namespace hada_ProyectoGrupo.Private
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Verificar sesión
-
+            if (Session["Email"] == null)
+            {
+                Response.Redirect("~/Public/Login.aspx");
+                return;
+            }
 
             if (!IsPostBack)
             {
-                // Cargar datos del usuario desde la sesión
-                // lblNombre.Text = Session["Nombre"]?.ToString();
-                // lblEmail.Text = Session["Email"]?.ToString();
+                CargarDatosUsuario();
             }
         }
 
-        protected void btnMisJugadores_Click(object sender, EventArgs e)
+        private void CargarDatosUsuario()
         {
-            Response.Redirect("~/Public/Jugadores.aspx");
+            string email = Session["Email"].ToString();
+            bool esAdmin = Session["EsAdmin"] != null && (bool)Session["EsAdmin"];
+
+            string nombre = Session["Nombre"]?.ToString();
+            lblNombre.Text = string.IsNullOrEmpty(nombre) ? "Usuario" : nombre;
+            lblEmail.Text = email;
+            lblRol.Text = esAdmin ? "Administrador" : "Jugador";
+
+            bool esUsuarioNormal = !esAdmin;
+            pnlMisJugadores.Visible = esUsuarioNormal;
+            pnlSumarFondos.Visible = esUsuarioNormal;
+            pnlSaldoRow.Visible = esUsuarioNormal;
+
+            try
+            {
+                CADUsuario cadUsuario = new CADUsuario();
+                ENUsuario usuario = new ENUsuario();
+                usuario.Email = email;
+
+                if (cadUsuario.Read(usuario))
+                {
+                    lblFechaNacimiento.Text = usuario.Fecha_Nacimiento.ToString("dd/MM/yyyy");
+                    if (esUsuarioNormal)
+                        lblSaldo.Text = usuario.Saldo_cartera.ToString("F2") + " €";
+                }
+                else
+                {
+                    lblFechaNacimiento.Text = "No disponible";
+                    if (esUsuarioNormal)
+                        lblSaldo.Text = "0,00 €";
+                }
+            }
+            catch (Exception)
+            {
+                lblFechaNacimiento.Text = "No disponible";
+                if (!esAdmin)
+                    lblSaldo.Text = "0,00 €";
+            }
         }
 
         protected void btnEditarPerfil_Click(object sender, EventArgs e)
         {
-            // TODO: Redirigir a página de edición de perfil
             Response.Redirect("~/Private/EditarPerfil.aspx");
         }
 
@@ -37,7 +73,68 @@ namespace hada_ProyectoGrupo.Private
         {
             Session.Clear();
             Session.Abandon();
-            Response.Redirect("~/Public/Login.aspx");
+            Response.Redirect("~/Default.aspx");
+        }
+
+        protected void btnMisJugadores_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Public/Jugadores.aspx");
+        }
+
+        protected void btnSumarFondos_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Private/AnadirSaldo.aspx");
+        }
+
+        protected void btnEliminarCuenta_Click(object sender, EventArgs e)
+        {
+            string email = Session["Email"].ToString();
+
+            try
+            {
+                CADJugador cadJugador = new CADJugador();
+                CADEquipo cadEquipo = new CADEquipo();
+                CADInscripcion cadInscripcion = new CADInscripcion();
+                CADUsuario cadUsuario = new CADUsuario();
+
+                List<ENJugador> jugadores = cadJugador.ReadAllByEmail(email);
+
+                foreach (ENJugador jugador in jugadores)
+                {
+                    ENEquipo equipo = cadEquipo.ReadByCapitan(jugador.Codigo);
+                    if (equipo != null)
+                    {
+                        cadInscripcion.DeleteByEquipo(equipo.Id_equipo);
+                        cadEquipo.Delete(equipo);
+                    }
+                    else if (jugador.Equipo_actual != 0)
+                    {
+                        cadJugador.QuitarDeEquipo(jugador.Codigo);
+                    }
+                    cadJugador.Delete(jugador);
+                }
+
+                ENUsuario usuario = new ENUsuario();
+                usuario.Email = email;
+
+                if (cadUsuario.Read(usuario))
+                {
+                    if (cadUsuario.Delete(usuario))
+                    {
+                        Session.Clear();
+                        Session.Abandon();
+                        Response.Redirect("~/Default.aspx?mensaje=Cuenta eliminada correctamente");
+                    }
+                    else
+                    {
+                        Response.Write("<script>alert('No se pudo eliminar la cuenta');</script>");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('Error: " + ex.Message.Replace("'", "\\'") + "');</script>");
+            }
         }
     }
 }

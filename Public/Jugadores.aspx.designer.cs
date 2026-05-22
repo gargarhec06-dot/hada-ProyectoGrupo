@@ -15,6 +15,15 @@ namespace hada_ProyectoGrupo.Public
     {
 
         /// <summary>
+        /// Control pnlBtnMisJugadores.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlBtnMisJugadores;
+
+        /// <summary>
         /// Control rptJugadores.
         /// </summary>
         /// <remarks>
@@ -24,13 +33,13 @@ namespace hada_ProyectoGrupo.Public
         protected global::System.Web.UI.WebControls.Repeater rptJugadores;
 
         /// <summary>
-        /// Control pnlJugador.
+        /// Control pnlAdmin3.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlJugador;
+        protected global::System.Web.UI.WebControls.Panel pnlAdmin3;
 
         /// <summary>
         /// Control btnCrear.
@@ -40,5 +49,14 @@ namespace hada_ProyectoGrupo.Public
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCrear;
+
+        /// <summary>
+        /// Control lblMensaje.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMensaje;
     }
 }

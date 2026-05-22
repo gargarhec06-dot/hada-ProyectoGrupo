@@ -19,6 +19,8 @@ namespace hada_ProyectoGrupo.Library.EN
         private string _hardware;
         private bool _buscando_equipo;
         private int _equipo_actual;
+        private int _juego;
+        private string _nombreEquipo;
 
         public ENJugador()
         {
@@ -26,15 +28,17 @@ namespace hada_ProyectoGrupo.Library.EN
             _email_usuario = "";
             _apodo = "";
             _rol_principal = "";
-            _kda_promedio = 0;
-            _winrate = 0;
+            _kda_promedio = 0.0f;
+            _winrate = 0.0f;
             _nivel = 1;
             _hardware = "";
             _buscando_equipo = false;
             _equipo_actual = 0;
+            _juego = 0;
+            _nombreEquipo = "EN NINGUNO";
         }
 
-        public ENJugador(int codigo, string email, string apodo, string rol, float kda, float winrate, int nivel, string hardware, bool buscando, int equipo)
+        public ENJugador(int codigo, string email, string apodo, string rol, float kda, float winrate, int nivel, string hardware, bool buscando, int equipo, int juego)
         {
             _codigo = codigo;
             _email_usuario = email;
@@ -46,17 +50,21 @@ namespace hada_ProyectoGrupo.Library.EN
             _hardware = hardware;
             _buscando_equipo = buscando;
             _equipo_actual = equipo;
+            _juego = juego;
         }
-
-        // Constructor para los parametro obligatorios
         public ENJugador(string email, string apodo)
         {
+            _codigo = 0;
             _email_usuario = email;
             _apodo = apodo;
-            _nivel = 1; 
+            _rol_principal = "";
+            _kda_promedio = 0.0f;
+            _winrate = 0.0f;
+            _nivel = 1;
+            _hardware = "";
             _buscando_equipo = false;
-            _kda_promedio = 0;
-            _winrate = 0;
+            _equipo_actual = 0;
+            _juego = 0;
         }
 
         public int Codigo
@@ -101,10 +109,26 @@ namespace hada_ProyectoGrupo.Library.EN
             set { _nivel = value; }
         }
 
+        public string NombreEquipo
+        {
+            get { return _nombreEquipo; }
+            set { _nombreEquipo = value; }
+        }
+
+        public int IdEquipo
+        {
+            get { return _equipo_actual; }
+            set { _equipo_actual = value; }
+        }
         public string Hardware
         {
             get { return _hardware; }
-            set { _hardware = value; }
+            set
+            {
+                if (value != null && value != "" && value != "teclado" && value != "mando")
+                    throw new ArgumentException("Hardware debe ser 'teclado' o 'mando'.");
+                _hardware = value ?? "";
+            }
         }
 
         public bool Buscando_equipo
@@ -117,6 +141,12 @@ namespace hada_ProyectoGrupo.Library.EN
         {
             get { return _equipo_actual; }
             set { _equipo_actual = value; }
+        }
+
+        public int Juego
+        {
+            get { return _juego; }
+            set { _juego = value; }
         }
 
         public bool Create()
@@ -142,5 +172,12 @@ namespace hada_ProyectoGrupo.Library.EN
             CADJugador cad = new CADJugador();
             return cad.Delete(this);
         }
+
+        public List<ENJugador> ReadAll()
+        {
+            CADJugador cad = new CADJugador();
+            return cad.ReadAll();
+        }
+
     }
 }

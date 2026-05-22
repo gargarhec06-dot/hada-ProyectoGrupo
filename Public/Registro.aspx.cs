@@ -22,15 +22,12 @@ namespace hada_ProyectoGrupo.Public
                 usuario.Apellidos = txtApellidos.Text;
                 usuario.Pais = txtPais.Text;
 
-                ENJugador jugador = new ENJugador(
-                    txtEmail.Text,
-                    txtApodo.Text
-                );
+                
 
                 bool okUsuario = usuario.Register();
-                bool okJugador = jugador.Create();
+                
 
-                if (okUsuario && okJugador)
+                if (okUsuario)
                 {
                     lblMensaje.ForeColor = System.Drawing.Color.Green;
                     lblMensaje.Text = "Registro exitoso. Ya puedes iniciar sesión.";

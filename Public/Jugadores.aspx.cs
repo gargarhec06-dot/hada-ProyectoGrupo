@@ -1,42 +1,117 @@
 ﻿using hada_ProyectoGrupo.Library.EN;
+using hada_ProyectoGrupo.Library.CAD;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace hada_ProyectoGrupo.Public
 {
+    public class JugadorViewModel
+    {
+        public int Codigo { get; set; }
+        public string Apodo { get; set; }
+        public string Rol_principal { get; set; }
+        public string Email_usuario { get; set; }
+        public string NombreEquipo { get; set; }
+        public string LogoEquipo { get; set; }
+        public string EstadoFiltro { get; set; }
+    }
+
     public partial class Jugadores : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            CargarJugadores();
-            if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == false)
-            {
-                pnlJugador.Visible = true;
-            }
+            if (!IsPostBack) CargarJugadores();
+            if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == false) pnlAdmin3.Visible = true;
         }
 
-        public void CargarJugadores()
+        private void CargarJugadores()
         {
-            List<ENJugador> lista = new List<ENJugador>
+            try
             {
-                new ENJugador(1, "ana.garcia@gmail.com", "MidMaster", "Mid Laner", 4.2f, 58.5f, 45, "PC Gaming - RTX 3080", true, 101),
-               new ENJugador(2, "carlos.lopez@hotmail.com", "TopGod", "Top Laner", 3.8f, 55.2f, 38, "Laptop Gaming - RTX 3060", false, 102),
-               new ENJugador(3, "lucia.martinez@gmail.com", "JungleQueen", "Jungler", 5.1f, 62.3f, 52, "PC Ultra - RTX 4090", true, 103),
-               new ENJugador(4, "mario.rodriguez@yahoo.com", "ADCPro", "AD Carry", 4.5f, 60.1f, 47, "PC Gaming - RTX 4070", false, 101),
-                new ENJugador(5, "elena.sanchez@gmail.com", "SupportLover", "Support", 3.5f, 53.7f, 41, "PC Standard - RTX 3060 Ti", true, 0),
-                new ENJugador(6, "david.fernandez@outlook.com", "FlexPlayer", "Fill", 4.0f, 56.8f, 35, "Laptop Gaming - RTX 3050", true, 104)
-            };
-            rptJugadores.DataSource = lista;
-            rptJugadores.DataBind();
+                List<ENJugador> todosLosJugadores = new ENJugador().ReadAll();
+                CADEquipo cadEquipo = new CADEquipo();
+                List<ENEquipo> todosEquipos = cadEquipo.ReadAll();
+                Dictionary<int, ENEquipo> mapEquipos = new Dictionary<int, ENEquipo>();
+                foreach (ENEquipo eq in todosEquipos)
+                    mapEquipos[eq.Id_equipo] = eq;
+
+                bool esJugador = Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == false;
+                string emailLogueado = Session["Email"]?.ToString() ?? "";
+
+                pnlBtnMisJugadores.Visible = esJugador && !string.IsNullOrEmpty(emailLogueado);
+
+                List<JugadorViewModel> vista = new List<JugadorViewModel>();
+
+                foreach (ENJugador j in todosLosJugadores)
+                {
+                    bool esMio = esJugador && j.Email_usuario == emailLogueado;
+                    bool tieneEquipo = j.Equipo_actual > 0;
+
+                    string estadoFiltro;
+                    if (esMio) estadoFiltro = "mio";
+                    else if (tieneEquipo) estadoFiltro = "con-equipo";
+                    else estadoFiltro = "sin-equipo";
+
+                    JugadorViewModel vm = new JugadorViewModel
+                    {
+                        Codigo = j.Codigo,
+                        Apodo = j.Apodo,
+                        Rol_principal = string.IsNullOrEmpty(j.Rol_principal) ? "Sin rol" : j.Rol_principal,
+                        Email_usuario = j.Email_usuario,
+                        EstadoFiltro = estadoFiltro
+                    };
+
+                    if (tieneEquipo && mapEquipos.ContainsKey(j.Equipo_actual))
+                    {
+                        ENEquipo equipoObj = mapEquipos[j.Equipo_actual];
+                        vm.NombreEquipo = equipoObj.Nombre;
+
+                        string logo = equipoObj.Logo_url ?? "";
+
+                        if (string.IsNullOrWhiteSpace(logo))
+                        {
+                            vm.LogoEquipo = "";
+                        }
+                        else if (logo.StartsWith("http://") || logo.StartsWith("https://"))
+                        {
+                            vm.LogoEquipo = logo;
+                        }
+                        else
+                        {
+                            if (!logo.StartsWith("~/"))
+                                logo = "~/" + logo.TrimStart('/');
+                            vm.LogoEquipo = logo;
+                        }
+                    }
+                    else
+                    {
+                        vm.NombreEquipo = "Sin equipo";
+                        vm.LogoEquipo = "";
+                    }
+
+                    vista.Add(vm);
+                }
+
+                rptJugadores.DataSource = vista;
+                rptJugadores.DataBind();
+
+                if (vista.Count == 0)
+                {
+                    lblMensaje.Text = "No hay jugadores registrados.";
+                    lblMensaje.ForeColor = System.Drawing.Color.Red;
+                }
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = "Error al cargar jugadores: " + ex.Message;
+                lblMensaje.ForeColor = System.Drawing.Color.Red;
+            }
         }
 
         protected void btnCrear_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Private/Jugador.aspx");
+            Response.Redirect("~/private/Jugador.aspx");
         }
     }
 }

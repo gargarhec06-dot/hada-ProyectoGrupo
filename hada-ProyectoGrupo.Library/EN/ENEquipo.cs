@@ -1,54 +1,19 @@
 ﻿using hada_ProyectoGrupo.Library.CAD;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace hada_ProyectoGrupo.Library.EN
 {
     public class ENEquipo
     {
-        // Atributos privados
         private int _id_equipo;
         private string _nombre;
         private DateTime _fecha_creacion;
         private string _logo_url;
         private string _descripcion;
         private int _id_capitan;
-
-        // Constructor por defecto
-        public ENEquipo()
-        {
-            _id_equipo = 0;
-            _nombre = "";
-            _fecha_creacion = DateTime.Now;
-            _logo_url = "";
-            _descripcion = "";
-            _id_capitan = 0;
-        }
-
-        // Constructor completo
-        public ENEquipo(int id, string nombre, DateTime fecha, string logo, string descripcion, int capitan)
-        {
-            _id_equipo = id;
-            _nombre = nombre;
-            _fecha_creacion = fecha;
-            _logo_url = logo;
-            _descripcion = descripcion;
-            _id_capitan = capitan;
-        }
-
-        // Constructor para parámetros obligatorios
-        public ENEquipo(string nombre, DateTime fecha)
-        {
-            _nombre = nombre;
-            _fecha_creacion = fecha;
-            _logo_url = "";
-            _descripcion = "";
-        }
-
-        // Propiedades públicas
+        private int _max_jugadores;
+        private int _miembros_actuales;
         public int Id_equipo
         {
             get { return _id_equipo; }
@@ -85,7 +50,40 @@ namespace hada_ProyectoGrupo.Library.EN
             set { _id_capitan = value; }
         }
 
-        // Métodos CRUD llamando al CAD
+        public int Max_jugadores
+        {
+            get { return _max_jugadores; }
+            set { _max_jugadores = value; }
+        }
+
+        public int MiembrosActuales
+        {
+            get { return _miembros_actuales; }
+            set { _miembros_actuales = value; }
+        }
+        public ENEquipo()
+        {
+            _id_equipo = 0;
+            _nombre = "";
+            _fecha_creacion = DateTime.Now;
+            _logo_url = "";
+            _descripcion = "";
+            _id_capitan = 0;
+            _max_jugadores = 5;
+            _miembros_actuales = 0;
+        }
+
+        public ENEquipo(int id, string nombre, DateTime fecha, string logo, string descripcion, int capitan, int maxJugadores, int miembrosActuales)
+        {
+            _id_equipo = id;
+            _nombre = nombre;
+            _fecha_creacion = fecha;
+            _logo_url = logo;
+            _descripcion = descripcion;
+            _id_capitan = capitan;
+            _max_jugadores = maxJugadores;
+            _miembros_actuales = miembrosActuales;
+        }
         public bool Create()
         {
             CADEquipo cad = new CADEquipo();
@@ -108,6 +106,12 @@ namespace hada_ProyectoGrupo.Library.EN
         {
             CADEquipo cad = new CADEquipo();
             return cad.Delete(this);
+        }
+
+        public List<ENEquipo> ReadAll()
+        {
+            CADEquipo cad = new CADEquipo();
+            return cad.ReadAll();
         }
     }
 }

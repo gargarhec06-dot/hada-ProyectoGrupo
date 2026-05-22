@@ -1,4 +1,5 @@
-﻿using hada_ProyectoGrupo.Library.EN;
+﻿using hada_ProyectoGrupo.Library.CAD;
+using hada_ProyectoGrupo.Library.EN;
 using System;
 using System.Collections.Generic;
 using System.Web.UI.WebControls;
@@ -18,7 +19,14 @@ namespace hada_ProyectoGrupo.Private
 
             if (!IsPostBack)
             {
-                ;
+                CADVideojuego cadVj = new CADVideojuego();
+                ddlVideojuego.DataSource = cadVj.ReadAll();
+                ddlVideojuego.DataTextField = "Nombre";
+                ddlVideojuego.DataValueField = "Codigo";
+                ddlVideojuego.DataBind();
+                ddlVideojuego.Items.Insert(0, new ListItem("Selecciona un videojuego", "0"));
+
+
             }
         }
 
@@ -34,9 +42,10 @@ namespace hada_ProyectoGrupo.Private
                     Session["Email"].ToString(),
                     txtApodo.Text
                 );
-                jugador.Rol_principal = ddlRol.SelectedValue;
+                jugador.Rol_principal = txtRol.Text;
                 jugador.Hardware = ddlHardware.SelectedValue;
                 jugador.Buscando_equipo = chkBuscandoEquipo.Checked;
+                jugador.Juego = int.Parse(ddlVideojuego.SelectedValue);
 
                 bool ok = jugador.Create();
 
@@ -45,7 +54,8 @@ namespace hada_ProyectoGrupo.Private
                     lblMensaje.ForeColor = System.Drawing.Color.Green;
                     lblMensaje.Text = "Jugador creado correctamente.";
                     txtApodo.Text = "";
-                    
+                    Response.Redirect("~/Public/Jugadores.aspx");
+
                 }
                 else
                 {

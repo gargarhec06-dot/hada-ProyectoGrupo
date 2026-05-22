@@ -24,22 +24,13 @@ namespace hada_ProyectoGrupo.Private
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tituloPagina;
 
         /// <summary>
-        /// Control txtVideojuego.
+        /// Control ddlVideojuego.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtVideojuego;
-
-        /// <summary>
-        /// Control rfvVideojuego.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvVideojuego;
+        protected global::System.Web.UI.WebControls.DropDownList ddlVideojuego;
 
         /// <summary>
         /// Control txtNombre.
@@ -123,6 +114,15 @@ namespace hada_ProyectoGrupo.Private
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvOrganizacion;
 
         /// <summary>
+        /// Control txtUbicacion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtUbicacion;
+
+        /// <summary>
         /// Control txtPremio.
         /// </summary>
         /// <remarks>
@@ -132,6 +132,51 @@ namespace hada_ProyectoGrupo.Private
         protected global::System.Web.UI.WebControls.TextBox txtPremio;
 
         /// <summary>
+        /// Control revPremio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revPremio;
+
+        /// <summary>
+        /// Control rfvPremio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvPremio;
+
+        /// <summary>
+        /// Control txtCapacidad.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCapacidad;
+
+        /// <summary>
+        /// Control revCapacidad.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revCapacidad;
+
+        /// <summary>
+        /// Control rfvCapacidad.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCapacidad;
+
+        /// <summary>
         /// Control chkProfesional.
         /// </summary>
         /// <remarks>
@@ -139,6 +184,15 @@ namespace hada_ProyectoGrupo.Private
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkProfesional;
+
+        /// <summary>
+        /// Control txtUrlLogo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtUrlLogo;
 
         /// <summary>
         /// Control btnGuardar.

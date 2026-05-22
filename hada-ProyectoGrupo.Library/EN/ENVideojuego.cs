@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace hada_ProyectoGrupo.Library.EN
@@ -12,9 +13,10 @@ namespace hada_ProyectoGrupo.Library.EN
         private int _codigo;
         private string _nombre;
         private string _descripcion;
-        private string _tipo;   //El tipo puede ser : SH (Shooter) , SU(Supervivencia), ST(Estrategia) , FG(Fighter)
+        private string _tipo;   //El tipo puede ser : SH (Shooter) , SU(Supervivencia), ST(Estrategia) , FG(Fighter), SP(Speedrun), MO (Moba)
         private int _edadMinima;
-
+        private string _iconUrl;
+        private string _caraUrl;
 
         public ENVideojuego()
         {
@@ -25,13 +27,15 @@ namespace hada_ProyectoGrupo.Library.EN
             _edadMinima = 0;
         }
         //Como todos los parametros son obligatorios basta con este constructor para inicializar
-        public ENVideojuego(int codigo, string nombre, string descripcion, string tipo, int edadMinima)
+        public ENVideojuego(int codigo, string nombre, string descripcion, string tipo, int edadMinima, string icon_url, string caratula_url)
         {
             _codigo = codigo;
             _nombre = nombre;
             _descripcion = descripcion;
             _tipo = tipo;
             _edadMinima = edadMinima;
+            _iconUrl = icon_url;
+            _caraUrl = caratula_url;
         }
         public int Codigo
         {
@@ -57,6 +61,16 @@ namespace hada_ProyectoGrupo.Library.EN
         {
             get { return _edadMinima; }
             set { _edadMinima = value;}
+        }
+        public string IconUrl
+        {
+            get { return _iconUrl; }
+            set { _iconUrl = value; }
+        }
+        public string CaratulaUrl
+        {
+            get { return _caraUrl; }
+            set { _caraUrl = value; }
         }
         public bool Create()
         {
@@ -85,6 +99,70 @@ namespace hada_ProyectoGrupo.Library.EN
         {
             CADVideojuego cad = new CADVideojuego();
             return cad.ReadAll();
+        }
+        public List<ENVideojuego> ReadAllFiltered(int ed_max)
+        {
+            CADVideojuego cad = new CADVideojuego();
+            return cad.ReadAllFiltered(this, ed_max);
+        }
+
+
+        public enum ENVideojuegoTipo
+        {
+            undefined, // FAILSAFE
+            MO, // MOBA
+            SH, // Shooter
+            SP, // Speedrun
+            SU, // Supervivencia
+            ST, // Estrategia
+            FG, // Fighting
+        }
+
+        public static string GetVideojuegoTipoToNombreLegible(ENVideojuegoTipo tipo)
+        {
+            switch (tipo)
+            {
+                case ENVideojuegoTipo.MO:
+                    return "Moba";
+                case ENVideojuegoTipo.SH:
+                    return "Shooter";
+                case ENVideojuegoTipo.SP:
+                    return "Speedrun";
+                case ENVideojuegoTipo.SU:
+                    return "Supervivencia";
+                case ENVideojuegoTipo.ST:
+                    return "Estrategia";
+                case ENVideojuegoTipo.FG:
+                    return "Fighter";
+            }
+
+            return "Desconocido";
+        }
+
+        public static ENVideojuegoTipo GetVideojuegoTipoFromCode(string code)
+        {
+            try
+            {
+                ENVideojuegoTipo tipo = (ENVideojuegoTipo)Enum.Parse(typeof(ENVideojuegoTipo), code);
+                return tipo;
+            }
+            catch (Exception) {
+                return ENVideojuegoTipo.undefined;
+            }
+        }
+
+        public static Dictionary<ENVideojuegoTipo, string> GetAllVideojuegoTipo()
+        {
+            Dictionary<ENVideojuegoTipo, string> tipos_videojuegos = new Dictionary<ENVideojuegoTipo, string>();
+
+            foreach (string code in Enum.GetNames(typeof(ENVideojuegoTipo)))
+            {
+                if (code == "undefined") continue;
+
+                tipos_videojuegos.Add((ENVideojuegoTipo)Enum.Parse(typeof(ENVideojuegoTipo), code), code);
+            }
+
+            return tipos_videojuegos;
         }
     }
 }

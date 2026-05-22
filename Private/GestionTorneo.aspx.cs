@@ -1,4 +1,5 @@
 ﻿using hada_ProyectoGrupo.Library.EN;
+using hada_ProyectoGrupo.Library.CAD;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,13 @@ namespace hada_ProyectoGrupo.Private
 
             if (!IsPostBack)
             {
+                CADVideojuego vj = new CADVideojuego();
+                ddlVideojuego.DataSource = vj.ReadAll();
+                ddlVideojuego.DataTextField = "Nombre";
+                ddlVideojuego.DataValueField = "Codigo";
+                ddlVideojuego.DataBind();
+                ddlVideojuego.Items.Insert(0, new ListItem("Selecciona un videojuego", "0"));
+
                 if (Request.QueryString["id"] != null)
                 {
                     idTorneo = int.Parse(Request.QueryString["id"]);
@@ -44,13 +52,14 @@ namespace hada_ProyectoGrupo.Private
 
             if (en.Read())
             {
-                txtVideojuego.Text = en.IdVideojuego.ToString();
+                ddlVideojuego.SelectedValue = en.IdVideojuego.ToString();
                 txtNombre.Text = en.Nombre;
                 txtDescripcion.Text = en.Descripcion;
                 txtFecha.Text = en.Fecha.ToString("yyyy-MM-dd");
                 txtInscripcion.Text = en.PrecioInscripcion.ToString();
                 txtOrganizacion.Text = en.CosteOrganizacion.ToString();
                 chkProfesional.Checked = en.Profesional;
+                txtUrlLogo.Text = en.Url_logo;
             }
         }
 
@@ -66,14 +75,17 @@ namespace hada_ProyectoGrupo.Private
                 esNuevo = false;
             }
 
-            en.IdVideojuego = int.Parse(txtVideojuego.Text);
+            en.IdVideojuego = int.Parse(ddlVideojuego.SelectedValue);
             en.Nombre = txtNombre.Text;
             en.Descripcion = txtDescripcion.Text;
             en.Fecha = DateTime.Parse(txtFecha.Text);
             en.PrecioInscripcion = float.Parse(txtInscripcion.Text);
             en.CosteOrganizacion = float.Parse(txtOrganizacion.Text);
             en.Profesional = chkProfesional.Checked;
-            en.Ubicacion = "Presencial";
+            en.Ubicacion = txtUbicacion.Text;
+            en.Premio = float.Parse(txtPremio.Text);
+            en.Capacidad = int.Parse(txtCapacidad.Text); 
+            en.Url_logo = txtUrlLogo.Text;
 
             bool operacionOk = esNuevo ? en.Create() : en.Update();
 

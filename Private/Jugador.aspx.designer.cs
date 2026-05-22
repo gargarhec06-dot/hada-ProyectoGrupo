@@ -24,13 +24,13 @@ namespace hada_ProyectoGrupo.Private
         protected global::System.Web.UI.WebControls.TextBox txtApodo;
 
         /// <summary>
-        /// Control ddlRol.
+        /// Control txtRol.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlRol;
+        protected global::System.Web.UI.WebControls.TextBox txtRol;
 
         /// <summary>
         /// Control ddlHardware.
@@ -40,6 +40,15 @@ namespace hada_ProyectoGrupo.Private
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlHardware;
+
+        /// <summary>
+        /// Control ddlVideojuego.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlVideojuego;
 
         /// <summary>
         /// Control chkBuscandoEquipo.

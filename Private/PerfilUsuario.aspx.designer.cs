@@ -14,31 +14,18 @@ namespace hada_ProyectoGrupo.Private
     public partial class PerfilUsuario
     {
 
-        /// <summary>
-        /// Control btnEditarPerfil.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEditarPerfil;
-
-        /// <summary>
-        /// Control btnMisJugadores.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlSaldoRow;
+        protected global::System.Web.UI.WebControls.Panel pnlSumarFondos;
+        protected global::System.Web.UI.WebControls.Panel pnlMisJugadores;
+        protected global::System.Web.UI.WebControls.Label lblNombre;
+        protected global::System.Web.UI.WebControls.Label lblEmail;
+        protected global::System.Web.UI.WebControls.Label lblRol;
+        protected global::System.Web.UI.WebControls.Label lblFechaNacimiento;
+        protected global::System.Web.UI.WebControls.Label lblSaldo;
         protected global::System.Web.UI.WebControls.Button btnMisJugadores;
-
-        /// <summary>
-        /// Control btnCerrarSesion.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSumarFondos;
+        protected global::System.Web.UI.WebControls.Button btnEditarPerfil;
         protected global::System.Web.UI.WebControls.Button btnCerrarSesion;
+        protected global::System.Web.UI.WebControls.Button btnEliminarCuenta;
     }
 }

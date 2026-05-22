@@ -5,13 +5,6 @@ using System.Collections.Generic;
 
 namespace hada_ProyectoGrupo.Public
 {
-    // Clase auxiliar para mostrar torneos del patrocinador
-    public class TorneoPatrocinador
-    {
-        public string NombreTorneo { get; set; }
-        public decimal Cantidad { get; set; }
-    }
-
     public partial class DetallePatrocinador : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -32,38 +25,30 @@ namespace hada_ProyectoGrupo.Public
                 {
                     pnlAdmin.Visible = true;
                 }
-
             }
         }
 
         private void CargarPatrocinador(int id)
         {
-            // Datos de ejemplo, se sustituirá por BD más adelante
             ENPatrocinador p = new ENPatrocinador();
-            p.Nombre = "Red Bull";
-            p.Email = "redbull@email.com";
-            p.PaginaWeb = "https://www.redbull.com";
-            p.InicioContrato = DateTime.Now;
-            p.FinContrato = DateTime.Now.AddYears(1);
-            p.Activo = true;
-
-            lblNombre.Text = p.Nombre;
-            lblEmail.Text = p.Email;
-            hlWeb.Text = p.PaginaWeb;
-            hlWeb.NavigateUrl = p.PaginaWeb;
-            lblInicioContrato.Text = p.InicioContrato.ToShortDateString();
-            lblFinContrato.Text = p.FinContrato.ToShortDateString();
-            lblActivo.Text = p.Activo ? "Activo" : "Inactivo";
+            p.IdPatrocinador = id;
+            CADPatrocinador cad = new CADPatrocinador();
+            if (cad.Read(p))
+            {
+                lblNombre.Text = p.Nombre;
+                lblEmail.Text = p.Email;
+                hlWeb.Text = p.PaginaWeb;
+                hlWeb.NavigateUrl = p.PaginaWeb;
+                lblInicioContrato.Text = p.InicioContrato.ToShortDateString();
+                lblFinContrato.Text = p.FinContrato.ToShortDateString();
+                lbltelefono.Text = p.Telefono;
+            }
         }
 
         private void CargarTorneos(int id)
         {
-            // Datos de ejemplo, se sustituirá por BD más adelante
-            List<TorneoPatrocinador> torneos = new List<TorneoPatrocinador>
-            {
-                new TorneoPatrocinador { NombreTorneo = "Valorant Cup 2026", Cantidad = 5000 },
-                new TorneoPatrocinador { NombreTorneo = "FIFA Championship", Cantidad = 3000 }
-            };
+            CADPatrocinador cad = new CADPatrocinador();
+            List<ENTorneoPatrocinador> torneos = cad.ReadTorneos(id);
             rptTorneos.DataSource = torneos;
             rptTorneos.DataBind();
         }
@@ -75,12 +60,16 @@ namespace hada_ProyectoGrupo.Public
 
         protected void btnEditar_Click(object sender, EventArgs e)
         {
-            //Response.Redirect($"~/Private/GestionPatrocinador.aspx?id={idPatrocinador}"); para editar el patrocinador se debe tener la BD primero 
+            int id = int.Parse(Request.QueryString["id"]);
+            Response.Redirect("~/Private/EditarPatrocinador.aspx?id=" + id);
         }
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
-            // Aquí se implementaría la lógica para eliminar el patrocinador de la base de datos
+            ENPatrocinador p = new ENPatrocinador();
+            p.IdPatrocinador = int.Parse(Request.QueryString["id"]);
+            CADPatrocinador cad = new CADPatrocinador();
+            cad.Delete(p);
             Response.Redirect("~/Public/Patrocinadores.aspx");
         }
     }

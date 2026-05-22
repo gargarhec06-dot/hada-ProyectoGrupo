@@ -1,13 +1,25 @@
-﻿using hada_ProyectoGrupo.Library.EN;
+﻿using hada_ProyectoGrupo.Library.CAD;
+using hada_ProyectoGrupo.Library.EN;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace hada_ProyectoGrupo.Public
 {
+    public class EquipoViewModel
+    {
+        public int Id_equipo { get; set; }
+        public string Nombre { get; set; }
+        public string Logo_url { get; set; }
+        public int MiembrosActuales { get; set; }
+        public int MaxJugadores { get; set; }
+        public string EstadoFiltro { get; set; }
+        public string BadgeClass { get; set; }
+        public string BadgeTexto { get; set; }
+    }
+
     public partial class Equipos : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -15,28 +27,91 @@ namespace hada_ProyectoGrupo.Public
             if (!IsPostBack)
             {
                 CargarEquipos();
-                if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"] == false)
-                {
-                    pnlJugador.Visible = true;
-                }
             }
         }
-        public void CargarEquipos()
+
+        private void CargarEquipos()
         {
-            List<ENEquipo> lista = new List<ENEquipo>
+            try
             {
-                new ENEquipo (1,"TSM", DateTime.Now, "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/TSM_Logo.svg/500px-TSM_Logo.svg.png" , "Especializado en shooters", 1),
-                new ENEquipo (2,"KOI", DateTime.Now, "https://static.wikia.nocookie.net/lolesports_gamepedia_en/images/a/a5/KOI_%28Spanish_Team%29logo_square.png/revision/latest?cb=20221224091735" , "Especializado en survivals", 2),
-                new ENEquipo (3,"FAZE", DateTime.Now, "https://cdn.shopify.com/s/files/1/0667/9547/1031/files/logo6_2.png?v=1770079941" , "Especializado en speedruns", 3)
-            };
-            rptEquipos.DataSource = lista;
-            rptEquipos.DataBind();
+                
+                List<EquipoConMiembros> listaEquipos = new CADEquipo().ReadAllConMiembros();
+
+                bool esAdmin = Session["EsAdmin"] != null && (bool)Session["EsAdmin"];
+                bool estaLogueado = Session["Email"] != null;
+                string emailLogueado = estaLogueado ? Session["Email"].ToString() : null;
+
+                pnlJugador.Visible = estaLogueado && !esAdmin;
+
+                List<int> misCodigosJugador = new List<int>();
+                if (emailLogueado != null)
+                {
+                    List<ENJugador> todosJugadores = new CADJugador().ReadAll();
+                    foreach (ENJugador j in todosJugadores)
+                    {
+                        if (j.Email_usuario == emailLogueado)
+                        {
+                            misCodigosJugador.Add(j.Codigo);
+                        }
+                    }
+                }
+
+                List<EquipoViewModel> vista = new List<EquipoViewModel>();
+
+                foreach (EquipoConMiembros eq in listaEquipos)
+                {
+                    bool soyElCapitan = misCodigosJugador.Contains(eq.Id_capitan);
+                    bool estaLleno = eq.MiembrosActuales >= eq.Max_jugadores;
+
+                    string estado = "abierto";
+                    if (soyElCapitan) estado = "mio";
+                    else if (estaLleno) estado = "lleno";
+
+                    string finalLogoUrl = !string.IsNullOrWhiteSpace(eq.Logo_url)
+                        ? eq.Logo_url
+                        : "~/Images/Equipos/default-team.png";
+
+                    vista.Add(new EquipoViewModel
+                    {
+                        Id_equipo = eq.Id_equipo,
+                        Nombre = eq.Nombre,
+                        Logo_url = ResolveUrl(finalLogoUrl),
+                        MiembrosActuales = eq.MiembrosActuales,
+                        MaxJugadores = eq.Max_jugadores,
+                        EstadoFiltro = estado,
+                        BadgeClass = soyElCapitan ? "badge-mine" : (estaLleno ? "badge-full" : "badge-open"),
+                        BadgeTexto = soyElCapitan ? "Mi Equipo" : (estaLleno ? "Lleno" : "Abierto")
+                    });
+                }
+
+                rptEquipos.DataSource = vista;
+                rptEquipos.DataBind();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error en CargarEquipos: " + ex.Message);
+            }
+        }
+
+        protected void rptEquipos_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                var data = (EquipoViewModel)e.Item.DataItem;
+                HtmlGenericControl barra = (HtmlGenericControl)e.Item.FindControl("barra");
+                if (barra != null && data.MaxJugadores > 0)
+                {
+                    double porcentaje = (double)data.MiembrosActuales * 100 / data.MaxJugadores;
+                    barra.Style["width"] = porcentaje.ToString(System.Globalization.CultureInfo.InvariantCulture) + "%";
+                    barra.Attributes["class"] = "eq-bar " +
+                        (data.EstadoFiltro == "lleno" ? "bar-full" : "bar-open");
+                }
+            }
         }
 
         protected void btnCrear_Click(object sender, EventArgs e)
         {
-            //Falta por implementar base de datos
-            Response.Redirect("~/Public/DetallesEquipo.aspx?id=1");
+            Response.Redirect("~/Public/DetallesEquipo.aspx");
         }
     }
 }
