@@ -1,6 +1,7 @@
 ﻿using hada_ProyectoGrupo.Library.CAD;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -177,5 +178,10 @@ namespace hada_ProyectoGrupo.Library.EN
             return cad.ReadAll();
         }
 
+        public DataSet LeerTodosDesconectado()
+        {
+            CADTorneo cad = new CADTorneo();
+            return cad.LeerAccesoDesconectado();
+        }
     }
 }

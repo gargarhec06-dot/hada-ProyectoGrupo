@@ -158,7 +158,7 @@ namespace hada_ProyectoGrupo.Library.CAD
             finally { c.Close(); }
             return lista;
         }
-    
+
 
         public bool ReadWithVideojuego(ENTorneo en, out string nombreJuego)
         {
@@ -200,6 +200,26 @@ namespace hada_ProyectoGrupo.Library.CAD
             }
             finally { c.Close(); }
             return ok;
+        }
+
+
+        public DataSet LeerAccesoDesconectado()
+        {
+            DataSet bdvirtual = new DataSet();
+            SqlConnection c = new SqlConnection(s);
+
+            try
+            {
+                SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Torneo", c);
+
+                da.Fill(bdvirtual, "Torneos");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("ERROR DESCONECTADO: " + ex.Message);
+            }
+
+            return bdvirtual;
         }
     }
 }
