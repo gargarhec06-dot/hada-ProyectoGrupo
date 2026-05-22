@@ -192,21 +192,6 @@ namespace hada_ProyectoGrupo.Library.CAD
             return lista;
         }
 
-        public int GetLastId()
-        {
-            int lastId = 0;
-            SqlConnection c = new SqlConnection(s);
-            try
-            {
-                c.Open();
-                SqlCommand com = new SqlCommand("SELECT ISNULL(MAX(id_equipo), 0) FROM Equipo", c);
-                lastId = (int)com.ExecuteScalar();
-            }
-            catch (Exception) { }
-            finally { c.Close(); }
-            return lastId;
-        }
-
         public ENEquipo ReadByCapitan(int idCapitan)
         {
             ENEquipo en = null;

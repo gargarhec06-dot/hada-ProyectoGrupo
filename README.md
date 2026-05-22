@@ -113,8 +113,8 @@ MEMORIA ENTREGA FINAL
 
 CAMBIOS HECHOS : 
 
--	EN y CAD de Equipo : añadir nuevos atributos :  max_jugadores y cantidad de miembros actuales y métodos para su manejo en su aspx : ReadAllConMiiembros , GetLastId , ReadByCapitan y la clase auxiliar Equipo con miembros
--	EN y CAD de Jugador : añadir nuevos atributos :  int juego y nombreEquipo junto con sus implementaciones y métodos para su manejo en su aspx:   QuitarCapitania y QuitardeEquipo
+-	EN y CAD de Equipo : añadir nuevos atributos :  max_jugadores y cantidad de miembros actuales y métodos para su manejo en su aspx : ReadAllConMiembros , ReadByCapitan y la clase auxiliar Equipo con miembros
+-	EN y CAD de Jugador : añadir nuevos atributos :  int juego y nombreEquipo junto con sus implementaciones y métodos para su manejo en su aspx: QuitardeEquipo
 -	Eliminación de la Entidad “Premio” y conversión a un atributo de la Entidad Torneo
 -	Implementación del CAD de Estadisticas junto su aspx y su .cs
 -	EN Y CAD de Noticia : añadir nuevos atributos y métodos para hacer likes
