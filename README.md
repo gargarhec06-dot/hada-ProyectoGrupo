@@ -105,6 +105,96 @@ FICHERO : Esquema_EERR.pdf
 
 UBICACIÓN : /Esquema_EERR.pdf
 
+###########################################################
+
+MEMORIA ENTREGA FINAL
+
+#############################################################
+
+CAMBIOS HECHOS : 
+
+-	EN y CAD de Equipo : añadir nuevos atributos :  max_jugadores y cantidad de miembros actuales y métodos para su manejo en su aspx : ReadAllConMiiembros , GetLastId , ReadByCapitan y la clase auxiliar Equipo con miembros
+-	EN y CAD de Jugador : añadir nuevos atributos :  int juego y nombreEquipo junto con sus implementaciones y métodos para su manejo en su aspx:   QuitarCapitania y QuitardeEquipo
+-	Eliminación de la Entidad “Premio” y conversión a un atributo de la Entidad Torneo
+-	Implementación del CAD de Estadisticas junto su aspx y su .cs
+-	EN Y CAD de Noticia : añadir nuevos atributos y métodos para hacer likes
+-	CAD Patrocinador : añadir métodos auxiliares :  ReadTorneos , ReadFiltrado , ReadPatrocinios.
+-	CAD de Torneo : añadido método ReadWithVideoJuego para mostrar nombre de videojuego en DetallesToreno.aspx e implementado atributo de capacidad de equipos .
+-	Control de Inscripción para que un Equipo no se puedo Inscribir al mismo Torneo.
+
+DIFICULTADES :
+
+-	Implementación de imágenes y subida de estas a la base de datos
+-	Uso de la base de datos para implementar, modificar o eliminar equipos según las restricciones empleadas
+-	Guardar datos auxiliares para comprobar si se es un usuario u otro
+-	Eliminación de cuenta de usuario al tener que controlar todas las relaciones existentes en la base de datos , como sus equipos , sus Jugadores , si estaban inscritos a un Torneo eliminarlo …
+-	Sistema de creación y edición de Patrocinadores para que aparecieran correctamente los Torneos disponibles para patrocinar y que se guardaran bien los datos. 
+-	Aplicación de filtros
+-	Búsqueda de información por otros medios al no tener la documentación del .NET la información necesaria a las soluciones buscadas por los miembros del proyecto
+-	Estilo del CSS
+-	Relación usuario y noticia con “LikesNoticia”
+-	Manejar Bootstrap
+-	Aplicación de variable application y su método : application_Error de global.asax
+
+
+APRENDIZAJES : 
+
+-	Uso y creación de filtros 
+-	CAD con SQL relacional entre 3 tablas
+-	Uso básico de Bootstrap
+-	Uso básico de CSS
+-	Graficas para las Estadísticas
+-	Variables y métodos del global.asax
+-	Estructuras HTML
+	
+INSTRUCCIONES
+
+1. Una vez clonado el proyecto se deberá establecer como proecto de inicio "hada-ProyectoGrupo"
+2. Respecto la BD , esta se deberá extraer del script de la propia entrega y llamarla HadaEsports
+3. Además ofrecemos una serie de datos incluyendo 4 usuarios , usuario1@gmail.com , usuario2@gmail.com ,  usuario3@gmail.com , usuario4@gmail.com y 
+ sus contraseñas son el numero de usuario que son . Ademas proporcionamos una cuenta se administrador llamada admin@gmail.com cuya contraseña es admin123
+
+
+PROBLEMAS CON PERSONAS EN EL GRUPO : NINGUNO
+
+PROBLEMAS DE PLANIFICACIÓN : 
+
+En la tercera y quinta entrega , en los issues se comentó que el trabajo de dicho momento tenia que haber estado antes del dia antes de la entrega oficial
+por la noche pero por mejorar y terminar el codigo se terminó el mismo el dia de la entrega por la tarde , cosa que fue una falla de planificación de las personas que
+tardarón pero por lo demás bien . 
+Se intentó hacer el reparto de tareas lo mas equitativo posible pero al no tener todas el mismo contenido , algunos compañeros aumentaron su carga de trabajo.
+
+
+Tareas hechas por cada miembro : 
+
+-	Héctor :
+	- EN y CAD de Torneo y VideoJuego
+	- aspx y aspx.cs de : Jugadores , DetallesJugador , Equipos , DetallesEquipo
+	- Desplegable de Acceso e Imagen de Fondo
+-	Farouk : 
+	- EN y CAD de Patrocinador y Noticia y EN de TorneoPatrocinador
+	- aspx y aspx.cs de: GestionPatrocinador, EditarPatrocinador, DetallePatrocinador, EditarPerfil, PerfilUsuario
+	- Registro y ayudar con el siteMater
+-	Carlos :  
+	- EN y CAD de Premio , Partida y modificaciones en VideoJuego.
+	- Frontend inicial de Login. Frontend y backend de Videojuegos, Videojuego y Partidas.
+	- Añadir el listado de partidas según el torneo.
+	- Crud de administrados para dichas secciones. 
+-	Maksim : 
+	- EN y CAD Equipo e Inscripción 
+	- aspx y cs de : Noticias DetallesNoticias ,  CAD de : Estadisticas y LikesNoticias .
+	- Modificaciones de default aspx y cs para prepararlo para Estadisiticas.
+-	Jesús : 
+	- EN y CAD Usuario y Jugador
+	- AnadirSaldo.aspx y AnadirSaldo.aspx.cs, GestionTorneo.aspx y GestionTorneo.aspx.cs, DetalleTorneo.aspx y DetalleTorneo.aspx.cs,
+	- Torneos.aspx y Torneos.aspx.cs, Error.aspx y Error.aspx.cs y Global.asax.
+
+
+
+
+
+
+
 
 
 
