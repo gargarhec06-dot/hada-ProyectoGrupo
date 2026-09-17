@@ -19,6 +19,7 @@
             <asp:Label ID="lblKDA" runat="server" />
             <asp:TextBox ID="txtKDA" runat="server" Visible="false" TextMode="Number" step="0.1" />
         </p>
+        <p> pENE </p>
         <p><strong>Winrate:</strong> 
             <asp:Label ID="lblWinrate" runat="server" />
             <asp:TextBox ID="txtWinrate" runat="server" Visible="false" TextMode="Number" step="0.1" />
